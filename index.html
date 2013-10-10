@@ -59,101 +59,200 @@
     </div>
     <div class="page-wrapper">
       <div class="content">
-        <h1 id="this-is-a-major-section-header">This is a Major Section Header</h1>
+        <h1 id="introduction">Introduction</h1>
 
-<p>This is a bunch of text that will appear in the light-background section to the left of your docs.</p>
+<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
 
-<h2 id="this-is-a-header-of-one-of-your-api-endpoints">This is a Header of One of Your API Endpoints</h2>
+<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
 
-<p>Blah blah blah blah blah blah blah</p>
+<p>This example API documentation page was created with <a href="http://github.com/tripit/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&rsquo;s documentation.</p>
 
-<h2 id="another-endpoint-header">Another Endpoint Header</h2>
+<h1 id="authentication">Authentication</h1>
 
-<p>More text here. This all appears in the area on the left.</p>
+<blockquote>
+<p>To authorize, use this code:</p>
+</blockquote>
+<pre class="highlight ruby"><span class="nb">require</span> <span class="s1">&#39;kittn&#39;</span>
 
-<h3 id="this-is-a-subheader-(won&#39;t-appear-in-the-table-of-contents)">This is a Subheader (won&rsquo;t appear in the table of contents)</h3>
-<pre class="highlight ruby"><span class="c1"># this is a ruby code block that will appear in the dark area on the right</span>
-<span class="k">def </span><span class="nf">say_hello</span>
-  <span class="nb">puts</span> <span class="s2">&quot;hello&quot;</span>
-<span class="k">end</span>
-</pre><pre class="highlight python"><span class="o">//</span> <span class="n">this</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">python</span> <span class="n">code</span> <span class="n">block</span> <span class="n">that</span> <span class="n">will</span> <span class="n">appear</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">dark</span> <span class="n">area</span> <span class="n">on</span> <span class="n">the</span> <span class="n">right</span>
-<span class="k">print</span> <span class="s">&quot;hello, world&quot;</span>
-</pre><pre class="highlight shell"><span class="c"># this is a shell code block that will appear in the dark area on the right</span>
-<span class="nb">echo</span> <span class="s2">&quot;hello, world&quot;</span>
-</pre><pre class="highlight text">This is a generic text block that will appear in the dark area on the right
+<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="nf">.authorize!</span><span class="p">(</span><span class="s1">&#39;meowmeowmeow&#39;</span><span class="p">)</span>
+</pre><pre class="highlight python"><span class="kn">import</span> <span class="s">&#39;kittn&#39;</span>
+
+<span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">&#39;meowmeowmeow&#39;</span><span class="p">)</span>
+</pre><pre class="highlight shell"><span class="c"># With shell, you can just pass the correct header with each request</span>
+curl <span class="s2">&quot;api_endpoint_here&quot;</span>
+  -H <span class="s2">&quot;Authorization: meowmeowmeow&quot;</span>
 </pre>
 <blockquote>
-<p>This is a code annotation that will appear in the dark area on the right</p>
+<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
 </blockquote>
 
-<p>This is a bunch of text that will appear in the light-background section to the left of your docs. This is <a href="#another-endpoint-header">an internal link to one of the headers above</a>.</p>
+<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
 
-<p>This is <a href="http://google.com">an external link to google</a>.</p>
+<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+
+<p><code class="prettyprint">Authorization: meowmeowmeow</code></p>
+
+<p>You must replace <code class="prettyprint">meowmeowmeow</code> with your personal API key from our developer portal.</p>
+
+<h1 id="kittens">Kittens</h1>
+
+<h2 id="get-all-kittens">Get All Kittens</h2>
+<pre class="highlight ruby"><span class="nb">require</span> <span class="s1">&#39;kittn&#39;</span>
+
+<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="nf">.authorize!</span><span class="p">(</span><span class="s1">&#39;meowmeowmeow&#39;</span><span class="p">)</span>
+<span class="n">api</span><span class="nf">.kittens.get</span>
+</pre><pre class="highlight python"><span class="kn">import</span> <span class="s">&#39;kittn&#39;</span>
+
+<span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">&#39;meowmeowmeow&#39;</span><span class="p">)</span>
+<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+</pre><pre class="highlight shell">curl <span class="s2">&quot;http://example.com/api/kittens&quot;</span>
+  -H <span class="s2">&quot;Authorization: meowmeowmeow&quot;</span>
+</pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fluffums&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="s2">&quot;breed&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;calico&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="s2">&quot;fluffiness&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+    </span><span class="s2">&quot;cuteness&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Isis&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="s2">&quot;breed&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unknown&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="s2">&quot;fluffiness&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+    </span><span class="s2">&quot;cuteness&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></pre>
+<p>This endpoint retrieves all kittens.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET http://example.com/kittens</code></p>
+
+<h3 id="query-parameters">Query Parameters</h3>
 
 <table><thead>
 <tr>
-<th>This</th>
-<th>Is</th>
-<th>A</th>
-<th>Table</th>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>which will appear</td>
-<td>in the area</td>
-<td>to the left</td>
-<td>of the code</td>
+<td>include_cats</td>
+<td>false</td>
+<td>If set to true, the result will also include cats.</td>
 </tr>
 <tr>
-<td>you can add</td>
-<td>more rows</td>
-<td>like this</td>
-<td>(the vertical pipes don&rsquo;t need to line up)</td>
+<td>available</td>
+<td>true</td>
+<td>If set to false, the result will include kittens that have already been adopted.</td>
 </tr>
 </tbody></table>
 
-<h1 id="major-header-2">Major Header 2</h1>
+<h2 id="get-a-specific-kitten">Get a Specific Kitten</h2>
+<pre class="highlight ruby"><span class="nb">require</span> <span class="s1">&#39;kittn&#39;</span>
 
-<p>The following sections are so you can check out the sweet table of contents to the left.</p>
+<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="nf">.authorize!</span><span class="p">(</span><span class="s1">&#39;meowmeowmeow&#39;</span><span class="p">)</span>
+<span class="n">api</span><span class="nf">.kittens.get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre><pre class="highlight python"><span class="kn">import</span> <span class="s">&#39;kittn&#39;</span>
 
-<h2 id="endpoint-1">Endpoint 1</h2>
+<span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">&#39;meowmeowmeow&#39;</span><span class="p">)</span>
+<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre><pre class="highlight shell">curl <span class="s2">&quot;http://example.com/api/kittens/3&quot;</span>
+  -H <span class="s2">&quot;Authorization: meowmeowmeow&quot;</span>
+</pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Isis&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s2">&quot;breed&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;unknown&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="s2">&quot;fluffiness&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+  </span><span class="s2">&quot;cuteness&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<p>This endpoint retrieves a specific kitten.</p>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, itaque, in, pariatur sed commodi dolore aut facilis voluptas magnam asperiores ratione adipisci repudiandae accusamus ipsa suscipit tempore unde molestiae nulla.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, itaque, in, pariatur sed commodi dolore aut facilis voluptas magnam asperiores ratione adipisci repudiandae accusamus ipsa suscipit tempore unde molestiae nulla.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, itaque, in, pariatur sed commodi dolore aut facilis voluptas magnam asperiores ratione adipisci repudiandae accusamus ipsa suscipit tempore unde molestiae nulla.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, itaque, in, pariatur sed commodi dolore aut facilis voluptas magnam asperiores ratione adipisci repudiandae accusamus ipsa suscipit tempore unde molestiae nulla.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, itaque, in, pariatur sed commodi dolore aut facilis voluptas magnam asperiores ratione adipisci repudiandae accusamus ipsa suscipit tempore unde molestiae nulla.</p>
+<h3 id="http-request">HTTP Request</h3>
 
-<h2 id="endpoint-2">Endpoint 2</h2>
+<p><code class="prettyprint">GET http://example.com/kittens/&lt;ID&gt;</code></p>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, itaque, in, pariatur sed commodi dolore aut facilis voluptas magnam asperiores ratione adipisci repudiandae accusamus ipsa suscipit tempore unde molestiae nulla.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, itaque, in, pariatur sed commodi dolore aut facilis voluptas magnam asperiores ratione adipisci repudiandae accusamus ipsa suscipit tempore unde molestiae nulla.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, itaque, in, pariatur sed commodi dolore aut facilis voluptas magnam asperiores ratione adipisci repudiandae accusamus ipsa suscipit tempore unde molestiae nulla.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, itaque, in, pariatur sed commodi dolore aut facilis voluptas magnam asperiores ratione adipisci repudiandae accusamus ipsa suscipit tempore unde molestiae nulla.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, itaque, in, pariatur sed commodi dolore aut facilis voluptas magnam asperiores ratione adipisci repudiandae accusamus ipsa suscipit tempore unde molestiae nulla.</p>
+<h3 id="url-parameters">URL Parameters</h3>
 
-<h2 id="endpoint-3">Endpoint 3</h2>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ID</td>
+<td>The ID of the cat to retrieve</td>
+</tr>
+</tbody></table>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, itaque, in, pariatur sed commodi dolore aut facilis voluptas magnam asperiores ratione adipisci repudiandae accusamus ipsa suscipit tempore unde molestiae nulla.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, itaque, in, pariatur sed commodi dolore aut facilis voluptas magnam asperiores ratione adipisci repudiandae accusamus ipsa suscipit tempore unde molestiae nulla.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, itaque, in, pariatur sed commodi dolore aut facilis voluptas magnam asperiores ratione adipisci repudiandae accusamus ipsa suscipit tempore unde molestiae nulla.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, itaque, in, pariatur sed commodi dolore aut facilis voluptas magnam asperiores ratione adipisci repudiandae accusamus ipsa suscipit tempore unde molestiae nulla.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, itaque, in, pariatur sed commodi dolore aut facilis voluptas magnam asperiores ratione adipisci repudiandae accusamus ipsa suscipit tempore unde molestiae nulla.</p>
+<h1 id="errors">Errors</h1>
 
-<h1 id="major-header-2">Major Header 2</h1>
+<p>The Kittn API uses the following error codes:</p>
 
-<h2 id="endpoint-4">Endpoint 4</h2>
-
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, deserunt, natus, autem, soluta saepe accusantium ad aut cupiditate voluptatem ducimus labore minus commodi odio nihil dignissimos magnam accusamus eveniet esse.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, deserunt, natus, autem, soluta saepe accusantium ad aut cupiditate voluptatem ducimus labore minus commodi odio nihil dignissimos magnam accusamus eveniet esse.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, deserunt, natus, autem, soluta saepe accusantium ad aut cupiditate voluptatem ducimus labore minus commodi odio nihil dignissimos magnam accusamus eveniet esse.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, deserunt, natus, autem, soluta saepe accusantium ad aut cupiditate voluptatem ducimus labore minus commodi odio nihil dignissimos magnam accusamus eveniet esse.</p>
-
-<h2 id="endpoint-5">Endpoint 5</h2>
-
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, deserunt, natus, autem, soluta saepe accusantium ad aut cupiditate voluptatem ducimus labore minus commodi odio nihil dignissimos magnam accusamus eveniet esse.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, deserunt, natus, autem, soluta saepe accusantium ad aut cupiditate voluptatem ducimus labore minus commodi odio nihil dignissimos magnam accusamus eveniet esse.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, deserunt, natus, autem, soluta saepe accusantium ad aut cupiditate voluptatem ducimus labore minus commodi odio nihil dignissimos magnam accusamus eveniet esse.</p>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Bad Request &ndash; Your request sucks</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized &ndash; Your API key is wrong</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden &ndash; The kitten requested is hidden for administrators only</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found &ndash; The specified kitten could not be found</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method Not Allowed &ndash; You tried to access a kitten with an invalid method</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
+</tr>
+<tr>
+<td>410</td>
+<td>Gone &ndash; The kitten requested has been removed from our servers</td>
+</tr>
+<tr>
+<td>418</td>
+<td>I&rsquo;m a teapot</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slown down!</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error &ndash; We had a problem with our server. Try again later.</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable &ndash; We&rsquo;re temporarially offline for maintanance. Please try again later.</td>
+</tr>
+</tbody></table>
 
       </div>
       <div class="dark-box">
