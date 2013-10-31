@@ -104,7 +104,9 @@ curl <span class="s2">&quot;api_endpoint_here&quot;</span>
 
 <p><code class="prettyprint">Authorization: meowmeowmeow</code></p>
 
-<p>You must replace <code class="prettyprint">meowmeowmeow</code> with your personal API key from our developer portal.</p>
+<p><aside class="notice">
+You must replace <code class="prettyprint">meowmeowmeow</code> with your personal API key.
+</aside></p>
 
 <h1 id="kittens">Kittens</h1>
 
@@ -167,6 +169,10 @@ curl <span class="s2">&quot;api_endpoint_here&quot;</span>
 </tr>
 </tbody></table>
 
+<p><aside class="success">
+Remember — a happy kitten is an authenticated kitten!
+</aside></p>
+
 <h2 id="get-a-specific-kitten">Get a Specific Kitten</h2>
 <pre class="highlight ruby"><span class="nb">require</span> <span class="s1">&#39;kittn&#39;</span>
 
@@ -191,6 +197,8 @@ curl <span class="s2">&quot;api_endpoint_here&quot;</span>
 </span><span class="p">}</span><span class="w">
 </span></pre>
 <p>This endpoint retrieves a specific kitten.</p>
+
+<p><aside class="warning">If you&rsquo;re not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside></p>
 
 <h3 id="http-request">HTTP Request</h3>
 
