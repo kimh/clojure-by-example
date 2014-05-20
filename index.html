@@ -1,80 +1,38 @@
-
 <!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
-
-    <!-- Always force latest IE rendering engine or request Chrome Frame -->
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-
-    <!-- Use title if it's in the page YAML frontmatter -->
     <title>API Reference</title>
 
-    <link href="stylesheets/screen.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="javascripts/all.js" type="text/javascript"></script>
 
-    <script>
-      $(function() {
-        var toc = $("#toc").tocify({
-          selectors: "h1,h2",
-          extendPage: false,
-          theme: "none",
-          smoothScroll: false,
-          showEffectSpeed: 0,
-          hideEffectSpeed: 180,
-          ignoreSelector: ".toc-ignore",
-          hashGenerator: 'pretty',
-          highlightOffset: 60,
-          scrollTo: -2,
-          scrollHistory: true,
-          hashGenerator: function(text, element) {
-            return element[0].getAttribute('id');
-          }
-        }).data("toc-tocify");
-        // Hack to make already open sections to start opened,
-        // instead of displaying an ugly animation
-        setTimeout(function() {
-          toc.setOption("showEffectSpeed", 180);
-        },50);
-        setupLanguages([
-          
-            
-              
-                'shell',
-              
-            
-              
-                'ruby',
-              
-            
-              
-                'python',
-              
-            
-          
-        ]);
-      });
-    </script>
+      <script>
+        $(function() {
+          setupLanguages(["shell","ruby","python"]);
+        });
+      </script>
   </head>
 
   <body class="index">
     <div class="tocify-wrapper">
       <img src="images/logo.png" />
+        <div class="search">
+          <input type="text" class="search" id="input-search">
+        </div>
+        <div class="search-info"></div>
       <div id="toc">
       </div>
-      
-      <ul class="toc-footer">
-        
-          <li><a href='#'>Sign Up for a Developer Key</a></li>
-        
-          <li><a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
-        
-      </ul>
-      
+        <ul class="toc-footer">
+            <li><a href='#'>Sign Up for a Developer Key</a></li>
+            <li><a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
+        </ul>
     </div>
     <div class="page-wrapper">
+      <div class="dark-box"></div>
       <div class="content">
         <h1 id="introduction">Introduction</h1>
 
@@ -92,13 +50,16 @@
 <pre class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
 
 <span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</pre><pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
+</pre>
+<pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
 
 <span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</pre><pre class="highlight shell"><span class="c"># With shell, you can just pass the correct header with each request</span>
+</pre>
+<pre class="highlight shell"><span class="c"># With shell, you can just pass the correct header with each request</span>
 curl <span class="s2">"api_endpoint_here"</span>
   -H <span class="s2">"Authorization: meowmeowmeow"</span>
 </pre>
+
 <blockquote>
 <p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
 </blockquote>
@@ -120,13 +81,16 @@ You must replace <code class="prettyprint">meowmeowmeow</code> with your persona
 
 <span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
 <span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</pre><pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
+</pre>
+<pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
 
 <span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
 <span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</pre><pre class="highlight shell">curl <span class="s2">"http://example.com/api/kittens"</span>
+</pre>
+<pre class="highlight shell">curl <span class="s2">"http://example.com/api/kittens"</span>
   -H <span class="s2">"Authorization: meowmeowmeow"</span>
 </pre>
+
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
@@ -147,6 +111,7 @@ You must replace <code class="prettyprint">meowmeowmeow</code> with your persona
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></pre>
+
 <p>This endpoint retrieves all kittens.</p>
 
 <h3 id="http-request">HTTP Request</h3>
@@ -183,13 +148,16 @@ Remember — a happy kitten is an authenticated kitten!
 
 <span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
 <span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</pre><pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
+</pre>
+<pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
 
 <span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
 <span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</pre><pre class="highlight shell">curl <span class="s2">"http://example.com/api/kittens/3"</span>
+</pre>
+<pre class="highlight shell">curl <span class="s2">"http://example.com/api/kittens/3"</span>
   -H <span class="s2">"Authorization: meowmeowmeow"</span>
 </pre>
+
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
@@ -201,6 +169,7 @@ Remember — a happy kitten is an authenticated kitten!
   </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
+
 <p>This endpoint retrieves a specific kitten.</p>
 
 <p><aside class="warning">If you&rsquo;re not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside></p>
@@ -223,7 +192,9 @@ Remember — a happy kitten is an authenticated kitten!
 </tr>
 </tbody></table>
 
-<h1 id="errors">Errors</h1>
+          <h1 id="errors">Errors</h1>
+
+<p><aside class="notice">This error section is stored in a separate file in <code class="prettyprint">includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the <code class="prettyprint">includes</code> folder and add them to the top of your <code class="prettyprint">index.md</code>&rsquo;s frontmatter. Files are included in the order listed.</aside></p>
 
 <p>The Kittn API uses the following error codes:</p>
 
@@ -281,23 +252,11 @@ Remember — a happy kitten is an authenticated kitten!
 
       </div>
       <div class="dark-box">
-        <div id="lang-selector">
-          
-            
-              
+          <div id="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
-              
-            
-              
                 <a href="#" data-language-name="ruby">ruby</a>
-              
-            
-              
                 <a href="#" data-language-name="python">python</a>
-              
-            
-          
-        </div>
+          </div>
       </div>
     </div>
   </body>
