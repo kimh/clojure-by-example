@@ -184,9 +184,9 @@ user=> `(1 2 3)
 
 <br>
 
-Lists are simple collection of values. You can create a list by grouping values with paren with **`** at the top. We need '`' because list will be evaluated without it.
+Lists are simple collection of values. You can create a list by grouping values with paren with **`** at the top. We need ``` ` ``` because list will be evaluated without it.
 
-## Get element by index
+## Get element
 
 ```clojure
 user=> (nth `(1 2 3) 1)
@@ -223,3 +223,260 @@ To add a value to the list, you use `conj` (conj[oin]). Note that the new value 
 
 How to remove a value from a list? You can't really remove a value from list in Clojure. That's not what list is supposed to do.
 If you are writing a program that needs to remove from collection, you should use other type of collection such as `Set`.
+
+# Vectors
+
+You can think of `Vector` as efficient version of `List`. It's more practical data storage of multiple values than `List`.
+
+## Literal
+
+```clojure
+user=> [1 2 3]
+[1 2 3]
+```
+
+<br>
+
+You can create a vector by grouping values with square brackets. Unlike list, you don't need ``` ` ``` because vector will not be evaluated unlike list.
+
+## Get element
+
+```clojure
+user=> (nth [1 2 3] 1)
+2
+```
+<br>
+To get a value from vector, you need to specify the index of the value.
+
+```clojure
+user=> (first [1 2 3])
+1
+
+user=> (last [1 2 3])
+3
+```
+
+<br>
+<br>
+
+`Vetor` has convenient functions to access elements. To get first and second element, you use `first` and `second`.
+
+## Add element
+
+```clojure
+user=> (conj [1 2 3] 4)
+[1 2 3 4]
+```
+
+<br>
+
+To add a value, you use `conj` (conj[oin]). **Note that the new value is added to the bottom.**
+
+## Get index
+
+```clojure
+user=>  (.indexOf [1 2 3] 2)
+1
+```
+
+<br>
+
+You can get the index of a value in vector with `.indexOf`.
+
+```clojure
+user=>  (.indexOf [1 2 3] 4)
+-1
+```
+
+<br>
+<br>
+
+Returns `-1` if the value doesn't exist.
+
+
+# Sets
+
+`Sets` are unordered collection of values, meaning that the order of values are not guaranteed.
+
+## Literal
+
+```clojure
+user=> #{1 2 3}
+#{1 3 2}
+```
+
+<br>
+
+You can create a set by grouping values with `#{}`. I get the order of 1 -> 3 -> 2 on my computer but you may get different order since the order is not guaranteed
+
+## Get element
+
+```clojure
+user=> (sort (conj #{1 2 3} 4))
+(1 2 3 4)
+```
+
+<br>
+
+To get sorted order, you use `sort`.
+
+## Add element
+
+```clojure
+user=> (conj #{1 2 3} 4)
+#{1 4 3 2}
+```
+
+<br>
+
+To add a value, you use `conj` (conj[oin]).
+
+```clojure
+user=> (conj (conj #{1 2 3} 4) 4)
+#{1 4 3 2}
+```
+
+<br>
+<br>
+
+One important trait of set is that **it does not contain an element more than once.**
+
+## Remove element
+
+```clojure
+user=> (disj #{1 2 3} 1)
+#{3 2}
+```
+
+<br>
+
+To create a set where a value is removed (basically removing a value from set), you use `disj` (disj[oin]).
+
+```clojure
+user=> (disj #{1 2 3} 4)
+#{1 3 2}
+```
+
+<br>
+<br>
+
+If `disj` value that the set doesn't contain, it returns the original set.
+
+## Select elements
+
+```clojure
+user=> (clojure.set/select odd? #{1 2 3} )
+#{1 3}
+```
+
+<br>
+
+To select certain values from a set, you use `select`. `odd?` returns boolean for each element. This example returns a new set which only contains odd numbers.
+
+## Check if element exists
+
+```clojure
+user=> (contains? #{1 2 3} 1)
+true
+
+user=> (contains? #{1 2 3} 4)
+false
+```
+
+<br>
+
+To check if a value is contained in a set, you use `contains?`.
+
+## Check if a set is part of other set
+
+```clojure
+user=>  (clojure.set/subset? #{1 2} #{1 2 3 4})
+true
+
+user=>  (clojure.set/subset? #{1 5} #{1 2 3 4})
+false
+```
+
+<br>
+
+To check if a set is part of another set, you use `subset?`.
+
+## Check if a set includes other set
+
+```clojure
+user=>  (clojure.set/superset? #{1 2 3} #{1 2})
+true
+```
+
+<br>
+
+To check if a set includes another set, you use `superset?`.
+
+# Maps
+
+`Maps` are key-value data structure to store multiple values.
+
+## Literal
+
+```clojure
+user=> {"Apple" "Mac" "Microsoft" "Windows"}
+{"Apple" "Mac" "Microsoft" "Windows"}
+```
+
+<br>
+
+You can create a map by grouping values with `{}`.
+
+
+## Get element
+
+```clojure
+user=> (get {"Apple" "Mac" "Microsoft" "Windows"} "Apple")
+"Mac"
+```
+
+<br>
+
+To get value from key, you use `get`.
+
+```clojure
+user=>  (get {"Apple" "Mac" "Microsoft" "Windows"} "Linux")
+nil
+```
+
+<br>
+<br>
+
+You get `nil` when key doesn't exist.
+
+## Add element
+
+```clojure
+user=> (assoc {"Apple", "Mac" "Microsoft" "Windows"} "Commodore" "Amiga")
+{"Commodore" "Amiga", "Apple" "Mac", "Microsoft" "Windows"}
+```
+
+<br>
+
+To add a key-value pair, you use `assoc`.
+
+```clojure
+user=> (assoc {"Apple", "Mac" "Microsoft" "Windows"} "Apple" "iOS")
+{"Apple" "iOS", "Microsoft" "Windows"}
+```
+
+<br>
+<br>
+
+If key already exists, it replace the value.
+
+## Combine maps
+
+```clojure
+user=> (merge {"Apple", "Mac" "Microsoft" "Windows"} {1 2})
+{1 2, "Apple" "Mac", "Microsoft" "Windows"}
+```
+
+<br>
+
+To combine two maps, you use `merge`.
