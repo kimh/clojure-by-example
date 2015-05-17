@@ -480,3 +480,251 @@ user=> (merge {"Apple", "Mac" "Microsoft" "Windows"} {1 2})
 <br>
 
 To combine two maps, you use `merge`.
+
+## Keys
+
+```clojure
+(keys {"Apple", "Mac" "Microsoft" "Windows"})
+```
+
+<br>
+
+To get all keys from a map, you use `keys`.
+
+## Vals
+
+```clojure
+(keys {"Apple", "Mac" "Microsoft" "Windows"})
+```
+
+<br>
+
+To get all values from a map, you use `vals`.
+
+# Sequences
+
+`Secuqnces` are logical lists that are not tied to a particular implementation. What does it mean? It means that you can apply the same functions to any types of collections without worrying about what types of collections that you are dealing with.
+
+```clojure
+user=> (map inc [ 1 2 3 ])
+(2 3 4)
+
+user=> (map inc `( 1 2 3 ))
+(2 3 4)
+
+user=> (map inc #{ 1 2 3 })
+(2 4 3)
+
+
+
+user=> (map println {:a 1 :b 2 :c 3} )
+[:c 3]
+[:b 2]
+[:a 1]
+(nil nil nil)
+```
+
+<br>
+
+Using map for `Vectors`.
+
+<br>
+
+Using map for `Lists`.
+
+<br>
+
+Using map for `Sets`.
+
+<br>
+
+Using map for `Maps`. We are using `println` for the function that we apply since `inc` doesn't work here, but this doesn't hurt the idea that you can use `map` for any collections.
+
+```clojure
+user=> (type (map inc [ 1 2 3 ]))
+clojure.lang.LazySeq
+
+user=> (type (map inc `( 1 2 3 )))
+clojure.lang.LazySeq
+
+user=> (type (map inc #{ 1 2 3 }))
+clojure.lang.LazySeq
+```
+
+<br>
+<br>
+<br>
+<br>
+
+As you can see, the type of all returned values is `LazySeq`.
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+`Sequences` **are the most important data abstraction in Clojure.**
+
+## Map
+
+```clojure
+user=> (map inc [ 1 2 3 ])
+(2 3 4)
+```
+
+<br>
+
+To apply a function to each element of collection, you use `map`.
+
+## Reduce
+
+```clojure
+user=> (reduce + [1 2 3 4])
+10
+```
+
+<br>
+
+`reduce` boils down values in a collection into a single value by applying a function.
+
+```clojure
+user=> (reduce + -10 [1 2 3 4])
+0
+```
+
+<br>
+<br>
+
+You can pass a default value in the second argument. When default value is given, `reduce` will use it as a starting point.
+
+## Into
+
+To convert from one type of collection to another, you use `into`.
+
+```clojure
+
+user=> (into [] `(1 2 3))
+[1 2 3]
+```
+
+<br>
+<br>
+
+Converting a list to a vector.
+
+
+```clojure
+user=> (into (list) [1 2 3])
+(3 2 1)
+```
+
+<br>
+<br>
+
+Converting a vector to a list.
+
+```clojure
+user=> (into #{} [1 2 3])
+#{1 3 2}
+```
+
+<br>
+<br>
+
+Converting a vector to a set.
+
+```clojure
+user=> (into [] #{1 2 3})
+[1 3 2]
+```
+
+<br>
+<br>
+
+Converting a set to a vector.
+
+```clojure
+user=> (into {} [[:a 1] [:b 2] [:c 3]])
+{:a 1, :b 2, :c 3}
+```
+
+<br>
+<br>
+
+Converting a nested vector into a map.
+
+```clojure
+user=> (into [] {:a 1 :b 2 :c 3})
+[[:c 3] [:b 2] [:a 1]]
+```
+
+<br>
+<br>
+
+Converting a map to a nested vector.
+
+```clojure
+user=> (reduce conj #{} [1 2 3])
+#{1 3 2}
+```
+
+<br>
+<br>
+
+`into` is just a thin wrapper around `reduce`. In fact, you can easily rewrite previous examples with `reduce`.
+
+## Iterate
+
+```clojure
+user=> (iterate + 0)
+
+```
+
+<br>
+
+You can get a sequence of infinite integers with `iterate`. Be careful, though. Running this example will freeze your terminal since the computation continues forever.
+
+## Range
+
+```clojure
+user=> (range 5 10)
+(5 6 7 8 9)
+```
+
+<br>
+
+To generates a sequence of numbers between two points, you can use `range`.
+
+```clojure
+user=> (range 0 100 5)
+(0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95)
+```
+
+<br>
+<br>
+
+You can get integers by every x within the range. In this case, we get a sequence of integers at every 5.
+
+## Repeatedly
+
+```clojure
+user=> (repeatedly 5 (fn [] (println "hi!")) )
+hi!
+hi!
+hi!
+hi!
+hi!
+(nil nil nil nil nil)
+```
+
+<br>
+
+To repeat something over and over again, you use `repeatedly`. We are passing an anonymous function `(fn [] (println "hi!"))` because the second argument must be a function.
+
+
+
+## Lazy Sequence
+
+Most of Clojure’s sequence functions are **lazy**.
