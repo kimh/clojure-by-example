@@ -195,7 +195,7 @@ user=> (nth `(1 2 3) 1)
 
 <br>
 
-To get a value from list, you use `nth` with index number. Index starts from 0
+To get a value from list, use `nth` with index number. Index starts from 0
 
 ## Count
 
@@ -206,7 +206,7 @@ user=> (count `(1 2 3) )
 
 <br>
 
-To count how many values in the list, you use `count`.
+To count how many values in the list, use `count`.
 
 ## Add element
 
@@ -217,7 +217,7 @@ user=> (conj `(1 2 3) 4)
 
 <br>
 
-To add a value to the list, you use `conj` (conj[oin]). Note that the new value is added to the top.
+To add a value to the list, use `conj` (conj[oin]). Note that the new value is added to the top.
 
 ## Remove element
 
@@ -259,7 +259,7 @@ user=> (last [1 2 3])
 <br>
 <br>
 
-`Vetor` has convenient functions to access elements. To get first and second element, you use `first` and `second`.
+`Vetor` has convenient functions to access elements. To get first and second element, use `first` and `second`.
 
 ## Add element
 
@@ -270,7 +270,7 @@ user=> (conj [1 2 3] 4)
 
 <br>
 
-To add a value, you use `conj` (conj[oin]). **Note that the new value is added to the bottom.**
+To add a value, use `conj` (conj[oin]). **Note that the new value is added to the bottom.**
 
 ## Get index
 
@@ -318,7 +318,7 @@ user=> (sort (conj #{1 2 3} 4))
 
 <br>
 
-To get sorted order, you use `sort`.
+To get sorted order, use `sort`.
 
 ## Add element
 
@@ -329,7 +329,7 @@ user=> (conj #{1 2 3} 4)
 
 <br>
 
-To add a value, you use `conj` (conj[oin]).
+To add a value, use `conj` (conj[oin]).
 
 ```clojure
 user=> (conj (conj #{1 2 3} 4) 4)
@@ -350,7 +350,7 @@ user=> (disj #{1 2 3} 1)
 
 <br>
 
-To create a set where a value is removed (basically removing a value from set), you use `disj` (disj[oin]).
+To create a set where a value is removed (basically removing a value from set), use `disj` (disj[oin]).
 
 ```clojure
 user=> (disj #{1 2 3} 4)
@@ -371,7 +371,7 @@ user=> (clojure.set/select odd? #{1 2 3} )
 
 <br>
 
-To select certain values from a set, you use `select`. `odd?` returns boolean for each element. This example returns a new set which only contains odd numbers.
+To select certain values from a set, use `select`. `odd?` returns boolean for each element. This example returns a new set which only contains odd numbers.
 
 ## Check if element exists
 
@@ -385,7 +385,7 @@ false
 
 <br>
 
-To check if a value is contained in a set, you use `contains?`.
+To check if a value is contained in a set, use `contains?`.
 
 ## Check if a set is part of other set
 
@@ -399,7 +399,7 @@ false
 
 <br>
 
-To check if a set is part of another set, you use `subset?`.
+To check if a set is part of another set, use `subset?`.
 
 ## Check if a set includes other set
 
@@ -410,7 +410,7 @@ true
 
 <br>
 
-To check if a set includes another set, you use `superset?`.
+To check if a set includes another set, use `superset?`.
 
 # Maps
 
@@ -437,7 +437,7 @@ user=> (get {"Apple" "Mac" "Microsoft" "Windows"} "Apple")
 
 <br>
 
-To get value from key, you use `get`.
+To get value from key, use `get`.
 
 ```clojure
 user=>  (get {"Apple" "Mac" "Microsoft" "Windows"} "Linux")
@@ -458,7 +458,7 @@ user=> (assoc {"Apple", "Mac" "Microsoft" "Windows"} "Commodore" "Amiga")
 
 <br>
 
-To add a key-value pair, you use `assoc`.
+To add a key-value pair, use `assoc`.
 
 ```clojure
 user=> (assoc {"Apple", "Mac" "Microsoft" "Windows"} "Apple" "iOS")
@@ -479,7 +479,7 @@ user=> (merge {"Apple", "Mac" "Microsoft" "Windows"} {1 2})
 
 <br>
 
-To combine two maps, you use `merge`.
+To combine two maps, use `merge`.
 
 ## Keys
 
@@ -489,7 +489,7 @@ To combine two maps, you use `merge`.
 
 <br>
 
-To get all keys from a map, you use `keys`.
+To get all keys from a map, use `keys`.
 
 ## Vals
 
@@ -499,7 +499,7 @@ To get all keys from a map, you use `keys`.
 
 <br>
 
-To get all values from a map, you use `vals`.
+To get all values from a map, use `vals`.
 
 # Sequences
 
@@ -576,7 +576,7 @@ user=> (map inc [ 1 2 3 ])
 
 <br>
 
-To apply a function to each element of collection, you use `map`.
+To apply a function to each element of collection, use `map`.
 
 ## Reduce
 
@@ -601,7 +601,7 @@ You can pass a default value in the second argument. When default value is given
 
 ## Into
 
-To convert from one type of collection to another, you use `into`.
+To convert from one type of collection to another, use `into`.
 
 ```clojure
 
@@ -721,7 +721,7 @@ hi!
 
 <br>
 
-To repeat something over and over again, you use `repeatedly`. We are passing an anonymous function `(fn [] (println "hi!"))` because the second argument must be a function.
+To repeat something over and over again, use `repeatedly`. We are passing an anonymous function `(fn [] (println "hi!"))` because the second argument must be a function.
 
 
 
