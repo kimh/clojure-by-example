@@ -675,6 +675,17 @@ user=> (reduce conj #{} [1 2 3])
 
 `into` is just a thin wrapper around `reduce`. In fact, you can easily rewrite previous examples with `reduce`.
 
+## Reverse
+
+``````clojure
+user=> (reverse [1 2 3])
+(3 2 1)
+```
+
+<br>
+
+To reverse a sequence, use `reverse`.
+
 ## Iterate
 
 ```clojure
@@ -723,7 +734,50 @@ hi!
 
 To repeat something over and over again, use `repeatedly`. We are passing an anonymous function `(fn [] (println "hi!"))` because the second argument must be a function.
 
+## Take
 
+```clojure
+user=> (take 5 (range 0 100))
+(0 1 2 3 4)
+```
+
+<br>
+
+
+To get the first `n` elements from a sequence, use `take`.
+
+## Take-While
+
+<br>
+
+```clojure
+user=> (take-while neg? [-3 -2 -1 0 1 2 3])
+(-3 -2 -1)
+```
+
+To get the first `n` elements from a sequence as long as the condition is satisfied but stop taking when the condition is not met, use `take-while`. `neg?` returns true for negative number.
+
+**Note:** Taking elements that only satisfies the condition is not what `take-while` does. That's the job of `select`.
+
+## Drop
+
+```clojure
+user=> (drop 5 (range 0 10))
+(5 6 7 8 9)
+```
+
+<br>
+
+To remove the first `n` elements from a sequence, use `drop`.
+
+## Drop-While
+
+```clojure
+user=> (drop-while neg? [-3 -2 -1 0 1 2 3])
+(0 1 2 3)
+```
+
+To get the first `n` elements from a sequence as long as the condition is satisfied but stop dropping when the condition is not met, use `drop-while`.
 
 ## Lazy Sequence
 
