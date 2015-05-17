@@ -743,8 +743,17 @@ user=> (take 5 (range 0 100))
 
 <br>
 
-
 To get the first `n` elements from a sequence, use `take`.
+
+```clojure
+user=>  (take 10 (range 0 5))
+(0 1 2 3 4)
+```
+
+<br>
+<br>
+
+Take all elements from a sequence if the size of the sequence is smaller than `n`.
 
 ## Take-While
 
@@ -777,8 +786,45 @@ user=> (drop-while neg? [-3 -2 -1 0 1 2 3])
 (0 1 2 3)
 ```
 
+<br>
+
+
 To get the first `n` elements from a sequence as long as the condition is satisfied but stop dropping when the condition is not met, use `drop-while`.
 
 ## Lazy Sequence
 
-Most of Clojure’s sequence functions are **lazy**.
+Most of Clojure’s sequences are **lazy**. To understand what **lazy** means, let's think about the opposite: **eager**.
+
+```clojure
+user=> (println (iterate inc 0))
+(0 1 2 3 4 5 6 7 8 9 10 11 12 13 ....................
+```
+
+<br>
+
+`(iterate inc 0)` generates an infinite sequence of numbers. We don't care how many values inside the sequence. We just tried to print as many as possible. This is the eager approach to handle infinite sequence. Trying to print out the infinite sequence takes, of course, infinitely, so this program never returns. As this example shows, handling infinite things eagerly doesn't really work well.
+
+```clojure
+
+
+
+user=> (println (take 5 (iterate inc 0)))
+(0 1 2 3 4)
+nil
+```
+
+<br>
+<br>
+
+Now we handle the infinite sequence with lazy approach by using `take`.
+
+`take` says to the infinite sequence: *Give me only first 5 elements and I don't care the rest*. The infinite sequence responds by saying: *Ok, here is the first five elements. I'll give you rest only when you ask more*.
+
+<br>
+
+
+Lazy sequence does not do anything until somebody asks. In other words, **computation is deferred**.
+
+Nature of lazy sequence is this: **when it's asked to compute, it does. Otherwise, it doesn't do anything**.
+
+Very lazy, right?
