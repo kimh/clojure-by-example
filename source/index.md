@@ -16,6 +16,90 @@ nil
 
 Our first Clojure code is, of course, printing "Hello, world!".
 
+# Functions
+
+```clojure
+
+
+user=> (defn say-hello
+         [name]
+         (println (str "Hello, " name)))
+
+user=> (say-hello "kim")
+Hello, kim
+nil
+```
+
+<br>
+
+To define a function, use `defn`.
+
+The first argument is the name of function `say-hello`, the second argument is the argument of the function `[name]`, and the third arugment is the function body ` (println (str "Hello, " name)))`.
+
+```clojure
+user=> (defn say-hello
+         "Takes name argument and say hello to the name"
+         [name]
+         (println (str "Hello, " name)))
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+You can also add documentation.
+
+```clojure
+user=> (doc say-hello)
+-------------------------
+user/say-hello
+([name])
+  Takes name argument and say hello to the name
+nil
+```
+
+<br>
+<br>
+<br>
+<br>
+
+Use `doc` to read the documentation.
+
+```clojure
+user=> (defn say-hello
+         "Takes name argument and say hello to the name"
+         {:added "1.0"
+          :static true}
+         [name]
+         (println (str "Hello, " name)))
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+You can also add metadata of the function.
+
+```clojure
+user=> (meta #'say-hello)
+{:added "1.0", :ns #<Namespace user>, :name say-hello, :file "NO_SOURCE_PATH", :static true, :column 1, :line 1, :arglists ([name]), :doc "Takes name argument and say hello to the name"}
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+You can expand the metadata with `meta`. `#'` is reader macro. **TODO: add link to reader macro**
+
+
 # Booleans
 
 ```clojure
@@ -41,34 +125,47 @@ user=> "Hi, there!"
 
 You can create a string by double-quoting text.
 
-## Concatination
-
+## Concatenation
 
 ```clojure
-user=> (+ "Good" " " "morning")
-
-ClassCastException java.lang.String cannot be cast to java.lang.Number  clojure.lang.Numbers.add (Numbers.java:126)
+user=> (str "Good " "morning")
+"Good morning"
 ```
 
-</br>
+<br>
 
-`+` operator *doesn't* work to concat strings against your expectation.
-
+One way to concatenate strings is using `str`.
 
 ```
 user=> (use '[clojure.string :only [join]])
 nil
 
-user=> (join "" ["Good" " " "morning"])
+user=> (join "" ["Good " "morning"])
 "Good morning"
+```
+
+</br>
+</br>
+
+You can also use `clojure.string/join`.
+
+```clojure
+user=> (+ "Good " "morning")
+
+ClassCastException java.lang.String cannot be cast to java.lang.Number  clojure.lang.Numbers.add (Numbers.java:126)
 ```
 
 </br>
 </br>
 </br>
 </br>
+</br>
 
-Instead, you can use `clojure.string/join`
+`+` operator *doesn't* work to concat strings against your expectation.
+
+## Interpolation
+
+Clojure doesn't have string interpolation. So, you need to use [concatenation functions](#concatenation).
 
 # Integers
 
