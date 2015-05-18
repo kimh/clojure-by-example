@@ -793,19 +793,23 @@ To get the first `n` elements from a sequence as long as the condition is satisf
 
 ## Lazy Sequence
 
-Most of Clojure’s sequences are **lazy**. To understand what **lazy** means, let's think about the opposite: **eager**.
+Most of Clojure’s sequences are **lazy**. All familiar functions such as `map` `range` `reduce` etc returns lazy sequences.
 
 ```clojure
+;; You need hit Ctrl+c very quickly to stop!!
 user=> (println (iterate inc 0))
-(0 1 2 3 4 5 6 7 8 9 10 11 12 13 ....................
+(0 1 2 3 ......
 ```
 
 <br>
 
-`(iterate inc 0)` generates an infinite sequence of numbers. We don't care how many values inside the sequence. We just tried to print as many as possible. This is the eager approach to handle infinite sequence. Trying to print out the infinite sequence takes, of course, infinitely, so this program never returns. As this example shows, handling infinite things eagerly doesn't really work well.
+`(iterate inc 0)` generates a sequence of infinite numbers which, of course, takes infinitely. But, you see `println` starts printing the numbers `(0 1 2 3 ......`. If the generation of the sequence never ends, how `println` can even start printing these numbers?
+
+<br>
+
+This is possible because `iterate` generates lazy sequence and `println` is able to handle lazy sequence correctly. `println` asks a number to print from `iterate` one by one, rather than asking the entire sequence. `iterate` only computes numbers as it is requested and pass the numbers to `println`.
 
 ```clojure
-
 
 
 user=> (println (take 5 (iterate inc 0)))
@@ -816,15 +820,9 @@ nil
 <br>
 <br>
 
-Now we handle the infinite sequence with lazy approach by using `take`.
-
-`take` says to the infinite sequence: *Give me only first 5 elements and I don't care the rest*. The infinite sequence responds by saying: *Ok, here is the first five elements. I'll give you rest only when you ask more*.
+`take` only asks the first `n` values from lazy sequence. `iterate` also only computes the first five numbers because that's what asked by `take`.
 
 <br>
 
 
-Lazy sequence does not do anything until somebody asks. In other words, **computation is deferred**.
-
-Nature of lazy sequence is this: **when it's asked to compute, it does. Otherwise, it doesn't do anything**.
-
-Very lazy, right?
+**Note:** In Clojure 1.1+, lazy sequences returns chunked values rather than one by one as mentioned above, but that's not you have to worry about reading this guide.
