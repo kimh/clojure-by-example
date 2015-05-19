@@ -14,6 +14,8 @@ hello, world
 nil
 ```
 
+<br>
+
 Our first Clojure code is, of course, printing "Hello, world!".
 
 # Functions
@@ -99,6 +101,205 @@ user=> (meta #'say-hello)
 
 You can expand the metadata with `meta`. `#'` is reader macro. **TODO: add link to reader macro**
 
+# Control Flow
+
+## If
+
+```clojure
+user=> (if true
+         (println "This is always printed")
+         (println "This is never printed"))
+This is always printed
+nil
+```
+
+<br>
+
+`if` takes a predicate (`true` or `false`) in the first argument. The second argument will be evaluated if the predicate is evaluated to `true`. The third argument is equivalent to **else** in many programming language which is evaluated when the predicate is evaluated to `false`.
+
+```clojure
+user=> (if true
+         (do
+         (println "one")
+         (println "two")))
+one
+two
+nil
+```
+
+<br>
+<br>
+<br>
+
+In Clojure, you can pass only one expression to a branch of `if`. However, you often need to pass more than one expression in real programs. In this case, use `do`.
+
+## If-Let
+
+```clojure
+user=> (if-let [pos-nums (filter pos? [ -1 -2 1 2])]
+  pos-nums
+  "no positive numbers")
+(1 2)
+```
+
+<br>
+
+After testing condition, you often want to reuse it later. `if-let` binds the evaluated condition to var when it's truthy. The result of `filter` will be binded to `pos-nums`.
+
+## When
+
+```clojure
+user=> (when true
+         (println "one")
+         (println "two"))
+one
+two
+nil
+```
+
+<br>
+
+When you only care about the case when the condition is truthy, you can use `when`. `when` is similar to `if` but no **else** branch and already wrapped by `do`, so you can pass multiple expression.
+
+```clojure
+user=> (when false
+         (println "one")
+         (println "two"))
+nil
+```
+
+<br>
+<br>
+<br>
+<br>
+
+Since there is no **else** branch, this doesn't do anything.
+
+## When-Let
+
+```clojure
+user=> (when-let [pos-nums (filter pos? [ -1 -2 1 2])]
+          pos-nums
+          (println "one")
+          (println "two"))
+one
+two
+nil
+```
+
+<br>
+
+There is also `when-let` which is similar to `if-let` but no **else** branch.
+
+## Case
+
+```clojure
+user=> (defn case-test-1
+         [n]
+         (case n
+               1 "n is 1"
+               2 "n is 2"
+               "n is other"))
+#'user/case-test-1
+
+user=> (println (case-test-1 1))
+n is 1
+nil
+
+user=> (println (case-test-1 2))
+n is 2
+nil
+
+user=> (println (case-test-1 3))
+n is other
+nil
+```
+
+<br>
+
+There is also `case` which works pretty much similar to that of other programming languages. `case` compares the value with each condition with `=`
+and evaluates the expression in the matched branch.
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+The expression in the last branch will be evaluated if none of other branch is matched.
+
+## Cond
+
+```clojure
+user=> (defn cond-test
+         [n]
+         (cond
+           (= n 1) "n is 1"
+           (and (> n 3) (< n 10)) "n is over 3 and under 10"
+           :else "n is other"))
+
+user=> (println (cond-test 1))
+n is 1
+nil
+
+user=> (println (cond-test 5))
+n is over 3 and under 10
+nil
+
+user=> (println (cond-test 15))
+n is other
+nil
+```
+
+<br>
+
+When you want to do similar thing to `case` but want to write your own test case rather than `=`, you can use `cond`. You can write different test case in each branch with `cond`.
+
+<br>
+<br>
+You use `:else` symbol for default case.
+
+## Condp
+
+```clojure
+user=> (defn condp-test-2
+         [n]
+         (condp contains? n
+           [1 2 3] "n is either 1 or 2 or 3"
+           "n is not 1 or 2 or 3"))
+#'user/condp-test-2
+
+user=> (println (condp-test-2 2))
+n is either 1 or 2 or 3
+nil
+
+user=> (println (condp-test-2 5))
+n is not 1 or 2 or 3
+nil
+```
+
+<br>
+
+You can use predicate with `condp` for condition, in this case `contains?`.
+
+
+<br>
+<br>
+<br>
+<br>
+
+`(contains? [1 2 3] 2)` will be evaluated in this case.
+
+<br>
+<br>
+
+`(contains? [1 2 3] 5)` will be evaluated falsey, thus default branch will be evaluated.
 
 # Booleans
 
@@ -109,6 +310,8 @@ true
 user=> false
 false
 ```
+
+<br>
 
 `true` and `false` are values of *Boolean* type just like in other programming languages.
 
@@ -923,3 +1126,6 @@ nil
 
 
 **Note:** In Clojure 1.1+, lazy sequences returns chunked values rather than one by one as mentioned above, but that's not you have to worry about reading this guide.
+
+# Thanks
+http://d.hatena.ne.jp/Kazuhira/20120603/1338728578
