@@ -18,7 +18,101 @@ nil
 
 Our first Clojure code is, of course, printing "Hello, world!".
 
+# Variables
+
+## Let
+
+```clojure
+user=> (let [object "light"] (println (str "God said let there be " object)))
+God said let there be light
+nil
+```
+
+<br>
+
+To bind (assign) value to variable, use `let`. Let takes a vector which takes a variable in the first element and a value in the second element.
+
+```clojure
+user=> (println object)
+
+CompilerException java.lang.RuntimeException: Unable to resolve symbol: object in this context, compiling:(NO_SOURCE_PATH:1:1)
+```
+
+<br>
+<br>
+
+You cannot access the variable defined from outside of the let. You can think of this as equivalent to *private variable* in non-functional language.
+
+```clojure
+user=> (let [object1 "light"
+             object2 "darkness" ]
+
+             (println (str "God said let there be " object1))
+             (println (str "God also said let there be " object2)))
+God said let there be light
+God also said let there be darkness
+nil
+```
+
+<br>
+<br>
+<br>
+
+We can also provide multiple bindings.
+
+```clojure
+user=>  (let [object "light"]
+             (let [object "darkness"])
+             (println (str "God said let there be " object)))
+God said let there be light
+nil
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+The most notable trait of `let` is that its ***immutable***: once you define, you never be able to change. Here, we tried to override object `light` with `darkness`, but we fail to do so.
+
+## Def (Var)
+
+```clojure
+user=> (def object "light")
+#'user/object
+
+user=> (println (str "God said let there be " object))
+God said let there be light
+nil
+```
+
+<br>
+
+You can also bind values to variable with `def`. In Clojure, we say `def` binds "light" to "object" which is something called `Var`.
+
+```clojure
+user=> (def object "darkness")
+#'user/object
+
+user=> (println (str "God said let there be " object))
+God said let there be darkness
+nil
+```
+
+Unlike `let`, you can access var outside `def`.
+
+<br>
+<br>
+<br>
+
+`Var` is ***mutable***, so we can redefine later. You should avoid doing this whenever possible, but sometimes useful in real programming.
+
 # Functions
+
+## Defn
 
 ```clojure
 
@@ -100,6 +194,111 @@ user=> (meta #'say-hello)
 <br>
 
 You can expand the metadata with `meta`. `#'` is reader macro. **TODO: add link to reader macro**
+
+## Anonymous Function
+
+Functions are first class object in Clojure. When you say something is *a first class object in programming language X*, it means that you can do the all basic operations with the object
+such as passing to a function, returned from a function, and binding to variable, etc.
+
+
+```clojure
+user=> (fn [] (println "Hello world"))
+#<user$eval3663$fn__3664 user$eval3663$fn__3664@5de5bfa4>
+```
+
+<br>
+
+To create a function object, use `fn`.
+
+```clojure
+user=> (def hello-world-func (fn [] (println "Hello world")))
+#'user/hello-world-func
+
+user=> (hello-world-func)
+Hello world
+nil
+```
+
+<br>
+<br>
+
+You can bind functions to var just like other values.
+
+```clojure
+user=> (def say-hello (fn [name] (println (str "Hello, " name))))
+#'user/say-hello
+
+user=> (def say-bye (fn [name] (println (str "Good bye, " name))))
+#'user/say-bye
+
+user=> (def greeting (fn [greeting-func name] (greeting-func name)))
+#'user/greeting-to-kim
+
+user=> (greeting say-hello "Kim")
+Hello, Kim
+nil
+
+user=> (greeting say-bye "Kim")
+Good bye, Kim
+nil
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+You can also pass a function to another function. We define two functions and bind to `say-hello` and `say-bye` vars. We also define a generic function and bind to `geeting`.
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Then we pass `say-hello` and `say-bye` to `greeting`.
+
+## Closure
+
+When a function (let's call this *inner* function) is returned from another function (let's call this *outer* function), and the inner function does somethings with the arguments given from outer function, then the inner function is called `closure`.
+
+```clojure
+user=> (defn inner
+         [from-outer]
+         (fn [] (println from-outer)))
+#'user/inner
+
+user=> (def outer1 (inner "this is from outer"))
+#'user/outer1
+
+user=> (def outer2 (inner "this is yet another from outer"))
+#'user/outer2
+
+user=> (outer1)
+this is from outer
+nil
+
+user=> (outer2)
+this is yet another from outer
+nil
+```
+
+<br>
+
+We define a function called `inner`. `inner` function prints `from-outer` var which is supposed to be given by outer function.
+
+<br>
+<br>
+
+We also define two functions, `outer1` and `outer2`. These functions both call `inner` but with different arguments.
+
+<br>
+<br>
+
+As a result, even if `from-outer` var doesn't change, `inner` prints different things.
+
 
 # Control Flow
 
@@ -1033,6 +1232,40 @@ hi!
 <br>
 
 To repeat something over and over again, use `repeatedly`. We are passing an anonymous function `(fn [] (println "hi!"))` because the second argument must be a function.
+
+## Doseq
+
+```clojure
+user=> (doseq [animal ["cat" "dog" "horse"]] (println animal) )
+cat
+dog
+horse
+nil
+```
+
+<br>
+
+Clojure doesn't have `for` or `for-each`. Do something to each element of a sequence, use `doseq`.
+
+```clojure
+user=> (doseq [n1 [1 2 ]
+               n2 [4 5 ]]
+         (println (+ n1 n2)))
+5
+6
+6
+7
+nil
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+You can bind multiple values. In this case, each element in the first vector is added to each element of the second vector.
+
 
 ## Take
 
