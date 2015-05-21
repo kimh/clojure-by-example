@@ -45,7 +45,7 @@ You cannot access the variable defined from outside of the let. You can think of
 
 ```clojure
 user=> (let [object1 "light"
-             object2 "darkness" ]
+             object2 "darkness"]
 
              (println (str "God said let there be " object1))
              (println (str "God also said let there be " object2)))
@@ -58,7 +58,7 @@ nil
 <br>
 <br>
 
-We can also provide multiple bindings.
+You can also provide multiple bindings.
 
 ```clojure
 user=>  (let [object "light"]
