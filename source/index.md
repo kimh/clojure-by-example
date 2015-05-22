@@ -1077,6 +1077,16 @@ user=> (map inc [ 1 2 3 ])
 
 To apply a function to each element of collection, use `map`.
 
+```clojure
+user=> (map (fn [x] (+ x 1)) '(1 2 3))
+(2 3 4)
+```
+
+<br>
+<br>
+
+If you want to do something more complex with each element, you can pass an anonymous function where each value is bound to `x`.
+
 ## Reduce
 
 ```clojure
