@@ -1370,5 +1370,100 @@ nil
 
 **Note:** In Clojure 1.1+, lazy sequences returns chunked values rather than one by one as mentioned above, but that's not you have to worry about reading this guide.
 
+# Macros
+
+Clojure's Macros gives you the power to restructure your Clojure code as you like. For example, you can create your own code syntax, invent new control flow, new types of values, etc.
+So, it's not even impossible to create a programming language that looks like Ruby by using Clojure Macros!
+
+## Defmacro
+
+```clojure
+user=> (defmacro unless [test then]
+           "Evaluates then when test evaluates to be falsey"
+           (list 'if (list 'not test)
+            then))
+
+user=> (unless false (println "false!!"))
+false!!
+nil
+
+;; Error
+user=> (defmacro unless [test then]
+           "Evaluates then when test evaluates to be falsey"
+           (list if (list not test)
+            then))
+
+CompilerException java.lang.RuntimeException: Unable to resolve symbol: if in this context, compiling:(NO_SOURCE_PATH:3:12)
+```
+
+<br>
+
+To define a macro, use `defmacro`. Like function, you can give it a name, docs, and arguments. Note that you are using quotes `'` followed by `if` and `not`.
+This is because you don't want them to be evaluated when you define the macro.
+
+<br>
+<br>
+<br>
+
+Without quotes, you will see an exception.
+
+## Macroexpand
+
+```clojure
+user=> (macroexpand '(unless false (println "hi")))
+(if (not false) (println "hi"))
+```
+
+<br>
+
+Macros are replaced with Clojure code when it's evaluated. To see how it will be replaced without actually evaluating the macro, use `macroexpand`.
+Note that you have to use `'` because you want it to be unevaluated list.
+
+## Quotes
+
+```clojure
+user=> (+ 1 2)
+3
+
+
+user=> (quote (+ 1 2))
+(+ 1 2)
+
+
+user=> '(+ 1 2)
+(+ 1 2)
+```
+
+<br>
+
+Without a quote, this expression will be just evaluated which returns the value.
+
+<br>
+
+However, when an expression is surrounded by `quote`, it does not evaluate the expression but returns the expression itself.
+
+<br>
+
+`'` is another form of `quote`. It does the exactly same thing with `quote`. `'` is used more often than `quote` since it's concise.
+
+```clojure
+user=> (defmacro unless [test then]
+           "Evaluates then when test evaluates to be falsey"
+           (list 'if (list 'not test)
+            then))
+```
+
+<br>
+
+You can see quoting at work in macros. In this `unless` macro, you need to use `'` followed by `if` and `not` because you don't want them to be evaluated inside the macro definition.
+
+## Syntax-Quote
+
+```clojure
+
+```
+
+
 # Thanks
 http://d.hatena.ne.jp/Kazuhira/20120603/1338728578
+http://www.braveclojure.com/writing-macros/
