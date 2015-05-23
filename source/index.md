@@ -1404,6 +1404,7 @@ This is because you don't want them to be evaluated when you define the macro.
 <br>
 <br>
 <br>
+<br>
 
 Without quotes, you will see an exception.
 
@@ -1416,7 +1417,7 @@ user=> (macroexpand '(unless false (println "hi")))
 
 <br>
 
-Macros are replaced with Clojure code when it's evaluated. To see how it will be replaced without actually evaluating the macro, use `macroexpand`.
+Macros are replaced with Clojure code before it's evaluated. To see how it will be replaced without actually evaluating the macro, use `macroexpand`.
 Note that you have to use `'` because you want it to be unevaluated list.
 
 ## Quotes
@@ -1436,7 +1437,7 @@ user=> '(+ 1 2)
 
 <br>
 
-Without a quote, this expression will be just evaluated which returns the value.
+Without a quote, this expression will be just evaluated and returns the value.
 
 <br>
 
@@ -1457,12 +1458,56 @@ user=> (defmacro unless [test then]
 
 You can see quoting at work in macros. In this `unless` macro, you need to use `'` followed by `if` and `not` because you don't want them to be evaluated inside the macro definition.
 
-## Syntax-Quote
+## Syntax-Quotes
 
 ```clojure
-
+user=> `(+ 1 2)
+(clojure.core/+ 1 2)
 ```
 
+<br>
+
+Syntax quoting ``` ` ```works very similarly to quoting `'`: it returns an unevaluated expression.
+
+```clojure
+user=> '(dec (inc 1))
+(dec (inc 1))
+
+user=> `(dec (inc 1))
+(clojure.core/dec (clojure.core/inc 1))
+```
+
+<br>
+<br>
+
+However, you see the difference from quoting when the expression contains symbols. Unlike quoting, syntax-quoting returns the fully qualified namespace.
+Using fully qualified namespace is very important in order to avoid name conflicts when defining macro.
+
+## Unquotes
+
+```clojure
+user=> '(+ 1 ~(inc 1))
+(+ 1 (clojure.core/unquote (inc 1)))
+
+user=> `(+ 1 ~(inc 1))
+(clojure.core/+ 1 2)
+```
+
+<br>
+
+You will see another difference between syntax quoting and and quoting when syntax quoting is used with unquoting `~`. Syntax quoting allows unquoting to evaluate the expression followed by `~`.
+
+```clojure
+user=> '(+ 1 ~(inc 1))
+(+ 1 (clojure.core/unquote (inc 1)))
+```
+
+<br>
+<br>
+<br>
+<br>
+
+Quoting doesn't allow unquoting to evaluate an expression.
 
 # Thanks
 http://d.hatena.ne.jp/Kazuhira/20120603/1338728578
