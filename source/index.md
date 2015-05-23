@@ -1509,6 +1509,20 @@ user=> '(+ 1 ~(inc 1))
 
 Quoting doesn't allow unquoting to evaluate an expression.
 
+## Unquote-Splice
+
+```clojure
+user=> `(+ ~(list 1 2 3))
+(clojure.core/+ (1 2 3))
+
+user=> `(+ ~@(list 1 2 3))
+(clojure.core/+ 1 2 3)
+```
+
+<br>
+
+The `~@` unquote splice works just like `~` unquote, except it expands a sequence and splice the contents of the sequence into the enclosing syntax-quoted data structure.
+
 # Thanks
 http://d.hatena.ne.jp/Kazuhira/20120603/1338728578
 http://www.braveclojure.com/writing-macros/
