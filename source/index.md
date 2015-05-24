@@ -1,4 +1,4 @@
----
+x---
 title: Clojure by Example
 
 includes:
@@ -222,7 +222,47 @@ nil
 <br>
 <br>
 
-You can bind functions to var just like other values.
+You can bind functions to var just like other values. This works just like `defn`
+
+
+```clojure
+user=> #(+ 1 1)
+#<user$eval2902$fn__2903 user$eval2902$fn__2903@1cc9a623>
+
+user=> (fn [] (+ 1 + 1))
+#<user$eval2920$fn__2921 user$eval2920$fn__2921@40bd9db>
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+`#()` is the shortcut for `fn`.
+
+```clojure
+user=> #(+ 1 %)
+#<user$eval2930$fn__2931 user$eval2930$fn__2931@3e445ad7>
+
+user=> (let [plus #(+ 1 %)]
+         (plus 10))
+11
+
+user=> (let [plus-numbers #(+ 1 %1 %2 %3)]
+         (plus-numbers 10 20 30))
+61
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+`%` will be replaced with arumgnets passed to the function. When the function takes multiple arugments, `%1` is for the first argument, `%2` is for the second and so on.
 
 ```clojure
 user=> (def say-hello (fn [name] (println (str "Hello, " name))))
@@ -249,6 +289,10 @@ nil
 <br>
 <br>
 <br>
+<br>
+<br>
+<br>
+
 
 You can also pass a function to another function. We define two functions and bind to `say-hello` and `say-bye` vars. We also define a generic function and bind to `geeting`.
 
@@ -1495,7 +1539,7 @@ user=> `(+ 1 ~(inc 1))
 
 <br>
 
-You will see another difference between syntax quoting and and quoting when syntax quoting is used with unquoting `~`. Syntax quoting allows unquoting to evaluate the expression followed by `~`.
+You will see another difference between syntax quoting and quoting when syntax quoting is used with unquoting `~`. Syntax quoting allows unquoting to evaluate the expression followed by `~`.
 
 ```clojure
 user=> '(+ 1 ~(inc 1))
