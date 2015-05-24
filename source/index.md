@@ -1,4 +1,4 @@
-x---
+---
 title: Clojure by Example
 
 includes:
