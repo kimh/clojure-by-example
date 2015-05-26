@@ -1567,6 +1567,54 @@ user=> `(+ ~@(list 1 2 3))
 
 The `~@` unquote splice works just like `~` unquote, except it expands a sequence and splice the contents of the sequence into the enclosing syntax-quoted data structure.
 
+# Concurrency
+
+## Futures
+
+```clojure
+user=> (do
+         (Thread/sleep 3000)
+         (println "hello"))
+
+;; Wait for 3 sec and then "hello" is printed
+hello
+nil
+```
+
+<br>
+"hello" is printed after sleeping 3 seconds.
+
+
+```clojure
+user=> (do
+          (future
+          (Thread/sleep 3000)
+          (println "hello"))
+hello
+nil
+after sleep
+```
+
+<br>
+But if you wrap sleep with future, it immediately returns and move to next line. Thus, "hello" is printed immediately.
+This is because Clojure puts future into another thread and moves the current thread forward.
+
+```clojure
+user=> (do
+          (future
+          (Thread/sleep 3000)
+          (println "after sleep"))
+          (println "hello"))
+hello
+nil
+after sleep
+```
+
+<br>
+
+Calls inside future blocks. So, in this case, "after sleep" is printed after 3 secs.
+
 # Thanks
 http://d.hatena.ne.jp/Kazuhira/20120603/1338728578
 http://www.braveclojure.com/writing-macros/
+
