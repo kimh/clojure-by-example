@@ -193,6 +193,7 @@ user=> (meta #'say-hello)
 <br>
 <br>
 
+
 You can expand the metadata with `meta`. `#'` is reader macro. **TODO: add link to reader macro**
 
 ## Anonymous Function
@@ -1567,9 +1568,9 @@ user=> `(+ ~@(list 1 2 3))
 
 The `~@` unquote splice works just like `~` unquote, except it expands a sequence and splice the contents of the sequence into the enclosing syntax-quoted data structure.
 
-# Concurrency
+# Futures
 
-## Futures
+## Future
 
 ```clojure
 user=> (do
@@ -1582,22 +1583,7 @@ nil
 ```
 
 <br>
-"hello" is printed after sleeping 3 seconds.
-
-
-```clojure
-user=> (do
-          (future
-          (Thread/sleep 3000)
-          (println "hello"))
-hello
-nil
-after sleep
-```
-
-<br>
-But if you wrap sleep with future, it immediately returns and move to next line. Thus, "hello" is printed immediately.
-This is because Clojure puts future into another thread and moves the current thread forward.
+"hello" is printed after sleeping 3 seconds. This is very obvious because these lines of the code are executed synchronously.
 
 ```clojure
 user=> (do
@@ -1611,8 +1597,116 @@ after sleep
 ```
 
 <br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-Calls inside future blocks. So, in this case, "after sleep" is printed after 3 secs.
+If you use `future`, `(println "hello")` is evaluated immediately, and after three seconds, `(println "after sleep")` will be evaluated.
+This is because Clojure puts the expression grouped by `future` into another thread and moves the current thread forward.
+
+<br>
+<br>
+
+Calls inside future still blocks. So, in this case, "after sleep" is printed after 3 secs.
+
+## Deref
+
+```clojure
+user> (let [future-val (future (inc 1))]
+         (println future-val))
+#<core$future_call$reify__6320@142cbba: 2>
+nil
+
+
+user> (let [future-val (future (inc 1))]
+         (println (deref future-val)))
+2
+nil
+```
+
+<br>
+
+`future` can return values.
+
+See the returned value `#<core$future_call$reify__6320@142cbba: 2>` which is not what you want. This returned value is the current state of the future, not the returned value of `(inc 1)`
+
+<br>
+
+To obtain the returned value of `(inc 1)`, you need to dereference the future with `deref`.
+
+```clojure
+user>  (let [future-val (future (inc 1))]
+         (println @future-val))
+2
+nil
+```
+
+<br>
+<br>
+<br>
+<br>
+
+You can also use `@` to dereference a future.
+
+```clojure
+user> @(future (Thread/sleep 3000) "returned!")
+;; Waiting three seconds...
+"returned!"
+```
+
+<br>
+<br>
+<br>
+<br>
+
+When you dereference a future, you will block until the result is returned.
+
+```clojure
+user>  (deref (future (Thread/sleep 1000) "I made it!") 2000 "Can't wait anymore!")
+"I made it!"
+
+user>  (deref (future (Thread/sleep 3000) "I made it!") 2000 "Can't wait anymore!")
+"Can't wait anymore!"
+```
+
+<br>
+<br>
+<br>
+
+You can tell `deref` how long you want to wait along with a value to return if it does time out.
+
+## Realized?
+
+```clojure
+user> 
+(def my-future (future (Thread/sleep 5000) ))
+
+(repeatedly 6
+ (fn []
+   (println (realized? my-future))
+   (Thread/sleep 1000)))
+ 
+#'user/my-futurefalse
+false
+false
+false
+false
+true
+```
+
+<br>
+
+To know if a future is already done, use `realized?`.
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+`realized` returns true after 5 seconds.
 
 # Thanks
 http://d.hatena.ne.jp/Kazuhira/20120603/1338728578
