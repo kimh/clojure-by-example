@@ -1568,6 +1568,85 @@ user=> `(+ ~@(list 1 2 3))
 
 The `~@` unquote splice works just like `~` unquote, except it expands a sequence and splice the contents of the sequence into the enclosing syntax-quoted data structure.
 
+# Delays
+
+## Delay
+
+When you want to defer the evaluation of an expression, you can use `delay`.
+
+```clojure
+user> (def later (do [] (prn "Adding") (+ 1 2)))
+"Adding"
+#'user/later
+
+
+user> (def later (delay (do [] (prn "Adding") (+ 1 2))))
+#'user/later
+```
+
+<br>
+
+
+This is the example of immediately evaluating an expression. Nothing special is involved  here. `(do ...)` is executed immediately and it's return value is bound to `later` var.
+
+<br>
+
+When you use `delay`, the expression is not evaluated immediately, so "Adding" is not printed.
+
+## Force
+
+```clojure
+user> (def later (delay (do [] (prn "Adding") (+ 1 2))))
+#'user/later
+
+user> (force later)
+"Adding"
+3
+```
+
+<br>
+<br>
+<br>
+<br>
+
+
+To evaluate and obtain the result of a delayed expression, use `force`.
+
+```clojure
+user> (def later (fn [] (prn "Adding") (+ 1 2) ))
+
+user> (later)
+"Adding"
+3
+```
+
+<br>
+<br>
+<br>
+
+
+You may think that you can archive the same thing by using an anonymous function and `def`. Then, why do we get bothered with delay?
+
+```clojure
+user> (def later (delay (do [] (prn "Adding") (+ 1 2))))
+#'user/later
+
+user> (force later)
+"Adding"
+3
+
+user> (force later)
+3
+```
+<br>
+<br>
+<br>
+<br>
+
+
+The difference from a plain function is that delay is only evaluated once and caches the result. "Adding" is only printed once because delay returns cached result from the second time.
+
+
 # Futures
 
 ## Future
@@ -1680,13 +1759,12 @@ You can tell `deref` how long you want to wait along with a value to return if i
 ## Realized?
 
 ```clojure
-user> 
-(def my-future (future (Thread/sleep 5000) ))
+user> (def my-future (future (Thread/sleep 5000) ))
 
-(repeatedly 6
- (fn []
-   (println (realized? my-future))
-   (Thread/sleep 1000)))
+user> (repeatedly 6
+        (fn []
+        (println (realized? my-future))
+        (Thread/sleep 1000)))
  
 #'user/my-futurefalse
 false
@@ -1697,11 +1775,12 @@ true
 ```
 
 <br>
+<br>
+<br>
+
 
 To know if a future is already done, use `realized?`.
 
-<br>
-<br>
 <br>
 <br>
 <br>
