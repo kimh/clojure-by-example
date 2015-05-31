@@ -1787,6 +1787,45 @@ To know if a future is already done, use `realized?`.
 
 `realized` returns true after 5 seconds.
 
+# Promises
+## Promise
+
+When you want to defer the evaluation of expressions until you obtain values to pass to them, use `promise`. The easiest example why you want to use promise is implementing a callback.
+
+
+```clojure
+user> (def my-promise (promise))
+
+#'user/my-promise
+user> (def listener (fn []
+  (println "Start listening...")
+  (future (println "Callback fired: " @my-promise))))
+  ;; Start listening
+  (listener)
+  ;; Suppose doing things that takes time
+  (Thread/sleep 2000)
+  
+  (deliver my-promise "delivered value")
+
+
+Start listening...
+;; Waiting two seconds here...
+Callback fired:  delivered value
+```
+
+<br>
+
+First, you make a promise with `promise`.
+
+<br>
+Creating a listener that listens to the promise and fire the callback when a value is delivered to the promise.
+
+<br>
+Just like future, promise will block when you dereference it. Calling `(listener)` will block at the dereference of `@my-promise`.
+
+<br>
+You can signal the promise to return delivered values with `deliver`.
+
 # Thanks
 http://d.hatena.ne.jp/Kazuhira/20120603/1338728578
 http://www.braveclojure.com/writing-macros/
