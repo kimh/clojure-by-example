@@ -993,6 +993,15 @@ nil
 
 You get `nil` when key doesn't exist.
 
+```clojure
+user> (:Apple {:Apple "Mac" :Microsoft "Windows"})
+"Mac"
+```
+
+<br>
+<br>
+
+When the key of a map is symbol, you can use the symbol just like a function to get the value.
 ## Add element
 
 ```clojure
@@ -1825,6 +1834,44 @@ Just like future, promise will block when you dereference it. Calling `(listener
 
 <br>
 You can signal the promise to return delivered values with `deliver`.
+
+# Atoms
+## Atom
+
+You've might hear this statement before: *there is no state in Clojure. Thus, the language is impractical and cannot be used to build real applications.* However, this is not true. Clojure has built-in mechanisms to manage application state. `Atom` is one of the mechanisms.
+
+```clojure
+user> (def atom-str (atom "hello"))
+#'user/atom-str
+user> (def atom-vector (atom [1 2 3]))
+#'user/atom-vector
+user> (def atom-map (atom {:a "aaa" :b "bbb"}))
+#'user/atom-map
+user> (def atom-int (atom 53))
+#'user/atom-int
+```
+
+<br>
+
+Use `atom` to create an atom that points to a value. You can create the atom of any values.
+
+```clojure
+user> (deref atom-int)
+53
+
+user> @atom-int
+53
+```
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+To obtain the value that an atom points to, use `deref` or `@`.
 
 # Thanks
 http://d.hatena.ne.jp/Kazuhira/20120603/1338728578
