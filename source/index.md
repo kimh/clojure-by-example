@@ -1853,7 +1853,7 @@ user> (def atom-int (atom 53))
 
 <br>
 
-Use `atom` to create an atom that points to a value. You can create the atom of any values.
+Use `atom` to create an atom that points to a value. You can create an atom of any values.
 
 ```clojure
 user> (deref atom-int)
@@ -1872,6 +1872,172 @@ user> @atom-int
 <br>
 
 To obtain the value that an atom points to, use `deref` or `@`.
+
+## Reset!
+
+```clojure
+user> (def atom-int (atom 53))
+#'user/atom-int
+
+user> (reset! atom-int 35)
+35
+
+user> @atom-int
+35
+```
+
+<br>
+
+You can update the value of an atom with `reset!`.
+
+```clojure
+user> (reset! atom-int 100)
+100
+
+user> @atom-int
+100
+
+user> (reset! atom-int 200)
+200
+
+user> @atom-int
+200
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Atoms are mutable, so you can update as many times as you want.
+
+## Swap!
+
+`swap!` allows you to use a function to update the value of an atom.
+
+```clojure
+user> (def atom-int (atom 0))
+#'user/atom-int
+
+user> (swap! atom-int
+        (fn [current-atom]
+            (inc current-atom)))
+1
+		  
+user> (swap! atom-int
+        (fn [_]
+            "not int"))
+"not int"
+		  
+user> @atom-int
+"not int"
+```
+
+<br>
+<br>
+<br>
+
+
+The function that you pass to `swap!` will take an argument which is the current atom.
+
+<br>
+<br>
+<br>
+
+
+The atom is updated by the return value of the function.
+
+```clojure
+user> (def atom-int (atom 100))
+#'user/atom-int
+
+user> (defn multiple-by
+        [current-atom num]
+        (* current-atom num))
+
+user> (swap! atom-int multiple-by 10)
+1000
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+You can pass a function that takes multiple arguments. The first argument of the function is the current atom.
+
+## Thread Safety
+
+Atoms are very similar to mutable variables in other programming languages. You can assign value to an atom and update anytime you want. However, Clojure's atom has one big advantage over them: it's `thread safe`.
+
+```clojure
+user> (def x 0)
+#'user/x
+
+user> (repeatedly 10
+        (fn [] (def x (inc x))))
+(#'user/x...
+		
+user> x
+10
+```
+
+<br>
+
+This will update `x` ten times and increment `x` by 1 every time. The final value of `x` will be 10.
+
+```clojure
+user> (def x 0)
+#'user/x
+
+user> (repeatedly 10
+        (fn [] (future (def x (inc x)))))
+(#<core$future_call$reify__6320@410e4786: :pending> #<core$futur...
+		
+user> x
+5
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+Similarly, this will update `x` ten times and increment `x` every time like the previous example. However, with this code, `(def x (inc x))` will be executed in parallel on different threads because we are using `future`. When you do this, the final value of `x` will not be deterministic anymore. Sometimes it is 5, and sometimes 9 because each thread access and update the same `x` in its own timing.
+
+```clojure
+user> (def x (atom 0))
+#'user/x
+
+user> (repeatedly 10
+        (fn [] (future (swap! x inc))))
+(#<core$future_call$reify__6320@632796c6: :pending>...
+		
+user> @x
+10
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+Now atom comes to rescue. `x` is atom and we use `swap!` to update the value. Unlike vars, atom is thread safe, so `x` will be updated by one thread at one time. Thus, the final value of `x` is guaranteed to be 10. This is archived thanks to the Clojure's use of [compare-and-swap](http://en.wikipedia.org/wiki/Compare-and-swap) in atom.
 
 # Thanks
 http://d.hatena.ne.jp/Kazuhira/20120603/1338728578
