@@ -1871,7 +1871,7 @@ user> @atom-int
 <br>
 <br>
 
-To obtain the value that an atom points to, use `deref` or `@`.
+To obtain the value of an atom, use `deref` or `@`.
 
 ## Reset!
 
@@ -2038,6 +2038,243 @@ user> @x
 
 
 Now atom comes to rescue. `x` is atom and we use `swap!` to update the value. Unlike vars, atom is thread safe, so `x` will be updated by one thread at one time. Thus, the final value of `x` is guaranteed to be 10. This is archived thanks to the Clojure's use of [compare-and-swap](http://en.wikipedia.org/wiki/Compare-and-swap) in atom.
+
+# Refs
+## Ref
+
+While `Atom` is handy to manage a state in a consistent way, `Ref` allows you to manage multiple states while ensuring they are consistent.
+
+```clojure
+user> (def my-ref (ref 0))
+#'user/my-ref
+```
+
+<br>
+
+To create a ref, use `ref`.
+
+```clojure
+user> (deref my-ref)
+0
+
+user> @my-ref
+0
+```
+
+<br>
+<br>
+
+To obtain the value of a ref, use `deref` or `@`.
+
+## Do-sync
+
+```clojure
+user> (deref my-ref)
+0
+
+user> @my-ref
+0
+
+user> (dosync
+       (ref-set my-ref 1)
+       (ref-set my-ref 2))
+2
+	   
+user> @my-ref
+2
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+The update of refs must be done inside `dosync` block. `dosync` is telling Clojure where the transaction update starts from. To set a ref to a new value, use `ref-set`. 
+
+```clojure
+user> (ref-set my-ref 3)
+IllegalStateException No transaction running  clojure.lang.LockingTransaction.getEx (LockingTransaction.java:208)
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Any updates to refs **always** has to be done inside `dosync` in order to make transactional updates. Otherwise, Clojure complains with `No transaction running` exception.
+
+## Alter
+
+`alter` allows you to use a function to update the value of a ref.
+
+```clojure
+user> (def my-ref (ref 0))
+#'user/my-ref
+
+user> (dosync
+        (alter my-ref
+        (fn [current_ref]
+            (inc current_ref))))
+1
+
+user> @my-ref
+1
+
+user> (dosync
+        (alter my-ref
+          (fn [_] "not int")))
+"not int"
+		  
+user> @my-ref
+"not int"
+```
+
+<br>
+<br>
+<br>
+
+
+The function that you pass to `alter` will take an argument which is the current atom.
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+The ref is updated by the return value of the function.
+
+```clojure
+user> (def my-ref (ref 100))
+#'user/atom-int
+
+user> (defn multiple-by
+        [current-ref num]
+        (* current-ref num))
+
+user> (dosync
+        (alter my-ref multiple-by 10))
+1000
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+You can pass a function that takes multiple arguments. The first argument of the function is the current atom.
+
+
+## Transaction
+
+This piece of code demonstrates how transaction works.
+
+```clojure
+user> (def user (ref {}))
+#'user/user
+
+user> (dosync
+ (alter user merge {:name "Kim"})
+ (throw (Exception. "something wrong happens!"))
+ (alter user merge {:age 32}))
+Exception something wrong happens!  user/eval2997/fn--2998 (NO_SOURCE_FILE:2)
+ 
+user> @user
+{}
+```
+
+<br>
+
+Suppose we are trying to create an user record in database. Each `alter` tries to update user-recrod ref with user info and you want the ref to be updated only when both `alter` succeed.
+
+<br>
+
+But, let's assume something wrong occurs between the first and the second alter.
+
+<br>
+<br>
+
+As you see, the user-record ref is still empty. This is because `alter` inside `dosync` doesn't update the ref until getting out of `dosycn` block successfully.
+
+
+```clojure
+user> (def user-record (atom {}))
+#'user/user-record
+
+user> (do
+ (swap! user-record merge {:name "Kim"})
+ (throw (Exception. "something wrong happens!"))
+ (swap! user-record merge {:age 32}))
+Exception something wrong happens!  user/eval3024 (NO_SOURCE_FILE:3)
+
+user> @user-record
+{:name "Kim"}
+```
+
+<br>
+
+This is the atom version that doesn't work. As you see, user-record atom is half updated when there is the exception.
+
+```clojure
+
+
+
+
+user> (def my-ref (ref 0))
+#'user/my-ref
+
+user> (future
+        (dosync
+          (alter my-ref inc)
+          (Thread/sleep 5000)))
+ #<core$future_call$reify__6320@6ef7be6a: :pending>
+
+user> (println @my-ref)
+0
+
+;; Wait 5 seconds
+user> (println @my-ref)
+1
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+The other way to see how transaction works is trying to observe the value of ref outside dosync block.
+
+<br>
+<br>
+<br>
+
+We use future to run the whole transaction in the separate thread and wait two seconds before exiting the dosync block.
+
+<br>
+<br>
+<br>
+
+The value of the ref is still 0 at this moment because the update to the ref is still not committed.
 
 # Thanks
 http://d.hatena.ne.jp/Kazuhira/20120603/1338728578
