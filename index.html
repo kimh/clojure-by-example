@@ -21,13 +21,21 @@
       </span>
     </a>
     <div class="tocify-wrapper">
-      <img src="images/logo.png" />
+      ## This is done by lazy Kim ##
+      <div style="margin-bottom : 25px">
+        <font size="5" color=#60b325>Clojure</font><font size="5" color=#fff> By</font><font size="5" color=#5881d8> Example</font>
+      </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
         </div>
         <ul class="search-results"></ul>
       <div id="toc">
       </div>
+        <ul class="toc-footer">
+            <li>Powered by <a href='https://github.com/tripit/slate'>Slate</a></li>
+            <li>Hosted on <a href='https://github.com/kimh/clojure-by-example'>Github</a></li>
+            <li>Made by <a href='http://kimh.github.io/about/'>Hirokuni Kim</a></li>
+        </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
@@ -38,7 +46,543 @@
 </span><span class="n">nil</span><span class="w">
 </span></code></pre>
 
+<p><br></p>
+
 <p>Our first Clojure code is, of course, printing &ldquo;Hello, world!&rdquo;.</p>
+
+<h1 id="bindings">Bindings</h1>
+
+<p>Giving names to values is called <strong>assignment</strong> in many programming languages. However, we call the mapping between names and values  <strong>binding</strong> in the world of Clojure.</p>
+
+<h2 id="symbol">Symbol</h2>
+
+<p>Symbols are used to bind names to values. <code class="prettyprint">a</code> <code class="prettyprint">b</code> <code class="prettyprint">my-cool-function</code> <code class="prettyprint">nyncat</code>: they are all symbols in Clojure.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">type</span><span class="w"> </span><span class="ss">'a</span><span class="p">)</span><span class="w">
+</span><span class="n">clojure.lang.Symbol</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">type</span><span class="w"> </span><span class="ss">'b</span><span class="p">)</span><span class="w">
+</span><span class="n">clojure.lang.Symbol</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">type</span><span class="w"> </span><span class="ss">'my-cool-function</span><span class="p">)</span><span class="w">
+</span><span class="n">clojure.lang.Symbol</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">type</span><span class="w"> </span><span class="ss">'my-cool-function</span><span class="p">)</span><span class="w">
+</span><span class="n">clojure.lang.Symbol</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>The reason why we are putting <code class="prettyprint">&#39;</code> single quote is that we want to treat symbols as data in order to pass them to <code class="prettyprint">type</code> function.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="s">"aaaaa"</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/a</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">print</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w">
+</span><span class="n">aaaaa</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">print</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w">
+</span><span class="n">CompilerException</span><span class="w"> </span><span class="n">java.lang.RuntimeException</span><span class="err">:</span><span class="w"> </span><span class="n">Unable</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="nb">resolve</span><span class="w"> </span><span class="nb">symbol</span><span class="err">:</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">context,</span><span class="w"> </span><span class="n">compiling</span><span class="err">:</span><span class="p">(</span><span class="nf">NO_SOURCE_PATH</span><span class="no">:1:1</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>If you don&rsquo;t append <code class="prettyprint">&#39;</code> single quote, you are telling Clojure to resolve the symbol. You can obtain bound values by resolving symbols.</p>
+
+<p><br></p>
+
+<p>When we try to resolve symbols that are not bound to anything, Clojure complains with the exception.</p>
+
+<h2 id="let">Let</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">object</span><span class="w"> </span><span class="s">"light"</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God said let there be "</span><span class="w"> </span><span class="n">object</span><span class="p">)))</span><span class="w">
+</span><span class="n">God</span><span class="w"> </span><span class="n">said</span><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">light</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To bind values to names, use <code class="prettyprint">let</code>. Let takes a vector which takes a symbol in the first element and a value in the second element.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">object</span><span class="p">)</span><span class="w">
+
+</span><span class="n">CompilerException</span><span class="w"> </span><span class="n">java.lang.RuntimeException</span><span class="err">:</span><span class="w"> </span><span class="n">Unable</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="nb">resolve</span><span class="w"> </span><span class="nb">symbol</span><span class="err">:</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">context,</span><span class="w"> </span><span class="n">compiling</span><span class="err">:</span><span class="p">(</span><span class="nf">NO_SOURCE_PATH</span><span class="no">:1:1</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>You cannot resolve the symbol outside the let. You can think of this as equivalent to <em>private variable</em> in other programming languages.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">object1</span><span class="w"> </span><span class="s">"light"</span><span class="w">
+</span><span class="n">object2</span><span class="w"> </span><span class="s">"darkness"</span><span class="p">]</span><span class="w">
+
+</span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God said let there be "</span><span class="w"> </span><span class="n">object1</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God also said let there be "</span><span class="w"> </span><span class="n">object2</span><span class="p">)))</span><span class="w">
+</span><span class="n">God</span><span class="w"> </span><span class="n">said</span><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">light</span><span class="w">
+</span><span class="n">God</span><span class="w"> </span><span class="n">also</span><span class="w"> </span><span class="n">said</span><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">darkness</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br></p>
+
+<p>You can also provide multiple bindings.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">object</span><span class="w"> </span><span class="s">"light"</span><span class="p">]</span><span class="w">
+</span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">object</span><span class="w"> </span><span class="s">"darkness"</span><span class="p">])</span><span class="w">
+</span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God said let there be "</span><span class="w"> </span><span class="n">object</span><span class="p">)))</span><span class="w">
+</span><span class="n">God</span><span class="w"> </span><span class="n">said</span><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">light</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>The most notable trait of <code class="prettyprint">let</code> is that its <strong><em>immutable</em></strong>: once you define, you never be able to change. Here, we tried to override object <code class="prettyprint">light</code> with <code class="prettyprint">darkness</code>, but we fail to do so.</p>
+
+<h2 id="def">Def</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="s">"light"</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/object</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God said let there be "</span><span class="w"> </span><span class="n">object</span><span class="p">))</span><span class="w">
+</span><span class="n">God</span><span class="w"> </span><span class="n">said</span><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">light</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>You can also bind values to names with <code class="prettyprint">def</code>. Unlike <code class="prettyprint">let</code>, you can access it outside <code class="prettyprint">def</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="s">"darkness"</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/object</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God said let there be "</span><span class="w"> </span><span class="n">object</span><span class="p">))</span><span class="w">
+</span><span class="n">God</span><span class="w"> </span><span class="n">said</span><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">darkness</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>The binding created by <code class="prettyprint">def</code> is <strong><em>mutable</em></strong>, so we can redefine later.</p>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p>The rule of thumb in Clojure is avoiding the use of <code class="prettyprint">def</code> as much as possible. <code class="prettyprint">defn</code> will introduce state and the abusing of state will make our code difficult to maintain.</p>
+
+<h1 id="functions">Functions</h1>
+
+<h2 id="defn">Defn</h2>
+<pre class="highlight clojure"><code><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">say-hello</span><span class="w">
+         </span><span class="p">[</span><span class="nb">name</span><span class="p">]</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"Hello, "</span><span class="w"> </span><span class="nb">name</span><span class="p">)))</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">say-hello</span><span class="w"> </span><span class="s">"kim"</span><span class="p">)</span><span class="w">
+</span><span class="n">Hello,</span><span class="w"> </span><span class="n">kim</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To define a function, use <code class="prettyprint">defn</code>.</p>
+
+<p>The first argument is the name of function <code class="prettyprint">say-hello</code>, the second argument is the argument of the function <code class="prettyprint">[name]</code>, and the third arugment is the function body <code class="prettyprint">(println (str &quot;Hello, &quot; name)))</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">say-hello</span><span class="w">
+         </span><span class="s">"Takes name argument and say hello to the name"</span><span class="w">
+         </span><span class="p">[</span><span class="nb">name</span><span class="p">]</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"Hello, "</span><span class="w"> </span><span class="nb">name</span><span class="p">)))</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>You can also add documentation.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">doc</span><span class="w"> </span><span class="n">say-hello</span><span class="p">)</span><span class="w">
+</span><span class="n">-------------------------</span><span class="w">
+</span><span class="n">user/say-hello</span><span class="w">
+</span><span class="p">([</span><span class="nb">name</span><span class="p">])</span><span class="w">
+  </span><span class="n">Takes</span><span class="w"> </span><span class="nb">name</span><span class="w"> </span><span class="n">argument</span><span class="w"> </span><span class="nb">and</span><span class="w"> </span><span class="n">say</span><span class="w"> </span><span class="n">hello</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="nb">name</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p>Use <code class="prettyprint">doc</code> to read the documentation.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">say-hello</span><span class="w">
+         </span><span class="s">"Takes name argument and say hello to the name"</span><span class="w">
+         </span><span class="p">{</span><span class="no">:added</span><span class="w"> </span><span class="s">"1.0"</span><span class="w">
+          </span><span class="no">:static</span><span class="w"> </span><span class="n">true</span><span class="p">}</span><span class="w">
+         </span><span class="p">[</span><span class="nb">name</span><span class="p">]</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"Hello, "</span><span class="w"> </span><span class="nb">name</span><span class="p">)))</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>You can also add metadata of the function.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">meta</span><span class="w"> </span><span class="p">(</span><span class="nf">var</span><span class="w"> </span><span class="n">say-hello</span><span class="p">))</span><span class="w">
+</span><span class="p">{</span><span class="no">:added</span><span class="w"> </span><span class="s">"1.0"</span><span class="n">,</span><span class="w"> </span><span class="no">:ns</span><span class="w"> </span><span class="o">#</span><span class="n">&lt;Namespace</span><span class="w"> </span><span class="n">user&gt;,</span><span class="w"> </span><span class="no">:name</span><span class="w"> </span><span class="n">say-hello,</span><span class="w"> </span><span class="no">:file</span><span class="w"> </span><span class="s">"NO_SOURCE_PATH"</span><span class="n">,</span><span class="w"> </span><span class="no">:static</span><span class="w"> </span><span class="n">true,</span><span class="w"> </span><span class="no">:column</span><span class="w"> </span><span class="mi">1</span><span class="n">,</span><span class="w"> </span><span class="no">:line</span><span class="w"> </span><span class="mi">1</span><span class="n">,</span><span class="w"> </span><span class="no">:arglists</span><span class="w"> </span><span class="p">([</span><span class="nb">name</span><span class="p">])</span><span class="n">,</span><span class="w"> </span><span class="no">:doc</span><span class="w"> </span><span class="s">"Takes name argument and say hello to the name"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>You can expand the metadata with <code class="prettyprint">meta</code>. Notice that <code class="prettyprint">say-hello</code> is first passed to <code class="prettyprint">var</code>. This is because <code class="prettyprint">meta</code> expects it&rsquo;s argument to be var object, not value, and <code class="prettyprint">var</code> will turn the passed symbol into var object.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">meta</span><span class="w"> </span><span class="o">#</span><span class="ss">'say-hello</span><span class="p">)</span><span class="w">
+</span><span class="p">{</span><span class="no">:added</span><span class="w"> </span><span class="s">"1.0"</span><span class="n">,</span><span class="w"> </span><span class="no">:ns</span><span class="w"> </span><span class="o">#</span><span class="n">&lt;Namespace</span><span class="w"> </span><span class="n">user&gt;,</span><span class="w"> </span><span class="no">:name</span><span class="w"> </span><span class="n">say-hello,</span><span class="w"> </span><span class="no">:file</span><span class="w"> </span><span class="s">"NO_SOURCE_PATH"</span><span class="n">,</span><span class="w"> </span><span class="no">:static</span><span class="w"> </span><span class="n">true,</span><span class="w"> </span><span class="no">:column</span><span class="w"> </span><span class="mi">1</span><span class="n">,</span><span class="w"> </span><span class="no">:line</span><span class="w"> </span><span class="mi">1</span><span class="n">,</span><span class="w"> </span><span class="no">:arglists</span><span class="w"> </span><span class="p">([</span><span class="nb">name</span><span class="p">])</span><span class="n">,</span><span class="w"> </span><span class="no">:doc</span><span class="w"> </span><span class="s">"Takes name argument and say hello to the name"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p><code class="prettyprint">#&#39;</code> is the reader macro for <code class="prettyprint">var</code> and works the exactly same.</p>
+
+<h2 id="anonymous-function">Anonymous Function</h2>
+
+<p>Functions are first class object in Clojure. When you say something is <em>a first class object in programming language X</em>, it means that you can do the all basic operations with the object
+such as passing to a function, returned from a function, and binding to variable, etc.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"Hello world"</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="n">&lt;user$eval3663$fn__3664</span><span class="w"> </span><span class="n">user$eval3663$fn__3664</span><span class="err">@</span><span class="mi">5</span><span class="n">de5bfa4&gt;</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To create a function object, use <code class="prettyprint">fn</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">hello-world-func</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"Hello world"</span><span class="p">)))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/hello-world-func</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">hello-world-func</span><span class="p">)</span><span class="w">
+</span><span class="n">Hello</span><span class="w"> </span><span class="n">world</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>You can bind functions to var just like other values. This works just like <code class="prettyprint">defn</code></p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="n">&lt;user$eval2902$fn__2903</span><span class="w"> </span><span class="n">user$eval2902$fn__2903</span><span class="err">@</span><span class="mi">1</span><span class="n">cc9a623&gt;</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="n">&lt;user$eval2920$fn__2921</span><span class="w"> </span><span class="n">user$eval2920$fn__2921</span><span class="err">@</span><span class="mi">40</span><span class="n">bd9db&gt;</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p><code class="prettyprint">#()</code> is the shortcut for <code class="prettyprint">fn</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">%</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="n">&lt;user$eval2930$fn__2931</span><span class="w"> </span><span class="n">user$eval2930$fn__2931</span><span class="err">@</span><span class="mi">3</span><span class="n">e445ad7&gt;</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">plus</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">%</span><span class="p">)]</span><span class="w">
+         </span><span class="p">(</span><span class="nf">plus</span><span class="w"> </span><span class="mi">10</span><span class="p">))</span><span class="w">
+</span><span class="mi">11</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">plus-numbers</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">%1</span><span class="w"> </span><span class="n">%2</span><span class="w"> </span><span class="n">%3</span><span class="p">)]</span><span class="w">
+         </span><span class="p">(</span><span class="nf">plus-numbers</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="mi">30</span><span class="p">))</span><span class="w">
+</span><span class="mi">61</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p><code class="prettyprint">%</code> will be replaced with arumgnets passed to the function. When the function takes multiple arugments, <code class="prettyprint">%1</code> is for the first argument, <code class="prettyprint">%2</code> is for the second and so on.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">say-hello</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="nb">name</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"Hello, "</span><span class="w"> </span><span class="nb">name</span><span class="p">))))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/say-hello</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">say-bye</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="nb">name</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"Good bye, "</span><span class="w"> </span><span class="nb">name</span><span class="p">))))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/say-bye</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">greeting</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">greeting-func</span><span class="w"> </span><span class="nb">name</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nf">greeting-func</span><span class="w"> </span><span class="nb">name</span><span class="p">)))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/greeting-to-kim</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">greeting</span><span class="w"> </span><span class="n">say-hello</span><span class="w"> </span><span class="s">"Kim"</span><span class="p">)</span><span class="w">
+</span><span class="n">Hello,</span><span class="w"> </span><span class="n">Kim</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">greeting</span><span class="w"> </span><span class="n">say-bye</span><span class="w"> </span><span class="s">"Kim"</span><span class="p">)</span><span class="w">
+</span><span class="n">Good</span><span class="w"> </span><span class="n">bye,</span><span class="w"> </span><span class="n">Kim</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>You can also pass a function to another function. We define two functions and bind to <code class="prettyprint">say-hello</code> and <code class="prettyprint">say-bye</code> vars. We also define a generic function and bind to <code class="prettyprint">geeting</code>.</p>
+
+<p><br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>Then we pass <code class="prettyprint">say-hello</code> and <code class="prettyprint">say-bye</code> to <code class="prettyprint">greeting</code>.</p>
+
+<h2 id="closure">Closure</h2>
+
+<p>When a function (let&rsquo;s call this <em>inner</em> function) is returned from another function (let&rsquo;s call this <em>outer</em> function), and the inner function does somethings with the arguments given from outer function, then the inner function is called <code class="prettyprint">closure</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">inner</span><span class="w">
+         </span><span class="p">[</span><span class="n">from-outer</span><span class="p">]</span><span class="w">
+         </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">from-outer</span><span class="p">)))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/inner</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">outer1</span><span class="w"> </span><span class="p">(</span><span class="nf">inner</span><span class="w"> </span><span class="s">"this is from outer"</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/outer1</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">outer2</span><span class="w"> </span><span class="p">(</span><span class="nf">inner</span><span class="w"> </span><span class="s">"this is yet another from outer"</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/outer2</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">outer1</span><span class="p">)</span><span class="w">
+</span><span class="n">this</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">outer</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">outer2</span><span class="p">)</span><span class="w">
+</span><span class="n">this</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">yet</span><span class="w"> </span><span class="n">another</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">outer</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>We define a function called <code class="prettyprint">inner</code>. <code class="prettyprint">inner</code> function prints <code class="prettyprint">from-outer</code> var which is supposed to be given by outer function.</p>
+
+<p><br>
+<br></p>
+
+<p>We also define two functions, <code class="prettyprint">outer1</code> and <code class="prettyprint">outer2</code>. These functions both call <code class="prettyprint">inner</code> but with different arguments.</p>
+
+<p><br>
+<br></p>
+
+<p>As a result, even if <code class="prettyprint">from-outer</code> var doesn&rsquo;t change, <code class="prettyprint">inner</code> prints different things.</p>
+
+<h1 id="control-flow">Control Flow</h1>
+
+<h2 id="if">If</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="n">true</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"This is always printed"</span><span class="p">)</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"This is never printed"</span><span class="p">))</span><span class="w">
+</span><span class="n">This</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">always</span><span class="w"> </span><span class="n">printed</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p><code class="prettyprint">if</code> takes a predicate (<code class="prettyprint">true</code> or <code class="prettyprint">false</code>) in the first argument. The second argument will be evaluated if the predicate is evaluated to <code class="prettyprint">true</code>. The third argument is equivalent to <strong>else</strong> in many programming language which is evaluated when the predicate is evaluated to <code class="prettyprint">false</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="n">true</span><span class="w">
+         </span><span class="p">(</span><span class="nf">do</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"one"</span><span class="p">)</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"two"</span><span class="p">)))</span><span class="w">
+</span><span class="n">one</span><span class="w">
+</span><span class="n">two</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br></p>
+
+<p>In Clojure, you can pass only one expression to a branch of <code class="prettyprint">if</code>. However, you often need to pass more than one expression in real programs. In this case, use <code class="prettyprint">do</code>.</p>
+
+<h2 id="if-let">If-Let</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">if-let</span><span class="w"> </span><span class="p">[</span><span class="n">pos-nums</span><span class="w"> </span><span class="p">(</span><span class="nb">filter</span><span class="w"> </span><span class="nb">pos?</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">])]</span><span class="w">
+  </span><span class="n">pos-nums</span><span class="w">
+  </span><span class="s">"no positive numbers"</span><span class="p">)</span><span class="w">
+</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>After testing condition, you often want to reuse it later. <code class="prettyprint">if-let</code> binds the evaluated condition to var when it&rsquo;s truthy. The result of <code class="prettyprint">filter</code> will be binded to <code class="prettyprint">pos-nums</code>.</p>
+
+<h2 id="when">When</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="n">true</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"one"</span><span class="p">)</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"two"</span><span class="p">))</span><span class="w">
+</span><span class="n">one</span><span class="w">
+</span><span class="n">two</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>When you only care about the case when the condition is truthy, you can use <code class="prettyprint">when</code>. <code class="prettyprint">when</code> is similar to <code class="prettyprint">if</code> but no <strong>else</strong> branch and already wrapped by <code class="prettyprint">do</code>, so you can pass multiple expression.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="n">false</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"one"</span><span class="p">)</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"two"</span><span class="p">))</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p>Since there is no <strong>else</strong> branch, this doesn&rsquo;t do anything.</p>
+
+<h2 id="when-let">When-Let</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">when-let</span><span class="w"> </span><span class="p">[</span><span class="n">pos-nums</span><span class="w"> </span><span class="p">(</span><span class="nb">filter</span><span class="w"> </span><span class="nb">pos?</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">])]</span><span class="w">
+          </span><span class="n">pos-nums</span><span class="w">
+          </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"one"</span><span class="p">)</span><span class="w">
+          </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"two"</span><span class="p">))</span><span class="w">
+</span><span class="n">one</span><span class="w">
+</span><span class="n">two</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>There is also <code class="prettyprint">when-let</code> which is similar to <code class="prettyprint">if-let</code> but no <strong>else</strong> branch.</p>
+
+<h2 id="case">Case</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">case-test-1</span><span class="w">
+         </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w">
+         </span><span class="p">(</span><span class="nf">case</span><span class="w"> </span><span class="n">n</span><span class="w">
+               </span><span class="mi">1</span><span class="w"> </span><span class="s">"n is 1"</span><span class="w">
+               </span><span class="mi">2</span><span class="w"> </span><span class="s">"n is 2"</span><span class="w">
+               </span><span class="s">"n is other"</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/case-test-1</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nf">case-test-1</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">
+</span><span class="n">n</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nf">case-test-1</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w">
+</span><span class="n">n</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="mi">2</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nf">case-test-1</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w">
+</span><span class="n">n</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">other</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>There is also <code class="prettyprint">case</code> which works pretty much similar to that of other programming languages. <code class="prettyprint">case</code> compares the value with each condition with <code class="prettyprint">=</code>
+and evaluates the expression in the matched branch.</p>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+The expression in the last branch will be evaluated if none of other branch is matched.</p>
+
+<h2 id="cond">Cond</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">cond-test</span><span class="w">
+         </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w">
+         </span><span class="p">(</span><span class="k">cond</span><span class="w">
+           </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="s">"n is 1"</span><span class="w">
+           </span><span class="p">(</span><span class="nb">and</span><span class="w"> </span><span class="p">(</span><span class="nb">&gt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">10</span><span class="p">))</span><span class="w"> </span><span class="s">"n is over 3 and under 10"</span><span class="w">
+           </span><span class="no">:else</span><span class="w"> </span><span class="s">"n is other"</span><span class="p">))</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nf">cond-test</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">
+</span><span class="n">n</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nf">cond-test</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span><span class="w">
+</span><span class="n">n</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">over</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nb">and</span><span class="w"> </span><span class="n">under</span><span class="w"> </span><span class="mi">10</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nf">cond-test</span><span class="w"> </span><span class="mi">15</span><span class="p">))</span><span class="w">
+</span><span class="n">n</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">other</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>When you want to do similar thing to <code class="prettyprint">case</code> but want to write your own test case rather than <code class="prettyprint">=</code>, you can use <code class="prettyprint">cond</code>. You can write different test case in each branch with <code class="prettyprint">cond</code>.</p>
+
+<p><br>
+<br>
+You use <code class="prettyprint">:else</code> symbol for default case.</p>
+
+<h2 id="condp">Condp</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">condp-test-2</span><span class="w">
+         </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w">
+         </span><span class="p">(</span><span class="nf">condp</span><span class="w"> </span><span class="nb">contains?</span><span class="w"> </span><span class="n">n</span><span class="w">
+           </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="s">"n is either 1 or 2 or 3"</span><span class="w">
+           </span><span class="s">"n is not 1 or 2 or 3"</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/condp-test-2</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nf">condp-test-2</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w">
+</span><span class="n">n</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">either</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nb">or</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nb">or</span><span class="w"> </span><span class="mi">3</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nf">condp-test-2</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span><span class="w">
+</span><span class="n">n</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="nb">not</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nb">or</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nb">or</span><span class="w"> </span><span class="mi">3</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>You can use predicate with <code class="prettyprint">condp</code> for condition, in this case <code class="prettyprint">contains?</code>.</p>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p><code class="prettyprint">(contains? [1 2 3] 2)</code> will be evaluated in this case.</p>
+
+<p><br>
+<br></p>
+
+<p><code class="prettyprint">(contains? [1 2 3] 5)</code> will be evaluated falsey, thus default branch will be evaluated.</p>
 
 <h1 id="booleans">Booleans</h1>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="n">true</span><span class="w">
@@ -47,6 +591,8 @@
 </span><span class="n">user=&gt;</span><span class="w"> </span><span class="n">false</span><span class="w">
 </span><span class="n">false</span><span class="w">
 </span></code></pre>
+
+<p><br></p>
 
 <p><code class="prettyprint">true</code> and <code class="prettyprint">false</code> are values of <em>Boolean</em> type just like in other programming languages.</p>
 
@@ -61,28 +607,41 @@
 
 <p>You can create a string by double-quoting text.</p>
 
-<h2 id="concatination">Concatination</h2>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="s">"Good"</span><span class="w"> </span><span class="s">" "</span><span class="w"> </span><span class="s">"morning"</span><span class="p">)</span><span class="w">
-
-</span><span class="n">ClassCastException</span><span class="w"> </span><span class="n">java.lang.String</span><span class="w"> </span><span class="n">cannot</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="nb">cast</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">java.lang.Number</span><span class="w">  </span><span class="n">clojure.lang.Numbers.add</span><span class="w"> </span><span class="p">(</span><span class="nf">Numbers.java</span><span class="no">:126</span><span class="p">)</span><span class="w">
+<h2 id="concatenation">Concatenation</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"Good "</span><span class="w"> </span><span class="s">"morning"</span><span class="p">)</span><span class="w">
+</span><span class="s">"Good morning"</span><span class="w">
 </span></code></pre>
 
-<p></br></p>
+<p><br></p>
 
-<p><code class="prettyprint">+</code> operator <em>doesn&rsquo;t</em> work to concat strings against your expectation.</p>
+<p>One way to concatenate strings is using <code class="prettyprint">str</code>.</p>
 <pre class="highlight plaintext"><code>user=&gt; (use '[clojure.string :only [join]])
 nil
 
-user=&gt; (join "" ["Good" " " "morning"])
+user=&gt; (join "" ["Good " "morning"])
 "Good morning"
 </code></pre>
 
 <p></br>
+</br></p>
+
+<p>You can also use <code class="prettyprint">clojure.string/join</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="s">"Good "</span><span class="w"> </span><span class="s">"morning"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">ClassCastException</span><span class="w"> </span><span class="n">java.lang.String</span><span class="w"> </span><span class="n">cannot</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="nb">cast</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">java.lang.Number</span><span class="w">  </span><span class="n">clojure.lang.Numbers.add</span><span class="w"> </span><span class="p">(</span><span class="nf">Numbers.java</span><span class="no">:126</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p></br>
+</br>
 </br>
 </br>
 </br></p>
 
-<p>Instead, you can use <code class="prettyprint">clojure.string/join</code></p>
+<p><code class="prettyprint">+</code> operator <em>doesn&rsquo;t</em> work to concat strings against your expectation.</p>
+
+<h2 id="interpolation">Interpolation</h2>
+
+<p>Clojure doesn&rsquo;t have string interpolation. So, you need to use <a href="#concatenation">concatenation functions</a>.</p>
 
 <h1 id="integers">Integers</h1>
 
@@ -176,16 +735,16 @@ user=&gt; (join "" ["Good" " " "morning"])
 
 <p><br></p>
 
-<p>Lists are simple collection of values. You can create a list by grouping values with paren with <strong>`</strong> at the top. We need &rsquo;`&rsquo; because list will be evaluated without it.</p>
+<p>Lists are simple collection of values. You can create a list by grouping values with paren with <strong>`</strong> at the top. We need <code class="prettyprint">`</code> because list will be evaluated without it.</p>
 
-<h2 id="get-element-by-index">Get element by index</h2>
+<h2 id="get-element">Get element</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">nth</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
 </span><span class="mi">2</span><span class="w">
 </span></code></pre>
 
 <p><br></p>
 
-<p>To get a value from list, you use <code class="prettyprint">nth</code> with index number. Index starts from 0</p>
+<p>To get a value from list, use <code class="prettyprint">nth</code> with index number. Index starts from 0</p>
 
 <h2 id="count">Count</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">count</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
@@ -194,7 +753,7 @@ user=&gt; (join "" ["Good" " " "morning"])
 
 <p><br></p>
 
-<p>To count how many values in the list, you use <code class="prettyprint">count</code>.</p>
+<p>To count how many values in the list, use <code class="prettyprint">count</code>.</p>
 
 <h2 id="add-element">Add element</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
@@ -203,12 +762,1332 @@ user=&gt; (join "" ["Good" " " "morning"])
 
 <p><br></p>
 
-<p>To add a value to the list, you use <code class="prettyprint">conj</code> (conj[oin]). Note that the new value is added to the top.</p>
+<p>To add a value to the list, use <code class="prettyprint">conj</code> (conj[oin]). Note that the new value is added to the top.</p>
 
 <h2 id="remove-element">Remove element</h2>
 
 <p>How to remove a value from a list? You can&rsquo;t really remove a value from list in Clojure. That&rsquo;s not what list is supposed to do.
 If you are writing a program that needs to remove from collection, you should use other type of collection such as <code class="prettyprint">Set</code>.</p>
+
+<h1 id="vectors">Vectors</h1>
+
+<p>You can think of <code class="prettyprint">Vector</code> as efficient version of <code class="prettyprint">List</code>. It&rsquo;s more practical data storage of multiple values than <code class="prettyprint">List</code>.</p>
+
+<h2 id="literal">Literal</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w">
+</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>You can create a vector by grouping values with square brackets. Unlike list, you don&rsquo;t need <code class="prettyprint">`</code> because vector will not be evaluated unlike list.</p>
+
+<h2 id="get-element">Get element</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">nth</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span><span class="mi">2</span><span class="w">
+</span></code></pre>
+
+<p><br>
+To get a value from vector, you need to specify the index of the value.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">first</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="mi">1</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">last</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="mi">3</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p><code class="prettyprint">Vetor</code> has convenient functions to access elements. To get first and second element, use <code class="prettyprint">first</code> and <code class="prettyprint">second</code>.</p>
+
+<h2 id="add-element">Add element</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To add a value, use <code class="prettyprint">conj</code> (conj[oin]). <strong>Note that the new value is added to the bottom.</strong></p>
+
+<h2 id="get-index">Get index</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nf">.indexOf</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span><span class="mi">1</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>You can get the index of a value in vector with <code class="prettyprint">.indexOf</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nf">.indexOf</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span><span class="mi">-1</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>Returns <code class="prettyprint">-1</code> if the value doesn&rsquo;t exist.</p>
+
+<h1 id="sets">Sets</h1>
+
+<p><code class="prettyprint">Sets</code> are unordered collection of values, meaning that the order of values are not guaranteed.</p>
+
+<h2 id="literal">Literal</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w">
+</span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>You can create a set by grouping values with <code class="prettyprint">#{}</code>. I get the order of 1 -&gt; 3 -&gt; 2 on my computer but you may get different order since the order is not guaranteed</p>
+
+<h2 id="get-element">Get element</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">sort</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">4</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To get sorted order, use <code class="prettyprint">sort</code>.</p>
+
+<h2 id="add-element">Add element</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To add a value, use <code class="prettyprint">conj</code> (conj[oin]).</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>One important trait of set is that <strong>it does not contain an element more than once.</strong></p>
+
+<h2 id="remove-element">Remove element</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">disj</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="p">{</span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To create a set where a value is removed (basically removing a value from set), use <code class="prettyprint">disj</code> (disj[oin]).</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">disj</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>If <code class="prettyprint">disj</code> value that the set doesn&rsquo;t contain, it returns the original set.</p>
+
+<h2 id="select-elements">Select elements</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">clojure.set/select</span><span class="w"> </span><span class="n">odd?</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To select certain values from a set, use <code class="prettyprint">select</code>. <code class="prettyprint">odd?</code> returns boolean for each element. This example returns a new set which only contains odd numbers.</p>
+
+<h2 id="check-if-element-exists">Check if element exists</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">contains?</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span><span class="n">true</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">contains?</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span><span class="n">false</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To check if a value is contained in a set, use <code class="prettyprint">contains?</code>.</p>
+
+<h2 id="check-if-a-set-is-part-of-other-set">Check if a set is part of other set</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nf">clojure.set/subset?</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">})</span><span class="w">
+</span><span class="n">true</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nf">clojure.set/subset?</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">5</span><span class="p">}</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">})</span><span class="w">
+</span><span class="n">false</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To check if a set is part of another set, use <code class="prettyprint">subset?</code>.</p>
+
+<h2 id="check-if-a-set-includes-other-set">Check if a set includes other set</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nf">clojure.set/superset?</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">})</span><span class="w">
+</span><span class="n">true</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To check if a set includes another set, use <code class="prettyprint">superset?</code>.</p>
+
+<h1 id="maps">Maps</h1>
+
+<p><code class="prettyprint">Maps</code> are key-value data structure to store multiple values.</p>
+
+<h2 id="literal">Literal</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>You can create a map by grouping values with <code class="prettyprint">{}</code>.</p>
+
+<h2 id="get-element">Get element</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">get</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="s">"Apple"</span><span class="p">)</span><span class="w">
+</span><span class="s">"Mac"</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To get value from key, use <code class="prettyprint">get</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nb">get</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="s">"Linux"</span><span class="p">)</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>You get <code class="prettyprint">nil</code> when key doesn&rsquo;t exist.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="no">:Apple</span><span class="w"> </span><span class="p">{</span><span class="no">:Apple</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="no">:Microsoft</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">})</span><span class="w">
+</span><span class="s">"Mac"</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>When the key of a map is symbol, you can use the symbol just like a function to get the value.</p>
+
+<h2 id="add-element">Add element</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">assoc</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="s">"Commodore"</span><span class="w"> </span><span class="s">"Amiga"</span><span class="p">)</span><span class="w">
+</span><span class="p">{</span><span class="s">"Commodore"</span><span class="w"> </span><span class="s">"Amiga"</span><span class="n">,</span><span class="w"> </span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="n">,</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To add a key-value pair, use <code class="prettyprint">assoc</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">assoc</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"iOS"</span><span class="p">)</span><span class="w">
+</span><span class="p">{</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"iOS"</span><span class="n">,</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>If key already exists, it replace the value.</p>
+
+<h2 id="combine-maps">Combine maps</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">merge</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">})</span><span class="w">
+</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="n">,</span><span class="w"> </span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="n">,</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To combine two maps, use <code class="prettyprint">merge</code>.</p>
+
+<h2 id="keys">Keys</h2>
+<pre class="highlight clojure"><code><span class="p">(</span><span class="nb">keys</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">})</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To get all keys from a map, use <code class="prettyprint">keys</code>.</p>
+
+<h2 id="vals">Vals</h2>
+<pre class="highlight clojure"><code><span class="p">(</span><span class="nb">keys</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">})</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To get all values from a map, use <code class="prettyprint">vals</code>.</p>
+
+<h1 id="sequences">Sequences</h1>
+
+<p><code class="prettyprint">Secuqnces</code> are logical lists that are not tied to a particular implementation. What does it mean? It means that you can apply the same functions to any types of collections without worrying about what types of collections that you are dealing with.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">])</span><span class="w">
+</span><span class="p">(</span><span class="nf">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="w"> </span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">})</span><span class="w">
+</span><span class="p">(</span><span class="nf">2</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
+
+
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">println</span><span class="w"> </span><span class="p">{</span><span class="no">:a</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="no">:b</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="no">:c</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="p">[</span><span class="no">:c</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w">
+</span><span class="p">[</span><span class="no">:b</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w">
+</span><span class="p">[</span><span class="no">:a</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w">
+</span><span class="p">(</span><span class="nf">nil</span><span class="w"> </span><span class="n">nil</span><span class="w"> </span><span class="n">nil</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Using map for <code class="prettyprint">Vectors</code>.</p>
+
+<p><br></p>
+
+<p>Using map for <code class="prettyprint">Lists</code>.</p>
+
+<p><br></p>
+
+<p>Using map for <code class="prettyprint">Sets</code>.</p>
+
+<p><br></p>
+
+<p>Using map for <code class="prettyprint">Maps</code>. We are using <code class="prettyprint">println</code> for the function that we apply since <code class="prettyprint">inc</code> doesn&rsquo;t work here, but this doesn&rsquo;t hurt the idea that you can use <code class="prettyprint">map</code> for any collections.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">type</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">]))</span><span class="w">
+</span><span class="n">clojure.lang.LazySeq</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">type</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="w"> </span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">)))</span><span class="w">
+</span><span class="n">clojure.lang.LazySeq</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">type</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">}))</span><span class="w">
+</span><span class="n">clojure.lang.LazySeq</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p>As you can see, the type of all returned values is <code class="prettyprint">LazySeq</code>.</p>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p><code class="prettyprint">Sequences</code> <strong>are the most important data abstraction in Clojure.</strong></p>
+
+<h2 id="map">Map</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">])</span><span class="w">
+</span><span class="p">(</span><span class="nf">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To apply a function to each element of collection, use <code class="prettyprint">map</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>If you want to do something more complex with each element, you can pass an anonymous function where each value is bound to <code class="prettyprint">x</code>.</p>
+
+<h2 id="reduce">Reduce</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">reduce</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w">
+</span><span class="mi">10</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p><code class="prettyprint">reduce</code> boils down values in a collection into a single value by applying a function.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">reduce</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">-10</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w">
+</span><span class="mi">0</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>You can pass a default value in the second argument. When default value is given, <code class="prettyprint">reduce</code> will use it as a starting point.</p>
+
+<h2 id="into">Into</h2>
+
+<p>To convert from one type of collection to another, use <code class="prettyprint">into</code>.</p>
+<pre class="highlight clojure"><code><span class="w">
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">into</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w">
+</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>Converting a list to a vector.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">into</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="p">)</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="p">(</span><span class="nf">3</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>Converting a vector to a list.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">into</span><span class="w"> </span><span class="o">#</span><span class="p">{}</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>Converting a vector to a set.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">into</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">})</span><span class="w">
+</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>Converting a set to a vector.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">into</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span><span class="p">[[</span><span class="no">:a</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="no">:b</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="no">:c</span><span class="w"> </span><span class="mi">3</span><span class="p">]])</span><span class="w">
+</span><span class="p">{</span><span class="no">:a</span><span class="w"> </span><span class="mi">1</span><span class="n">,</span><span class="w"> </span><span class="no">:b</span><span class="w"> </span><span class="mi">2</span><span class="n">,</span><span class="w"> </span><span class="no">:c</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>Converting a nested vector into a map.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">into</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="no">:a</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="no">:b</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="no">:c</span><span class="w"> </span><span class="mi">3</span><span class="p">})</span><span class="w">
+</span><span class="p">[[</span><span class="no">:c</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="no">:b</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="no">:a</span><span class="w"> </span><span class="mi">1</span><span class="p">]]</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>Converting a map to a nested vector.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">reduce</span><span class="w"> </span><span class="nb">conj</span><span class="w"> </span><span class="o">#</span><span class="p">{}</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p><code class="prettyprint">into</code> is just a thin wrapper around <code class="prettyprint">reduce</code>. In fact, you can easily rewrite previous examples with <code class="prettyprint">reduce</code>.</p>
+
+<h2 id="reverse">Reverse</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">reverse</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="p">(</span><span class="nf">3</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To reverse a sequence, use <code class="prettyprint">reverse</code>.</p>
+
+<h2 id="iterate">Iterate</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">iterate</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">
+
+</span></code></pre>
+
+<p><br></p>
+
+<p>You can get a sequence of infinite integers with <code class="prettyprint">iterate</code>. Be careful, though. Running this example will freeze your terminal since the computation continues forever.</p>
+
+<h2 id="range">Range</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">range</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w">
+</span><span class="p">(</span><span class="nf">5</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="mi">9</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To generates a sequence of numbers between two points, you can use <code class="prettyprint">range</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">range</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">
+</span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">15</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="mi">25</span><span class="w"> </span><span class="mi">30</span><span class="w"> </span><span class="mi">35</span><span class="w"> </span><span class="mi">40</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="mi">55</span><span class="w"> </span><span class="mi">60</span><span class="w"> </span><span class="mi">65</span><span class="w"> </span><span class="mi">70</span><span class="w"> </span><span class="mi">75</span><span class="w"> </span><span class="mi">80</span><span class="w"> </span><span class="mi">85</span><span class="w"> </span><span class="mi">90</span><span class="w"> </span><span class="mi">95</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>You can get integers by every x within the range. In this case, we get a sequence of integers at every 5.</p>
+
+<h2 id="repeatedly">Repeatedly</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">repeatedly</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"hi!"</span><span class="p">))</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">hi!</span><span class="w">
+</span><span class="n">hi!</span><span class="w">
+</span><span class="n">hi!</span><span class="w">
+</span><span class="n">hi!</span><span class="w">
+</span><span class="n">hi!</span><span class="w">
+</span><span class="p">(</span><span class="nf">nil</span><span class="w"> </span><span class="n">nil</span><span class="w"> </span><span class="n">nil</span><span class="w"> </span><span class="n">nil</span><span class="w"> </span><span class="n">nil</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To repeat something over and over again, use <code class="prettyprint">repeatedly</code>. We are passing an anonymous function <code class="prettyprint">(fn [] (println &quot;hi!&quot;))</code> because the second argument must be a function.</p>
+
+<h2 id="doseq">Doseq</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">doseq</span><span class="w"> </span><span class="p">[</span><span class="n">animal</span><span class="w"> </span><span class="p">[</span><span class="s">"cat"</span><span class="w"> </span><span class="s">"dog"</span><span class="w"> </span><span class="s">"horse"</span><span class="p">]]</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">animal</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">cat</span><span class="w">
+</span><span class="n">dog</span><span class="w">
+</span><span class="n">horse</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Clojure doesn&rsquo;t have <code class="prettyprint">for</code> or <code class="prettyprint">for-each</code>. Do something to each element of a sequence, use <code class="prettyprint">doseq</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">doseq</span><span class="w"> </span><span class="p">[</span><span class="n">n1</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">]</span><span class="w">
+               </span><span class="n">n2</span><span class="w"> </span><span class="p">[</span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">]]</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="n">n1</span><span class="w"> </span><span class="n">n2</span><span class="p">)))</span><span class="w">
+</span><span class="mi">5</span><span class="w">
+</span><span class="mi">6</span><span class="w">
+</span><span class="mi">6</span><span class="w">
+</span><span class="mi">7</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>You can bind multiple values. In this case, each element in the first vector is added to each element of the second vector.</p>
+
+<h2 id="take">Take</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">take</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">(</span><span class="nb">range</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">100</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To get the first <code class="prettyprint">n</code> elements from a sequence, use <code class="prettyprint">take</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nb">take</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">(</span><span class="nb">range</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">5</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>Take all elements from a sequence if the size of the sequence is smaller than <code class="prettyprint">n</code>.</p>
+
+<h2 id="take-while">Take-While</h2>
+
+<p><br></p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">take-while</span><span class="w"> </span><span class="nb">neg?</span><span class="w"> </span><span class="p">[</span><span class="mi">-3</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="p">(</span><span class="nf">-3</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p>To get the first <code class="prettyprint">n</code> elements from a sequence as long as the condition is satisfied but stop taking when the condition is not met, use <code class="prettyprint">take-while</code>. <code class="prettyprint">neg?</code> returns true for negative number.</p>
+
+<p><strong>Note:</strong> Taking elements that only satisfies the condition is not what <code class="prettyprint">take-while</code> does. That&rsquo;s the job of <code class="prettyprint">select</code>.</p>
+
+<h2 id="drop">Drop</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">drop</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">(</span><span class="nb">range</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">10</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">5</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="mi">9</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To remove the first <code class="prettyprint">n</code> elements from a sequence, use <code class="prettyprint">drop</code>.</p>
+
+<h2 id="drop-while">Drop-While</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">drop-while</span><span class="w"> </span><span class="nb">neg?</span><span class="w"> </span><span class="p">[</span><span class="mi">-3</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To get the first <code class="prettyprint">n</code> elements from a sequence as long as the condition is satisfied but stop dropping when the condition is not met, use <code class="prettyprint">drop-while</code>.</p>
+
+<h2 id="lazy-sequence">Lazy Sequence</h2>
+
+<p>Most of Clojure’s sequences are <strong>lazy</strong>. All familiar functions such as <code class="prettyprint">map</code> <code class="prettyprint">range</code> <code class="prettyprint">reduce</code> etc returns lazy sequences.</p>
+<pre class="highlight clojure"><code><span class="c1">;; You need hit Ctrl+c very quickly to stop!!
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">iterate</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">......</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p><code class="prettyprint">(iterate inc 0)</code> generates a sequence of infinite numbers which, of course, takes infinitely. But, you see <code class="prettyprint">println</code> starts printing the numbers <code class="prettyprint">(0 1 2 3 ......</code>. If the generation of the sequence never ends, how <code class="prettyprint">println</code> can even start printing these numbers?</p>
+
+<p><br></p>
+
+<p>This is possible because <code class="prettyprint">iterate</code> generates lazy sequence and <code class="prettyprint">println</code> is able to handle lazy sequence correctly. <code class="prettyprint">println</code> asks a number to print from <code class="prettyprint">iterate</code> one by one, rather than asking the entire sequence. <code class="prettyprint">iterate</code> only computes numbers as it is requested and pass the numbers to <code class="prettyprint">println</code>.</p>
+<pre class="highlight clojure"><code><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">take</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">(</span><span class="nb">iterate</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="mi">0</span><span class="p">)))</span><span class="w">
+</span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p><code class="prettyprint">take</code> only asks the first <code class="prettyprint">n</code> values from lazy sequence. <code class="prettyprint">iterate</code> also only computes the first five numbers because that&rsquo;s what asked by <code class="prettyprint">take</code>.</p>
+
+<p><br></p>
+
+<p><strong>Note:</strong> In Clojure 1.1+, lazy sequences returns chunked values rather than one by one as mentioned above, but that&rsquo;s not you have to worry about reading this guide.</p>
+
+<h1 id="macros">Macros</h1>
+
+<p>Clojure&rsquo;s Macros gives you the power to restructure your Clojure code as you like. For example, you can create your own code syntax, invent new control flow, new types of values, etc.
+So, it&rsquo;s not even impossible to create a programming language that looks like Ruby by using Clojure Macros!</p>
+
+<h2 id="defmacro">Defmacro</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defmacro</span><span class="w"> </span><span class="n">unless</span><span class="w"> </span><span class="p">[</span><span class="nb">test</span><span class="w"> </span><span class="n">then</span><span class="p">]</span><span class="w">
+           </span><span class="s">"Evaluates then when test evaluates to be falsey"</span><span class="w">
+           </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="ss">'if</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="ss">'not</span><span class="w"> </span><span class="nb">test</span><span class="p">)</span><span class="w">
+            </span><span class="n">then</span><span class="p">))</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">unless</span><span class="w"> </span><span class="n">false</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"false!!"</span><span class="p">))</span><span class="w">
+</span><span class="n">false!!</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+
+</span><span class="c1">;; Error
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defmacro</span><span class="w"> </span><span class="n">unless</span><span class="w"> </span><span class="p">[</span><span class="nb">test</span><span class="w"> </span><span class="n">then</span><span class="p">]</span><span class="w">
+           </span><span class="s">"Evaluates then when test evaluates to be falsey"</span><span class="w">
+           </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="nb">not</span><span class="w"> </span><span class="nb">test</span><span class="p">)</span><span class="w">
+            </span><span class="n">then</span><span class="p">))</span><span class="w">
+
+</span><span class="n">CompilerException</span><span class="w"> </span><span class="n">java.lang.RuntimeException</span><span class="err">:</span><span class="w"> </span><span class="n">Unable</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="nb">resolve</span><span class="w"> </span><span class="nb">symbol</span><span class="err">:</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">context,</span><span class="w"> </span><span class="n">compiling</span><span class="err">:</span><span class="p">(</span><span class="nf">NO_SOURCE_PATH</span><span class="no">:3:12</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To define a macro, use <code class="prettyprint">defmacro</code>. Like function, you can give it a name, docs, and arguments. Note that you are using quotes <code class="prettyprint">&#39;</code> followed by <code class="prettyprint">if</code> and <code class="prettyprint">not</code>.
+This is because you don&rsquo;t want them to be evaluated when you define the macro.</p>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p>Without quotes, you will see an exception.</p>
+
+<h2 id="macroexpand">Macroexpand</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">macroexpand</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">unless</span><span class="w"> </span><span class="n">false</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"hi"</span><span class="p">)))</span><span class="w">
+</span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">not</span><span class="w"> </span><span class="n">false</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"hi"</span><span class="p">))</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Macros are replaced with Clojure code before it&rsquo;s evaluated. To see how it will be replaced without actually evaluating the macro, use <code class="prettyprint">macroexpand</code>.
+Note that you have to use <code class="prettyprint">&#39;</code> because you want it to be unevaluated list.</p>
+
+<h2 id="quotes">Quotes</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span><span class="mi">3</span><span class="w">
+
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">quote</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Without a quote, this expression will be just evaluated and returns the value.</p>
+
+<p><br></p>
+
+<p>However, when an expression is surrounded by <code class="prettyprint">quote</code>, it does not evaluate the expression but returns the expression itself.</p>
+
+<p><br></p>
+
+<p><code class="prettyprint">&#39;</code> is another form of <code class="prettyprint">quote</code>. It does the exactly same thing with <code class="prettyprint">quote</code>. <code class="prettyprint">&#39;</code> is used more often than <code class="prettyprint">quote</code> since it&rsquo;s concise.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defmacro</span><span class="w"> </span><span class="n">unless</span><span class="w"> </span><span class="p">[</span><span class="nb">test</span><span class="w"> </span><span class="n">then</span><span class="p">]</span><span class="w">
+           </span><span class="s">"Evaluates then when test evaluates to be falsey"</span><span class="w">
+           </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="ss">'if</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="ss">'not</span><span class="w"> </span><span class="nb">test</span><span class="p">)</span><span class="w">
+            </span><span class="n">then</span><span class="p">))</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>You can see quoting at work in macros. In this <code class="prettyprint">unless</code> macro, you need to use <code class="prettyprint">&#39;</code> followed by <code class="prettyprint">if</code> and <code class="prettyprint">not</code> because you don&rsquo;t want them to be evaluated inside the macro definition.</p>
+
+<h2 id="syntax-quotes">Syntax-Quotes</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span><span class="p">(</span><span class="nf">clojure.core/+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Syntax quoting <code class="prettyprint">`</code>works very similarly to quoting <code class="prettyprint">&#39;</code>: it returns an unevaluated expression.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">clojure.core/dec</span><span class="w"> </span><span class="p">(</span><span class="nf">clojure.core/inc</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>However, you see the difference from quoting when the expression contains symbols. Unlike quoting, syntax-quoting returns the fully qualified namespace.
+Using fully qualified namespace is very important in order to avoid name conflicts when defining macro.</p>
+
+<h2 id="unquotes">Unquotes</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">~</span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nf">clojure.core/unquote</span><span class="w"> </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">~</span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">clojure.core/+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>You will see another difference between syntax quoting and quoting when syntax quoting is used with unquoting <code class="prettyprint">~</code>. Syntax quoting allows unquoting to evaluate the expression followed by <code class="prettyprint">~</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">~</span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="nf">clojure.core/unquote</span><span class="w"> </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p>Quoting doesn&rsquo;t allow unquoting to evaluate an expression.</p>
+
+<h2 id="unquote-splice">Unquote-Splice</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="o">~</span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">clojure.core/+</span><span class="w"> </span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="o">~@</span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">clojure.core/+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>The <code class="prettyprint">~@</code> unquote splice works just like <code class="prettyprint">~</code> unquote, except it expands a sequence and splice the contents of the sequence into the enclosing syntax-quoted data structure.</p>
+
+<h1 id="delays">Delays</h1>
+
+<h2 id="delay">Delay</h2>
+
+<p>When you want to defer the evaluation of an expression, you can use <code class="prettyprint">delay</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">later</span><span class="w"> </span><span class="p">(</span><span class="nf">do</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nb">prn</span><span class="w"> </span><span class="s">"Adding"</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)))</span><span class="w">
+</span><span class="s">"Adding"</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/later</span><span class="w">
+
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">later</span><span class="w"> </span><span class="p">(</span><span class="nf">delay</span><span class="w"> </span><span class="p">(</span><span class="nf">do</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nb">prn</span><span class="w"> </span><span class="s">"Adding"</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">))))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/later</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>This is the example of immediately evaluating an expression. Nothing special is involved  here. <code class="prettyprint">(do ...)</code> is executed immediately and it&rsquo;s return value is bound to <code class="prettyprint">later</code> var.</p>
+
+<p><br></p>
+
+<p>When you use <code class="prettyprint">delay</code>, the expression is not evaluated immediately, so &ldquo;Adding&rdquo; is not printed.</p>
+
+<h2 id="force">Force</h2>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">later</span><span class="w"> </span><span class="p">(</span><span class="nf">delay</span><span class="w"> </span><span class="p">(</span><span class="nf">do</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nb">prn</span><span class="w"> </span><span class="s">"Adding"</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">))))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/later</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">force</span><span class="w"> </span><span class="n">later</span><span class="p">)</span><span class="w">
+</span><span class="s">"Adding"</span><span class="w">
+</span><span class="mi">3</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p>To evaluate and obtain the result of a delayed expression, use <code class="prettyprint">force</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">later</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nb">prn</span><span class="w"> </span><span class="s">"Adding"</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">))</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">later</span><span class="p">)</span><span class="w">
+</span><span class="s">"Adding"</span><span class="w">
+</span><span class="mi">3</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br></p>
+
+<p>You may think that you can archive the same thing by using an anonymous function and <code class="prettyprint">def</code>. Then, why do we get bothered with delay?</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">later</span><span class="w"> </span><span class="p">(</span><span class="nf">delay</span><span class="w"> </span><span class="p">(</span><span class="nf">do</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nb">prn</span><span class="w"> </span><span class="s">"Adding"</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">))))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/later</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">force</span><span class="w"> </span><span class="n">later</span><span class="p">)</span><span class="w">
+</span><span class="s">"Adding"</span><span class="w">
+</span><span class="mi">3</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">force</span><span class="w"> </span><span class="n">later</span><span class="p">)</span><span class="w">
+</span><span class="mi">3</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p>The difference from a plain function is that delay is only evaluated once and caches the result. &ldquo;Adding&rdquo; is only printed once because delay returns cached result from the second time.</p>
+
+<h1 id="futures">Futures</h1>
+
+<h2 id="future">Future</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">do</span><span class="w">
+         </span><span class="p">(</span><span class="nf">Thread/sleep</span><span class="w"> </span><span class="mi">3000</span><span class="p">)</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"hello"</span><span class="p">))</span><span class="w">
+
+</span><span class="c1">;; Wait for 3 sec and then "hello" is printed
+</span><span class="n">hello</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+&ldquo;hello&rdquo; is printed after sleeping 3 seconds. This is very obvious because these lines of the code are executed synchronously.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">do</span><span class="w">
+          </span><span class="p">(</span><span class="nf">future</span><span class="w">
+          </span><span class="p">(</span><span class="nf">Thread/sleep</span><span class="w"> </span><span class="mi">3000</span><span class="p">)</span><span class="w">
+          </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"after sleep"</span><span class="p">))</span><span class="w">
+          </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"hello"</span><span class="p">))</span><span class="w">
+</span><span class="n">hello</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span><span class="n">after</span><span class="w"> </span><span class="n">sleep</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>If you use <code class="prettyprint">future</code>, <code class="prettyprint">(println &quot;hello&quot;)</code> is evaluated immediately, and after three seconds, <code class="prettyprint">(println &quot;after sleep&quot;)</code> will be evaluated.
+This is because Clojure puts the expression grouped by <code class="prettyprint">future</code> into another thread and moves the current thread forward.</p>
+
+<p><br>
+<br></p>
+
+<p>Calls inside future still blocks. So, in this case, &ldquo;after sleep&rdquo; is printed after 3 secs.</p>
+
+<h2 id="deref">Deref</h2>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">future-val</span><span class="w"> </span><span class="p">(</span><span class="nf">future</span><span class="w"> </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="mi">1</span><span class="p">))]</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">future-val</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="n">&lt;core$future_call$reify__6320</span><span class="err">@</span><span class="mi">142</span><span class="n">cbba</span><span class="err">:</span><span class="w"> </span><span class="mi">2</span><span class="nb">&gt;</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">future-val</span><span class="w"> </span><span class="p">(</span><span class="nf">future</span><span class="w"> </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="mi">1</span><span class="p">))]</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">deref</span><span class="w"> </span><span class="n">future-val</span><span class="p">)))</span><span class="w">
+</span><span class="mi">2</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p><code class="prettyprint">future</code> can return values.</p>
+
+<p>See the returned value <code class="prettyprint">#&lt;core$future_call$reify__6320@142cbba: 2&gt;</code> which is not what you want. This returned value is the current state of the future, not the returned value of <code class="prettyprint">(inc 1)</code></p>
+
+<p><br></p>
+
+<p>To obtain the returned value of <code class="prettyprint">(inc 1)</code>, you need to dereference the future with <code class="prettyprint">deref</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">future-val</span><span class="w"> </span><span class="p">(</span><span class="nf">future</span><span class="w"> </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="mi">1</span><span class="p">))]</span><span class="w">
+         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="err">@</span><span class="n">future-val</span><span class="p">))</span><span class="w">
+</span><span class="mi">2</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p>You can also use <code class="prettyprint">@</code> to dereference a future.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="err">@</span><span class="p">(</span><span class="nf">future</span><span class="w"> </span><span class="p">(</span><span class="nf">Thread/sleep</span><span class="w"> </span><span class="mi">3000</span><span class="p">)</span><span class="w"> </span><span class="s">"returned!"</span><span class="p">)</span><span class="w">
+</span><span class="c1">;; Waiting three seconds...
+</span><span class="s">"returned!"</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p>When you dereference a future, you will block until the result is returned.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w">  </span><span class="p">(</span><span class="nb">deref</span><span class="w"> </span><span class="p">(</span><span class="nf">future</span><span class="w"> </span><span class="p">(</span><span class="nf">Thread/sleep</span><span class="w"> </span><span class="mi">1000</span><span class="p">)</span><span class="w"> </span><span class="s">"I made it!"</span><span class="p">)</span><span class="w"> </span><span class="mi">2000</span><span class="w"> </span><span class="s">"Can't wait anymore!"</span><span class="p">)</span><span class="w">
+</span><span class="s">"I made it!"</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w">  </span><span class="p">(</span><span class="nb">deref</span><span class="w"> </span><span class="p">(</span><span class="nf">future</span><span class="w"> </span><span class="p">(</span><span class="nf">Thread/sleep</span><span class="w"> </span><span class="mi">3000</span><span class="p">)</span><span class="w"> </span><span class="s">"I made it!"</span><span class="p">)</span><span class="w"> </span><span class="mi">2000</span><span class="w"> </span><span class="s">"Can't wait anymore!"</span><span class="p">)</span><span class="w">
+</span><span class="s">"Can't wait anymore!"</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br></p>
+
+<p>You can tell <code class="prettyprint">deref</code> how long you want to wait along with a value to return if it does time out.</p>
+
+<h2 id="realized?">Realized?</h2>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">my-future</span><span class="w"> </span><span class="p">(</span><span class="nf">future</span><span class="w"> </span><span class="p">(</span><span class="nf">Thread/sleep</span><span class="w"> </span><span class="mi">5000</span><span class="p">)</span><span class="w"> </span><span class="p">))</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">repeatedly</span><span class="w"> </span><span class="mi">6</span><span class="w">
+        </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[]</span><span class="w">
+        </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nf">realized?</span><span class="w"> </span><span class="n">my-future</span><span class="p">))</span><span class="w">
+        </span><span class="p">(</span><span class="nf">Thread/sleep</span><span class="w"> </span><span class="mi">1000</span><span class="p">)))</span><span class="w">
+
+</span><span class="o">#</span><span class="ss">'user/my-futurefalse</span><span class="w">
+</span><span class="n">false</span><span class="w">
+</span><span class="n">false</span><span class="w">
+</span><span class="n">false</span><span class="w">
+</span><span class="n">false</span><span class="w">
+</span><span class="n">true</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br></p>
+
+<p>To know if a future is already done, use <code class="prettyprint">realized?</code>.</p>
+
+<p><br>
+<br>
+<br></p>
+
+<p><code class="prettyprint">realized</code> returns true after 5 seconds.</p>
+
+<h1 id="promises">Promises</h1>
+
+<h2 id="promise">Promise</h2>
+
+<p>When you want to defer the evaluation of expressions until you obtain values to pass to them, use <code class="prettyprint">promise</code>. The easiest example why you want to use promise is implementing a callback.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">my-promise</span><span class="w"> </span><span class="p">(</span><span class="nf">promise</span><span class="p">))</span><span class="w">
+
+</span><span class="o">#</span><span class="ss">'user/my-promise</span><span class="w">
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">listener</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"Start listening..."</span><span class="p">)</span><span class="w">
+  </span><span class="p">(</span><span class="nf">future</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"Callback fired: "</span><span class="w"> </span><span class="err">@</span><span class="n">my-promise</span><span class="p">))))</span><span class="w">
+  </span><span class="c1">;; Start listening
+</span><span class="w">  </span><span class="p">(</span><span class="nf">listener</span><span class="p">)</span><span class="w">
+  </span><span class="c1">;; Suppose doing things that takes time
+</span><span class="w">  </span><span class="p">(</span><span class="nf">Thread/sleep</span><span class="w"> </span><span class="mi">2000</span><span class="p">)</span><span class="w">
+
+  </span><span class="p">(</span><span class="nf">deliver</span><span class="w"> </span><span class="n">my-promise</span><span class="w"> </span><span class="s">"delivered value"</span><span class="p">)</span><span class="w">
+
+
+</span><span class="n">Start</span><span class="w"> </span><span class="n">listening...</span><span class="w">
+</span><span class="c1">;; Waiting two seconds here...
+</span><span class="n">Callback</span><span class="w"> </span><span class="n">fired</span><span class="err">:</span><span class="w">  </span><span class="n">delivered</span><span class="w"> </span><span class="n">value</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>First, you make a promise with <code class="prettyprint">promise</code>.</p>
+
+<p><br>
+Creating a listener that listens to the promise and fire the callback when a value is delivered to the promise.</p>
+
+<p><br>
+Just like future, promise will block when you dereference it. Calling <code class="prettyprint">(listener)</code> will block at the dereference of <code class="prettyprint">@my-promise</code>.</p>
+
+<p><br>
+You can signal the promise to return delivered values with <code class="prettyprint">deliver</code>.</p>
+
+<h1 id="atoms">Atoms</h1>
+
+<h2 id="atom">Atom</h2>
+
+<p>You&rsquo;ve might hear this statement before: <em>there is no state in Clojure. Thus, the language is impractical and cannot be used to build real applications.</em> However, this is not true. Clojure has built-in mechanisms to manage application state. <code class="prettyprint">Atom</code> is one of the mechanisms.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">atom-str</span><span class="w"> </span><span class="p">(</span><span class="nf">atom</span><span class="w"> </span><span class="s">"hello"</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/atom-str</span><span class="w">
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">atom-vector</span><span class="w"> </span><span class="p">(</span><span class="nf">atom</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/atom-vector</span><span class="w">
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">atom-map</span><span class="w"> </span><span class="p">(</span><span class="nf">atom</span><span class="w"> </span><span class="p">{</span><span class="no">:a</span><span class="w"> </span><span class="s">"aaa"</span><span class="w"> </span><span class="no">:b</span><span class="w"> </span><span class="s">"bbb"</span><span class="p">}))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/atom-map</span><span class="w">
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">atom-int</span><span class="w"> </span><span class="p">(</span><span class="nf">atom</span><span class="w"> </span><span class="mi">53</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/atom-int</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Use <code class="prettyprint">atom</code> to create an atom that points to a value. You can create an atom of any values.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">deref</span><span class="w"> </span><span class="n">atom-int</span><span class="p">)</span><span class="w">
+</span><span class="mi">53</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="err">@</span><span class="n">atom-int</span><span class="w">
+</span><span class="mi">53</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>To obtain the value of an atom, use <code class="prettyprint">deref</code> or <code class="prettyprint">@</code>.</p>
+
+<h2 id="reset!">Reset!</h2>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">atom-int</span><span class="w"> </span><span class="p">(</span><span class="nf">atom</span><span class="w"> </span><span class="mi">53</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/atom-int</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">reset!</span><span class="w"> </span><span class="n">atom-int</span><span class="w"> </span><span class="mi">35</span><span class="p">)</span><span class="w">
+</span><span class="mi">35</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="err">@</span><span class="n">atom-int</span><span class="w">
+</span><span class="mi">35</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>You can update the value of an atom with <code class="prettyprint">reset!</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">reset!</span><span class="w"> </span><span class="n">atom-int</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w">
+</span><span class="mi">100</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="err">@</span><span class="n">atom-int</span><span class="w">
+</span><span class="mi">100</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">reset!</span><span class="w"> </span><span class="n">atom-int</span><span class="w"> </span><span class="mi">200</span><span class="p">)</span><span class="w">
+</span><span class="mi">200</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="err">@</span><span class="n">atom-int</span><span class="w">
+</span><span class="mi">200</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>Atoms are mutable, so you can update as many times as you want.</p>
+
+<h2 id="swap!">Swap!</h2>
+
+<p><code class="prettyprint">swap!</code> allows you to use a function to update the value of an atom.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">atom-int</span><span class="w"> </span><span class="p">(</span><span class="nf">atom</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/atom-int</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">swap!</span><span class="w"> </span><span class="n">atom-int</span><span class="w">
+        </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">current-atom</span><span class="p">]</span><span class="w">
+            </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="n">current-atom</span><span class="p">)))</span><span class="w">
+</span><span class="mi">1</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">swap!</span><span class="w"> </span><span class="n">atom-int</span><span class="w">
+        </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">_</span><span class="p">]</span><span class="w">
+            </span><span class="s">"not int"</span><span class="p">))</span><span class="w">
+</span><span class="s">"not int"</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="err">@</span><span class="n">atom-int</span><span class="w">
+</span><span class="s">"not int"</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br></p>
+
+<p>The function that you pass to <code class="prettyprint">swap!</code> will take an argument which is the current atom.</p>
+
+<p><br>
+<br>
+<br></p>
+
+<p>The atom is updated by the return value of the function.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">atom-int</span><span class="w"> </span><span class="p">(</span><span class="nf">atom</span><span class="w"> </span><span class="mi">100</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/atom-int</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">multiple-by</span><span class="w">
+        </span><span class="p">[</span><span class="n">current-atom</span><span class="w"> </span><span class="n">num</span><span class="p">]</span><span class="w">
+        </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">current-atom</span><span class="w"> </span><span class="n">num</span><span class="p">))</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">swap!</span><span class="w"> </span><span class="n">atom-int</span><span class="w"> </span><span class="n">multiple-by</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w">
+</span><span class="mi">1000</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>You can pass a function that takes multiple arguments. The first argument of the function is the current atom.</p>
+
+<h2 id="thread-safety">Thread Safety</h2>
+
+<p>Atoms are very similar to mutable variables in other programming languages. You can assign value to an atom and update anytime you want. However, Clojure&rsquo;s atom has one big advantage over them: it&rsquo;s <code class="prettyprint">thread safe</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/x</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">repeatedly</span><span class="w"> </span><span class="mi">10</span><span class="w">
+        </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="n">x</span><span class="p">))))</span><span class="w">
+</span><span class="p">(</span><span class="o">#</span><span class="ss">'user/x...</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="n">x</span><span class="w">
+</span><span class="mi">10</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>This will update <code class="prettyprint">x</code> ten times and increment <code class="prettyprint">x</code> by 1 every time. The final value of <code class="prettyprint">x</code> will be 10.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/x</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">repeatedly</span><span class="w"> </span><span class="mi">10</span><span class="w">
+        </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nf">future</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="n">x</span><span class="p">)))))</span><span class="w">
+</span><span class="p">(</span><span class="o">#</span><span class="n">&lt;core$future_call$reify__6320</span><span class="err">@</span><span class="mi">410</span><span class="n">e4786</span><span class="err">:</span><span class="w"> </span><span class="no">:pending&gt;</span><span class="w"> </span><span class="o">#</span><span class="n">&lt;core$futur...</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="n">x</span><span class="w">
+</span><span class="mi">5</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>Similarly, this will update <code class="prettyprint">x</code> ten times and increment <code class="prettyprint">x</code> every time like the previous example. However, with this code, <code class="prettyprint">(def x (inc x))</code> will be executed in parallel on different threads because we are using <code class="prettyprint">future</code>. When you do this, the final value of <code class="prettyprint">x</code> will not be deterministic anymore. Sometimes it is 5, and sometimes 9 because each thread access and update the same <code class="prettyprint">x</code> in its own timing.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">(</span><span class="nf">atom</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/x</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">repeatedly</span><span class="w"> </span><span class="mi">10</span><span class="w">
+        </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nf">future</span><span class="w"> </span><span class="p">(</span><span class="nf">swap!</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="nb">inc</span><span class="p">))))</span><span class="w">
+</span><span class="p">(</span><span class="o">#</span><span class="n">&lt;core$future_call$reify__6320</span><span class="err">@</span><span class="mi">632796</span><span class="n">c6</span><span class="err">:</span><span class="w"> </span><span class="no">:pending&gt;...</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="err">@</span><span class="n">x</span><span class="w">
+</span><span class="mi">10</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>Now atom comes to rescue. <code class="prettyprint">x</code> is atom and we use <code class="prettyprint">swap!</code> to update the value. Unlike vars, atom is thread safe, so <code class="prettyprint">x</code> will be updated by one thread at one time. Thus, the final value of <code class="prettyprint">x</code> is guaranteed to be 10. This is archived thanks to the Clojure&rsquo;s use of <a href="http://en.wikipedia.org/wiki/Compare-and-swap">compare-and-swap</a> in atom.</p>
+
+<h1 id="refs">Refs</h1>
+
+<h2 id="ref">Ref</h2>
+
+<p>While <code class="prettyprint">Atom</code> is handy to manage a state in a consistent way, <code class="prettyprint">Ref</code> allows you to manage multiple states while ensuring they are consistent.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">my-ref</span><span class="w"> </span><span class="p">(</span><span class="nb">ref</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/my-ref</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To create a ref, use <code class="prettyprint">ref</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">deref</span><span class="w"> </span><span class="n">my-ref</span><span class="p">)</span><span class="w">
+</span><span class="mi">0</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="err">@</span><span class="n">my-ref</span><span class="w">
+</span><span class="mi">0</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>To obtain the value of a ref, use <code class="prettyprint">deref</code> or <code class="prettyprint">@</code>.</p>
+
+<h2 id="do-sync">Do-sync</h2>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">deref</span><span class="w"> </span><span class="n">my-ref</span><span class="p">)</span><span class="w">
+</span><span class="mi">0</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="err">@</span><span class="n">my-ref</span><span class="w">
+</span><span class="mi">0</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">dosync</span><span class="w">
+       </span><span class="p">(</span><span class="nb">ref-set</span><span class="w"> </span><span class="n">my-ref</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+       </span><span class="p">(</span><span class="nb">ref-set</span><span class="w"> </span><span class="n">my-ref</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w">
+</span><span class="mi">2</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="err">@</span><span class="n">my-ref</span><span class="w">
+</span><span class="mi">2</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>The update of refs must be done inside <code class="prettyprint">dosync</code> block. <code class="prettyprint">dosync</code> is telling Clojure where the transaction update starts from. To set a ref to a new value, use <code class="prettyprint">ref-set</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">ref-set</span><span class="w"> </span><span class="n">my-ref</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
+</span><span class="n">IllegalStateException</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">transaction</span><span class="w"> </span><span class="n">running</span><span class="w">  </span><span class="n">clojure.lang.LockingTransaction.getEx</span><span class="w"> </span><span class="p">(</span><span class="nf">LockingTransaction.java</span><span class="no">:208</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>Any updates to refs <strong>always</strong> has to be done inside <code class="prettyprint">dosync</code> in order to make transactional updates. Otherwise, Clojure complains with <code class="prettyprint">No transaction running</code> exception.</p>
+
+<h2 id="alter">Alter</h2>
+
+<p><code class="prettyprint">alter</code> allows you to use a function to update the value of a ref.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">my-ref</span><span class="w"> </span><span class="p">(</span><span class="nb">ref</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/my-ref</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">dosync</span><span class="w">
+        </span><span class="p">(</span><span class="nb">alter</span><span class="w"> </span><span class="n">my-ref</span><span class="w">
+        </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">current_ref</span><span class="p">]</span><span class="w">
+            </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="n">current_ref</span><span class="p">))))</span><span class="w">
+</span><span class="mi">1</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="err">@</span><span class="n">my-ref</span><span class="w">
+</span><span class="mi">1</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">dosync</span><span class="w">
+        </span><span class="p">(</span><span class="nb">alter</span><span class="w"> </span><span class="n">my-ref</span><span class="w">
+          </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">_</span><span class="p">]</span><span class="w"> </span><span class="s">"not int"</span><span class="p">)))</span><span class="w">
+</span><span class="s">"not int"</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="err">@</span><span class="n">my-ref</span><span class="w">
+</span><span class="s">"not int"</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br></p>
+
+<p>The function that you pass to <code class="prettyprint">alter</code> will take an argument which is the current atom.</p>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>The ref is updated by the return value of the function.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">my-ref</span><span class="w"> </span><span class="p">(</span><span class="nb">ref</span><span class="w"> </span><span class="mi">100</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/atom-int</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">multiple-by</span><span class="w">
+        </span><span class="p">[</span><span class="n">current-ref</span><span class="w"> </span><span class="n">num</span><span class="p">]</span><span class="w">
+        </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">current-ref</span><span class="w"> </span><span class="n">num</span><span class="p">))</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">dosync</span><span class="w">
+        </span><span class="p">(</span><span class="nb">alter</span><span class="w"> </span><span class="n">my-ref</span><span class="w"> </span><span class="n">multiple-by</span><span class="w"> </span><span class="mi">10</span><span class="p">))</span><span class="w">
+</span><span class="mi">1000</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>You can pass a function that takes multiple arguments. The first argument of the function is the current atom.</p>
+
+<h2 id="transaction">Transaction</h2>
+
+<p>This piece of code demonstrates how transaction works.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="p">(</span><span class="nb">ref</span><span class="w"> </span><span class="p">{}))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/user</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">dosync</span><span class="w">
+ </span><span class="p">(</span><span class="nb">alter</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="nb">merge</span><span class="w"> </span><span class="p">{</span><span class="no">:name</span><span class="w"> </span><span class="s">"Kim"</span><span class="p">})</span><span class="w">
+ </span><span class="p">(</span><span class="nf">throw</span><span class="w"> </span><span class="p">(</span><span class="nf">Exception.</span><span class="w"> </span><span class="s">"something wrong happens!"</span><span class="p">))</span><span class="w">
+ </span><span class="p">(</span><span class="nb">alter</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="nb">merge</span><span class="w"> </span><span class="p">{</span><span class="no">:age</span><span class="w"> </span><span class="mi">32</span><span class="p">}))</span><span class="w">
+</span><span class="n">Exception</span><span class="w"> </span><span class="n">something</span><span class="w"> </span><span class="n">wrong</span><span class="w"> </span><span class="n">happens!</span><span class="w">  </span><span class="n">user/eval2997/fn--2998</span><span class="w"> </span><span class="p">(</span><span class="nf">NO_SOURCE_FILE</span><span class="no">:2</span><span class="p">)</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="err">@</span><span class="n">user</span><span class="w">
+</span><span class="p">{}</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Suppose we are trying to create an user record in database. Each <code class="prettyprint">alter</code> tries to update user-recrod ref with user info and you want the ref to be updated only when both <code class="prettyprint">alter</code> succeed.</p>
+
+<p><br></p>
+
+<p>But, let&rsquo;s assume something wrong occurs between the first and the second alter.</p>
+
+<p><br>
+<br></p>
+
+<p>As you see, the user-record ref is still empty. This is because <code class="prettyprint">alter</code> inside <code class="prettyprint">dosync</code> doesn&rsquo;t update the ref until getting out of <code class="prettyprint">dosycn</code> block successfully.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">user-record</span><span class="w"> </span><span class="p">(</span><span class="nf">atom</span><span class="w"> </span><span class="p">{}))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/user-record</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">do</span><span class="w">
+ </span><span class="p">(</span><span class="nf">swap!</span><span class="w"> </span><span class="n">user-record</span><span class="w"> </span><span class="nb">merge</span><span class="w"> </span><span class="p">{</span><span class="no">:name</span><span class="w"> </span><span class="s">"Kim"</span><span class="p">})</span><span class="w">
+ </span><span class="p">(</span><span class="nf">throw</span><span class="w"> </span><span class="p">(</span><span class="nf">Exception.</span><span class="w"> </span><span class="s">"something wrong happens!"</span><span class="p">))</span><span class="w">
+ </span><span class="p">(</span><span class="nf">swap!</span><span class="w"> </span><span class="n">user-record</span><span class="w"> </span><span class="nb">merge</span><span class="w"> </span><span class="p">{</span><span class="no">:age</span><span class="w"> </span><span class="mi">32</span><span class="p">}))</span><span class="w">
+</span><span class="n">Exception</span><span class="w"> </span><span class="n">something</span><span class="w"> </span><span class="n">wrong</span><span class="w"> </span><span class="n">happens!</span><span class="w">  </span><span class="n">user/eval3024</span><span class="w"> </span><span class="p">(</span><span class="nf">NO_SOURCE_FILE</span><span class="no">:3</span><span class="p">)</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="err">@</span><span class="n">user-record</span><span class="w">
+</span><span class="p">{</span><span class="no">:name</span><span class="w"> </span><span class="s">"Kim"</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>This is the atom version that doesn&rsquo;t work. As you see, user-record atom is half updated when there is the exception.</p>
+<pre class="highlight clojure"><code><span class="w">
+
+
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">my-ref</span><span class="w"> </span><span class="p">(</span><span class="nb">ref</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/my-ref</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">future</span><span class="w">
+        </span><span class="p">(</span><span class="nb">dosync</span><span class="w">
+          </span><span class="p">(</span><span class="nb">alter</span><span class="w"> </span><span class="n">my-ref</span><span class="w"> </span><span class="nb">inc</span><span class="p">)</span><span class="w">
+          </span><span class="p">(</span><span class="nf">Thread/sleep</span><span class="w"> </span><span class="mi">5000</span><span class="p">)))</span><span class="w">
+ </span><span class="o">#</span><span class="n">&lt;core$future_call$reify__6320</span><span class="err">@</span><span class="mi">6</span><span class="n">ef7be6a</span><span class="err">:</span><span class="w"> </span><span class="no">:pending&gt;</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="err">@</span><span class="n">my-ref</span><span class="p">)</span><span class="w">
+</span><span class="mi">0</span><span class="w">
+
+</span><span class="c1">;; Wait 5 seconds
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="err">@</span><span class="n">my-ref</span><span class="p">)</span><span class="w">
+</span><span class="mi">1</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>The other way to see how transaction works is trying to observe the value of ref outside dosync block.</p>
+
+<p><br>
+<br>
+<br></p>
+
+<p>We use future to run the whole transaction in the separate thread and wait two seconds before exiting the dosync block.</p>
+
+<p><br>
+<br>
+<br></p>
+
+<p>The value of the ref is still 0 at this moment because the update to the ref is still not committed.</p>
+
+<h1 id="many-thanks">Many Thanks</h1>
+
+<p><a href="https://aphyr.com/tags/Clojure-from-the-ground-up">Clojure from the ground up</a></p>
+
+<p><a href="http://www.braveclojure.com/">CLOJURE for the BRAVE and TRUE</a></p>
+
+<p><a href="http://clojure.org/cheatsheet">Clojure Cheetsheet</a></p>
+
+<p>And many other great articles and pages made by the Clojure community.</p>
 
       </div>
       <div class="dark-box">
