@@ -18,7 +18,64 @@ nil
 
 Our first Clojure code is, of course, printing "Hello, world!".
 
-# Variables
+# Bindings
+
+Giving names to values is called **assignment** in many programming languages. However, we call the mapping between names and values  **binding** in the world of Clojure.
+
+## Symbol
+
+Symbols are used to bind names to values. `a` `b` `my-cool-function` `nyncat`: they are all symbols in Clojure.
+
+```clojure
+user> (type 'a)
+clojure.lang.Symbol
+
+user> (type 'b)
+clojure.lang.Symbol
+
+user> (type 'my-cool-function)
+clojure.lang.Symbol
+
+user> (type 'my-cool-function)
+clojure.lang.Symbol
+```
+
+<br>
+
+The reason why we are putting `'` single quote is that we want to treat symbols as data in order to pass them to `type` function.
+
+```clojure
+user> (def a "aaaaa")
+#'user/a
+
+user> (print a)
+aaaaa
+nil
+
+user> (print b)
+CompilerException java.lang.RuntimeException: Unable to resolve symbol: b in this context, compiling:(NO_SOURCE_PATH:1:1)
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+If you don't append `'` single quote, you are telling Clojure to `resolve` the symbol. You can obtain bound values by resolving symbols.
+
+<br>
+
+When we try to resolve symbols that are not bound to anything, Clojure complains with the exception.
+
 
 ## Let
 
@@ -30,7 +87,7 @@ nil
 
 <br>
 
-To bind (assign) value to variable, use `let`. Let takes a vector which takes a variable in the first element and a value in the second element.
+To bind values to names, use `let`. Let takes a vector which takes a symbol in the first element and a value in the second element.
 
 ```clojure
 user=> (println object)
@@ -41,14 +98,14 @@ CompilerException java.lang.RuntimeException: Unable to resolve symbol: object i
 <br>
 <br>
 
-You cannot access the variable defined from outside of the let. You can think of this as equivalent to *private variable* in non-functional language.
+You cannot resolve the symbol outside the let. You can think of this as equivalent to *private variable* in other programming languages.
 
 ```clojure
 user=> (let [object1 "light"
-             object2 "darkness"]
+object2 "darkness"]
 
-             (println (str "God said let there be " object1))
-             (println (str "God also said let there be " object2)))
+(println (str "God said let there be " object1))
+(println (str "God also said let there be " object2)))
 God said let there be light
 God also said let there be darkness
 nil
@@ -62,8 +119,8 @@ You can also provide multiple bindings.
 
 ```clojure
 user=>  (let [object "light"]
-             (let [object "darkness"])
-             (println (str "God said let there be " object)))
+(let [object "darkness"])
+(println (str "God said let there be " object)))
 God said let there be light
 nil
 ```
@@ -78,7 +135,7 @@ nil
 
 The most notable trait of `let` is that its ***immutable***: once you define, you never be able to change. Here, we tried to override object `light` with `darkness`, but we fail to do so.
 
-## Def (Var)
+## Def
 
 ```clojure
 user=> (def object "light")
@@ -91,7 +148,7 @@ nil
 
 <br>
 
-You can also bind values to variable with `def`. In Clojure, we say `def` binds "light" to "object" which is something called `Var`.
+You can also bind values to names with `def`. Unlike `let`, you can access it outside `def`.
 
 ```clojure
 user=> (def object "darkness")
@@ -102,13 +159,25 @@ God said let there be darkness
 nil
 ```
 
-Unlike `let`, you can access var outside `def`.
 
 <br>
 <br>
 <br>
+<br>
+<br>
+<br>
 
-`Var` is ***mutable***, so we can redefine later. You should avoid doing this whenever possible, but sometimes useful in real programming.
+
+The binding created by `def` is ***mutable***, so we can redefine later.
+
+<br>
+<br>
+<br>
+<br>
+
+The rule of thumb in Clojure is avoiding the use of `def` as much as possible. `defn` will introduce state and the abusing of state will make our code difficult to maintain.
+
+
 
 # Functions
 
@@ -1774,7 +1843,7 @@ user> (repeatedly 6
         (fn []
         (println (realized? my-future))
         (Thread/sleep 1000)))
- 
+
 #'user/my-futurefalse
 false
 false
@@ -1813,7 +1882,7 @@ user> (def listener (fn []
   (listener)
   ;; Suppose doing things that takes time
   (Thread/sleep 2000)
-  
+
   (deliver my-promise "delivered value")
 
 
@@ -1927,12 +1996,12 @@ user> (swap! atom-int
         (fn [current-atom]
             (inc current-atom)))
 1
-		  
+
 user> (swap! atom-int
         (fn [_]
             "not int"))
 "not int"
-		  
+
 user> @atom-int
 "not int"
 ```
@@ -1984,7 +2053,7 @@ user> (def x 0)
 user> (repeatedly 10
         (fn [] (def x (inc x))))
 (#'user/x...
-		
+
 user> x
 10
 ```
@@ -2000,7 +2069,7 @@ user> (def x 0)
 user> (repeatedly 10
         (fn [] (future (def x (inc x)))))
 (#<core$future_call$reify__6320@410e4786: :pending> #<core$futur...
-		
+
 user> x
 5
 ```
@@ -2025,7 +2094,7 @@ user> (def x (atom 0))
 user> (repeatedly 10
         (fn [] (future (swap! x inc))))
 (#<core$future_call$reify__6320@632796c6: :pending>...
-		
+
 user> @x
 10
 ```
@@ -2079,7 +2148,7 @@ user> (dosync
        (ref-set my-ref 1)
        (ref-set my-ref 2))
 2
-	   
+
 user> @my-ref
 2
 ```
@@ -2093,7 +2162,7 @@ user> @my-ref
 
 
 
-The update of refs must be done inside `dosync` block. `dosync` is telling Clojure where the transaction update starts from. To set a ref to a new value, use `ref-set`. 
+The update of refs must be done inside `dosync` block. `dosync` is telling Clojure where the transaction update starts from. To set a ref to a new value, use `ref-set`.
 
 ```clojure
 user> (ref-set my-ref 3)
@@ -2130,7 +2199,7 @@ user> (dosync
         (alter my-ref
           (fn [_] "not int")))
 "not int"
-		  
+
 user> @my-ref
 "not int"
 ```
@@ -2191,7 +2260,7 @@ user> (dosync
  (throw (Exception. "something wrong happens!"))
  (alter user merge {:age 32}))
 Exception something wrong happens!  user/eval2997/fn--2998 (NO_SOURCE_FILE:2)
- 
+
 user> @user
 {}
 ```
@@ -2279,4 +2348,3 @@ The value of the ref is still 0 at this moment because the update to the ref is 
 # Thanks
 http://d.hatena.ne.jp/Kazuhira/20120603/1338728578
 http://www.braveclojure.com/writing-macros/
-
