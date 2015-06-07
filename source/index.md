@@ -4,7 +4,13 @@ title: Clojure by Example
 includes:
 
 search: true
+
+toc_footers:
+ - Powered by <a href='https://github.com/tripit/slate'>Slate</a>
+ - Hosted on <a href='https://github.com/kimh/clojure-by-example'>Github</a>
+ - Made by <a href='http://kimh.github.io/about/'>Hirokuni Kim</a>
 ---
+ 
 
 # Hello, world!!
 
@@ -2354,6 +2360,13 @@ We use future to run the whole transaction in the separate thread and wait two s
 
 The value of the ref is still 0 at this moment because the update to the ref is still not committed.
 
-# Thanks
-http://d.hatena.ne.jp/Kazuhira/20120603/1338728578
-http://www.braveclojure.com/writing-macros/
+# Many Thanks
+[Clojure from the ground up](https://aphyr.com/tags/Clojure-from-the-ground-up)
+
+[CLOJURE for the BRAVE and TRUE](http://www.braveclojure.com/)
+
+[Clojure Cheetsheet](http://clojure.org/cheatsheet)
+
+
+And many other great articles and pages made by the Clojure community.
+
