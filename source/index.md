@@ -70,7 +70,7 @@ CompilerException java.lang.RuntimeException: Unable to resolve symbol: b in thi
 <br>
 
 
-If you don't append `'` single quote, you are telling Clojure to `resolve` the symbol. You can obtain bound values by resolving symbols.
+If you don't append `'` single quote, you are telling Clojure to resolve the symbol. You can obtain bound values by resolving symbols.
 
 <br>
 
@@ -251,7 +251,7 @@ user=> (defn say-hello
 You can also add metadata of the function.
 
 ```clojure
-user=> (meta #'say-hello)
+user=> (meta (var say-hello))
 {:added "1.0", :ns #<Namespace user>, :name say-hello, :file "NO_SOURCE_PATH", :static true, :column 1, :line 1, :arglists ([name]), :doc "Takes name argument and say hello to the name"}
 ```
 
@@ -263,7 +263,16 @@ user=> (meta #'say-hello)
 <br>
 
 
-You can expand the metadata with `meta`. `#'` is reader macro. **TODO: add link to reader macro**
+You can expand the metadata with `meta`. Notice that `say-hello` is first passed to `var`. This is because `meta` expects it's argument to be var object, not value, and `var` will turn the passed symbol into var object.
+
+```clojure
+user> (meta #'say-hello)
+{:added "1.0", :ns #<Namespace user>, :name say-hello, :file "NO_SOURCE_PATH", :static true, :column 1, :line 1, :arglists ([name]), :doc "Takes name argument and say hello to the name"}
+```
+
+<br>
+
+`#'` is the reader macro for `var` and works the exactly same.
 
 ## Anonymous Function
 
