@@ -12,21 +12,41 @@ toc_footers:
 ---
  
 
-# Hello, world!!
+# Hello, world!
 
 ```clojure
-user=> (println "hello, world")
+user=> (println "Hello, world!")
 hello, world
 nil
+
+
+
+
+user> "h"
+"h"
+
+user> 100
+100
+
+user> true
+true
 ```
 
 <br>
 
-Our first Clojure code is, of course, printing "Hello, world!".
+Our first Clojure code is, of course, printing "Hello, world!". Here, we invoke the **function** `println` with the **argument** `Hello, world!`. We call the invocation of function ***applying the function to data*** in Clojure or other functional programming language.
+
+<br>
+<br>
+
+The entire line of the code `(....)` is called a **form** in Clojure. It's also called **expression** in a general sense, but there is no real problem to use them interchangeably.
+
+You can think of form as something that returns a value. `"h"` `100` `true` are all forms as well because they are returning themselves.
+
 
 # Bindings
 
-Giving names to values is called **assignment** in many programming languages. However, we call the mapping between names and values  **binding** in the world of Clojure.
+Giving names to values is called **assignment** in many programming languages. However, we call the mapping between names and values  **binding** in Clojure.
 
 ## Symbol
 
