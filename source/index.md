@@ -41,7 +41,7 @@ Our first Clojure code is, of course, printing "Hello, world!". Here, we invoke 
 
 The entire line of the code `(....)` is called a **form** in Clojure. It's also called **expression** in a general sense, but there is no real problem to use them interchangeably.
 
-You can think of form as something that returns a value. `"h"` `100` `true` are all forms as well because they are returning themselves.
+You can think of form as something that returns a value. `"h"` `100` `true` are all forms as well.
 
 
 # Bindings
@@ -68,7 +68,7 @@ clojure.lang.Symbol
 
 <br>
 
-The reason why we are putting `'` single quote is that we want to treat symbols as data in order to pass them to `type` function.
+`'` will prevent a form from being evaluated. We are doing this here because we want to treat symbols as data in order to pass them to `type` function.
 
 ```clojure
 user> (def a "aaaaa")
@@ -124,14 +124,13 @@ CompilerException java.lang.RuntimeException: Unable to resolve symbol: object i
 <br>
 <br>
 
-You cannot resolve the symbol outside the let. You can think of this as equivalent to *private variable* in other programming languages.
+You cannot resolve the symbol outside the let. This behavior is very similar to *private variable* in other programming languages.
 
 ```clojure
 user=> (let [object1 "light"
-object2 "darkness"]
-
-(println (str "God said let there be " object1))
-(println (str "God also said let there be " object2)))
+             object2 "darkness"]
+             (println (str "God said let there be " object1))
+             (println (str "God also said let there be " object2)))
 God said let there be light
 God also said let there be darkness
 nil
@@ -145,8 +144,8 @@ You can also provide multiple bindings.
 
 ```clojure
 user=>  (let [object "light"]
-(let [object "darkness"])
-(println (str "God said let there be " object)))
+        (let [object "darkness"])
+        (println (str "God said let there be " object)))
 God said let there be light
 nil
 ```
@@ -159,7 +158,7 @@ nil
 <br>
 <br>
 
-The most notable trait of `let` is that its ***immutable***: once you define, you never be able to change. Here, we tried to override object `light` with `darkness`, but we fail to do so.
+The most notable trait of `let` is that its **immutable**: once you define, you never be able to change. Here, we tried to override object light with darkness, but we fail to do so.
 
 ## Def
 
@@ -194,7 +193,7 @@ nil
 <br>
 
 
-The binding created by `def` is ***mutable***, so we can redefine later.
+The binding created by `def` is **mutable**, so we can redefine later.
 
 <br>
 <br>
@@ -411,7 +410,7 @@ Then we pass `say-hello` and `say-bye` to `greeting`.
 
 ## Closure
 
-When a function (let's call this *inner* function) is returned from another function (let's call this *outer* function), and the inner function does somethings with the arguments given from outer function, then the inner function is called `closure`.
+When a function (let's call this *inner* function) is returned from another function (let's call this *outer* function), and the inner function does somethings with the arguments given from outer function, then the inner function is called **closure**.
 
 ```clojure
 user=> (defn inner
@@ -484,9 +483,9 @@ In Clojure, you can pass only one expression to a branch of `if`. However, you o
 ## If-Let
 
 ```clojure
-user=> (if-let [pos-nums (filter pos? [ -1 -2 1 2])]
-  pos-nums
-  "no positive numbers")
+user=> (if-let [pos-nums (filter pos? [-1 -2 1 2])]
+          pos-nums
+          "no positive numbers")
 (1 2)
 ```
 
@@ -545,9 +544,9 @@ There is also `when-let` which is similar to `if-let` but no **else** branch.
 user=> (defn case-test-1
          [n]
          (case n
-               1 "n is 1"
-               2 "n is 2"
-               "n is other"))
+            1 "n is 1"
+            2 "n is 2"
+            "n is other"))
 #'user/case-test-1
 
 user=> (println (case-test-1 1))
@@ -565,7 +564,7 @@ nil
 
 <br>
 
-There is also `case` which works pretty much similar to that of other programming languages. `case` compares the value with each condition with `=`
+There is also `case` which works pretty much the same as the one in other programming languages. `case` compares the value with each condition with `=`
 and evaluates the expression in the matched branch.
 
 <br>
@@ -580,7 +579,7 @@ and evaluates the expression in the matched branch.
 <br>
 <br>
 <br>
-The expression in the last branch will be evaluated if none of other branch is matched.
+The expression in the last branch will be evaluated if none of other branches are matched.
 
 ## Cond
 
@@ -611,7 +610,7 @@ When you want to do similar thing to `case` but want to write your own test case
 
 <br>
 <br>
-You use `:else` symbol for default case.
+You use `:else` keyword for the default case.
 
 ## Condp
 
@@ -634,7 +633,7 @@ nil
 
 <br>
 
-You can use predicate with `condp` for condition, in this case `contains?`.
+You can use predicate with `condp` for condition. In this case `contains?` is the predicate.
 
 
 <br>
@@ -661,22 +660,50 @@ false
 
 <br>
 
-`true` and `false` are values of *Boolean* type just like in other programming languages.
+`true` and `false` are values of **Boolean** type just like in other programming languages.
+
+```clojure
+user> (boolean false)
+false
+
+user> (boolean nil)
+false
+
+user> (boolean 0)
+true
+
+user> (boolean 1)
+true
+
+user> (boolean "hi there")
+true
+
+user> (boolean :hi)
+true
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+In Clojure, everything except `false` and `nil` are `true`.
 
 # Strings
 
-## Literals
+## Literal
 
 ```clojure
 user=> "Hi, there!"
-"Hi, there!"G
+"Hi, there!"
 ```
 
 </br>
 
-You can create a string by double-quoting text.
+You can create a string by double-quoting texts.
 
-## Concatenation
+## Str
 
 ```clojure
 user=> (str "Good " "morning")
@@ -685,20 +712,7 @@ user=> (str "Good " "morning")
 
 <br>
 
-One way to concatenate strings is using `str`.
-
-```
-user=> (use '[clojure.string :only [join]])
-nil
-
-user=> (join "" ["Good " "morning"])
-"Good morning"
-```
-
-</br>
-</br>
-
-You can also use `clojure.string/join`.
+To concatenate strings, use `str`.
 
 ```clojure
 user=> (+ "Good " "morning")
@@ -706,17 +720,24 @@ user=> (+ "Good " "morning")
 ClassCastException java.lang.String cannot be cast to java.lang.Number  clojure.lang.Numbers.add (Numbers.java:126)
 ```
 
-</br>
-</br>
-</br>
-</br>
-</br>
+<br>
+<br>
 
-`+` operator *doesn't* work to concat strings against your expectation.
+`+` operator doesn't work to concat strings against your expectation.
 
-## Interpolation
+```clojure
+user> (let [first "Hirokuni"
+            last "Kim"]
+            (str "My name is " first " " last))
+"My name is Hirokuni Kim"
+```
 
-Clojure doesn't have string interpolation. So, you need to use [concatenation functions](#concatenation).
+<br>
+<br>
+<br>
+<br>
+
+Clojure doesn't have string interpolation. `str` works for you.
 
 # Integers
 
@@ -823,32 +844,44 @@ You can use `bigint` to handle really big number.
 
 # Lists
 
+Lists are the most basic collection in Clojure which is a dialect of Lisp (List Processing language). However, you don't often use list as data collection because you have more useful collection data types in Clojure such as vectors or maps.
+
 ## Literal
 
 ```clojure
-user=> `(1 2 3)
+user=> '(1 2 3)
 (1 2 3)
 ```
 
 <br>
 
-Lists are simple collection of values. You can create a list by grouping values with paren with **`** at the top. We need ``` ` ``` because list will be evaluated without it.
-
-## Get element
+Lists are simple collection of values. You can create a list by grouping values with parentheses with a single quote `'` at the top.
 
 ```clojure
-user=> (nth `(1 2 3) 1)
+user> (1 2 3)
+ClassCastException java.lang.Long cannot be cast to clojure.lang.IFn  user/eval2843 (NO_SOURCE_FILE:1)
+```
+
+<br>
+<br>
+
+We need `'` to prevent the list from being evaluated.
+
+## Nth
+
+```clojure
+user=> (nth '(1 2 3) 1)
 2
 ```
 
 <br>
 
-To get a value from list, use `nth` with index number. Index starts from 0
+To get a value from the list, use `nth` with index number. Index starts from 0
 
 ## Count
 
 ```clojure
-user=> (count `(1 2 3) )
+user=> (count '(1 2 3) )
 3
 ```
 
@@ -856,10 +889,10 @@ user=> (count `(1 2 3) )
 
 To count how many values in the list, use `count`.
 
-## Add element
+## Conj
 
 ```clojure
-user=> (conj `(1 2 3) 4)
+user=> (conj '(1 2 3) 4)
 (4 1 2 3)
 ```
 
@@ -870,11 +903,11 @@ To add a value to the list, use `conj` (conj[oin]). Note that the new value is a
 ## Remove element
 
 How to remove a value from a list? You can't really remove a value from list in Clojure. That's not what list is supposed to do.
-If you are writing a program that needs to remove from collection, you should use other type of collection such as `Set`.
+If you are writing a program that needs to remove items from collection, you should use other type of collection such as vectors or sets.
 
 # Vectors
 
-You can think of `Vector` as efficient version of `List`. It's more practical data storage of multiple values than `List`.
+You can think of vectors as efficient and useful version of lists. It's more practical data storage of multiple values than lists.
 
 ## Literal
 
@@ -885,16 +918,16 @@ user=> [1 2 3]
 
 <br>
 
-You can create a vector by grouping values with square brackets. Unlike list, you don't need ``` ` ``` because vector will not be evaluated unlike list.
+You can create a vector by grouping values with square brackets. Unlike lists, you don't need `'` because vectors will not be evaluated.
 
-## Get element
+## Nth
 
 ```clojure
 user=> (nth [1 2 3] 1)
 2
 ```
 <br>
-To get a value from vector, you need to specify the index of the value.
+To get a value from the vector, you need to specify the index of the value.
 
 ```clojure
 user=> (first [1 2 3])
@@ -906,10 +939,11 @@ user=> (last [1 2 3])
 
 <br>
 <br>
+<br>
 
-`Vetor` has convenient functions to access elements. To get first and second element, use `first` and `second`.
+Vectors have convenient functions to access elements. To get the first and second elements, use `first` and `second`.
 
-## Add element
+## Conj
 
 ```clojure
 user=> (conj [1 2 3] 4)
@@ -918,9 +952,9 @@ user=> (conj [1 2 3] 4)
 
 <br>
 
-To add a value, use `conj` (conj[oin]). **Note that the new value is added to the bottom.**
+To add a value, use `conj` (conj[oin]). Note that the new value is added to the bottom while it is added to the top in lists.
 
-## Get index
+## .indexOf
 
 ```clojure
 user=>  (.indexOf [1 2 3] 2)
@@ -929,7 +963,7 @@ user=>  (.indexOf [1 2 3] 2)
 
 <br>
 
-You can get the index of a value in vector with `.indexOf`.
+You can get the index of a value with `.indexOf`. The dot before indexOf indicates Java interop to access methods in Java.
 
 ```clojure
 user=>  (.indexOf [1 2 3] 4)
@@ -944,7 +978,7 @@ Returns `-1` if the value doesn't exist.
 
 # Sets
 
-`Sets` are unordered collection of values, meaning that the order of values are not guaranteed.
+Sets are unordered collection of values, meaning that the order of values are not guaranteed.
 
 ## Literal
 
@@ -955,9 +989,9 @@ user=> #{1 2 3}
 
 <br>
 
-You can create a set by grouping values with `#{}`. I get the order of 1 -> 3 -> 2 on my computer but you may get different order since the order is not guaranteed
+You can create a set by grouping values with `#{}`. I get the order of 1 -> 3 -> 2 on my computer but you may the get different order since the order is not guaranteed
 
-## Get element
+## Sort
 
 ```clojure
 user=> (sort (conj #{1 2 3} 4))
@@ -966,9 +1000,9 @@ user=> (sort (conj #{1 2 3} 4))
 
 <br>
 
-To get sorted order, use `sort`.
+To get a sorted order, use `sort`.
 
-## Add element
+## Conj
 
 ```clojure
 user=> (conj #{1 2 3} 4)
@@ -987,9 +1021,9 @@ user=> (conj (conj #{1 2 3} 4) 4)
 <br>
 <br>
 
-One important trait of set is that **it does not contain an element more than once.**
+One important trait of sets is that **it does not contain an element more than once.**
 
-## Remove element
+## Disj
 
 ```clojure
 user=> (disj #{1 2 3} 1)
@@ -1008,9 +1042,9 @@ user=> (disj #{1 2 3} 4)
 <br>
 <br>
 
-If `disj` value that the set doesn't contain, it returns the original set.
+If trying to `disj` a value that doesn't exist in the set, it returns the original set.
 
-## Select elements
+## Select
 
 ```clojure
 user=> (clojure.set/select odd? #{1 2 3} )
@@ -1021,7 +1055,7 @@ user=> (clojure.set/select odd? #{1 2 3} )
 
 To select certain values from a set, use `select`. `odd?` returns boolean for each element. This example returns a new set which only contains odd numbers.
 
-## Check if element exists
+## Contains?
 
 ```clojure
 user=> (contains? #{1 2 3} 1)
@@ -1033,9 +1067,9 @@ false
 
 <br>
 
-To check if a value is contained in a set, use `contains?`.
+To check if a value is contained in the set, use `contains?`.
 
-## Check if a set is part of other set
+## Subset?
 
 ```clojure
 user=>  (clojure.set/subset? #{1 2} #{1 2 3 4})
@@ -1047,9 +1081,9 @@ false
 
 <br>
 
-To check if a set is part of another set, use `subset?`.
+To check if a set is the part of another set, use `subset?`.
 
-## Check if a set includes other set
+## Superset?
 
 ```clojure
 user=>  (clojure.set/superset? #{1 2 3} #{1 2})
@@ -1062,7 +1096,7 @@ To check if a set includes another set, use `superset?`.
 
 # Maps
 
-`Maps` are key-value data structure to store multiple values.
+Maps are key-value data structure to store multiple values.
 
 ## Literal
 
@@ -1076,7 +1110,7 @@ user=> {"Apple" "Mac" "Microsoft" "Windows"}
 You can create a map by grouping values with `{}`.
 
 
-## Get element
+## Get
 
 ```clojure
 user=> (get {"Apple" "Mac" "Microsoft" "Windows"} "Apple")
@@ -1106,7 +1140,8 @@ user> (:Apple {:Apple "Mac" :Microsoft "Windows"})
 <br>
 
 When the key of a map is symbol, you can use the symbol just like a function to get the value.
-## Add element
+
+## Assoc
 
 ```clojure
 user=> (assoc {"Apple", "Mac" "Microsoft" "Windows"} "Commodore" "Amiga")
@@ -1125,9 +1160,9 @@ user=> (assoc {"Apple", "Mac" "Microsoft" "Windows"} "Apple" "iOS")
 <br>
 <br>
 
-If key already exists, it replace the value.
+If the key already exists, it replaces the value.
 
-## Combine maps
+## Merge
 
 ```clojure
 user=> (merge {"Apple", "Mac" "Microsoft" "Windows"} {1 2})
@@ -1141,7 +1176,8 @@ To combine two maps, use `merge`.
 ## Keys
 
 ```clojure
-(keys {"Apple", "Mac" "Microsoft" "Windows"})
+user> (keys {"Apple", "Mac" "Microsoft" "Windows"})
+("Apple" "Microsoft")
 ```
 
 <br>
@@ -1151,7 +1187,8 @@ To get all keys from a map, use `keys`.
 ## Vals
 
 ```clojure
-(keys {"Apple", "Mac" "Microsoft" "Windows"})
+user> (vals {"Apple", "Mac" "Microsoft" "Windows"})
+("Mac" "Windows")
 ```
 
 <br>
@@ -1160,7 +1197,10 @@ To get all values from a map, use `vals`.
 
 # Sequences
 
-`Secuqnces` are logical lists that are not tied to a particular implementation. What does it mean? It means that you can apply the same functions to any types of collections without worrying about what types of collections that you are dealing with.
+Secuqnces are logical lists that are not tied to a particular implementation. What does it mean? It means that you can apply the same functions to any types of collections without worrying about what types of collections that you are dealing with.
+
+`Sequences` **are the most important data abstraction in Clojure.**
+
 
 ```clojure
 user=> (map inc [ 1 2 3 ])
@@ -1183,19 +1223,19 @@ user=> (map println {:a 1 :b 2 :c 3} )
 
 <br>
 
-Using map for `Vectors`.
+Applying `map` for the vector.
 
 <br>
 
-Using map for `Lists`.
+Applying `map` for the list.
 
 <br>
 
-Using map for `Sets`.
+Applying map for the set.
 
 <br>
 
-Using map for `Maps`. We are using `println` for the function that we apply since `inc` doesn't work here, but this doesn't hurt the idea that you can use `map` for any collections.
+Applying `map` for the map. We are using `println` for the function that we apply since you cannot `inc` a map, but this doesn't hurt the idea that you can use `map` for any collections.
 
 ```clojure
 user=> (type (map inc [ 1 2 3 ]))
@@ -1214,15 +1254,6 @@ clojure.lang.LazySeq
 <br>
 
 As you can see, the type of all returned values is `LazySeq`.
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-`Sequences` **are the most important data abstraction in Clojure.**
 
 ## Map
 
