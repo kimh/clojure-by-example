@@ -1222,7 +1222,7 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <p><br></p>
 
-<p>You can get a sequence of infinite integers with <code class="prettyprint">iterate</code>. Be careful, though. Running this example will freeze your terminal since the computation continues forever.</p>
+<p>You can get a sequence of infinite integers with <code class="prettyprint">iterate</code>. Be careful, though. Running this example will freeze your terminal since the evaluation of this expression never returns.</p>
 
 <h2 id="range">Range</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">range</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w">
@@ -1231,7 +1231,7 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <p><br></p>
 
-<p>To generates a sequence of numbers between two points, you can use <code class="prettyprint">range</code>.</p>
+<p>To generates a sequence of numbers between two points, use <code class="prettyprint">range</code>.</p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">range</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">
 </span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">15</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="mi">25</span><span class="w"> </span><span class="mi">30</span><span class="w"> </span><span class="mi">35</span><span class="w"> </span><span class="mi">40</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="mi">55</span><span class="w"> </span><span class="mi">60</span><span class="w"> </span><span class="mi">65</span><span class="w"> </span><span class="mi">70</span><span class="w"> </span><span class="mi">75</span><span class="w"> </span><span class="mi">80</span><span class="w"> </span><span class="mi">85</span><span class="w"> </span><span class="mi">90</span><span class="w"> </span><span class="mi">95</span><span class="p">)</span><span class="w">
 </span></code></pre>
@@ -1363,8 +1363,7 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <h1 id="macros">Macros</h1>
 
-<p>Clojure&rsquo;s Macros gives you the power to restructure your Clojure code as you like. For example, you can create your own code syntax, invent new control flow, new types of values, etc.
-So, it&rsquo;s not even impossible to create a programming language that looks like Ruby by using Clojure Macros!</p>
+<p>Clojure&rsquo;s Macros gives you the power to restructure your Clojure code as you like. For example, you can create your own code syntax, invent new control flow, new types of values, etc.</p>
 
 <h2 id="defmacro">Defmacro</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defmacro</span><span class="w"> </span><span class="n">unless</span><span class="w"> </span><span class="p">[</span><span class="nb">test</span><span class="w"> </span><span class="n">then</span><span class="p">]</span><span class="w">
@@ -1500,7 +1499,7 @@ Using fully qualified namespace is very important in order to avoid name conflic
 
 <h2 id="delay">Delay</h2>
 
-<p>When you want to defer the evaluation of an expression, you can use <code class="prettyprint">delay</code>.</p>
+<p>When you want to defer the evaluation of an expression, use <code class="prettyprint">delay</code>.</p>
 <pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">later</span><span class="w"> </span><span class="p">(</span><span class="nf">do</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nb">prn</span><span class="w"> </span><span class="s">"Adding"</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)))</span><span class="w">
 </span><span class="s">"Adding"</span><span class="w">
 </span><span class="o">#</span><span class="ss">'user/later</span><span class="w">
@@ -1544,7 +1543,7 @@ Using fully qualified namespace is very important in order to avoid name conflic
 <br>
 <br></p>
 
-<p>You may think that you can archive the same thing by using an anonymous function and <code class="prettyprint">def</code>. Then, why do we get bothered with delay?</p>
+<p>You can archive the same thing by using an anonymous function and <code class="prettyprint">def</code>. Then, why do we get bothered with delay?</p>
 <pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">later</span><span class="w"> </span><span class="p">(</span><span class="nf">delay</span><span class="w"> </span><span class="p">(</span><span class="nf">do</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nb">prn</span><span class="w"> </span><span class="s">"Adding"</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">))))</span><span class="w">
 </span><span class="o">#</span><span class="ss">'user/later</span><span class="w">
 
