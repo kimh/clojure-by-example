@@ -10,7 +10,28 @@ toc_footers:
  - Hosted on <a href='https://github.com/kimh/clojure-by-example'>Github</a>
  - Made by <a href='http://kimh.github.io/about/'>Hirokuni Kim</a>
 ---
- 
+
+# About
+I don't like reading thick O'Reilly books when I start learning new programming languages. Rather, I like starting by writing small and dirty codes. If you take this approach, having many simple codes examples are extremely helpful because I can find answers to these questions very easily.
+
+*How can I define a function?*
+
+*What's the syntax for if and else?*
+
+*Does the language support string interpolation?*
+
+*What scopes of variables are available?*
+
+These are very basic questions, but enough to start hacking with the new languages.
+
+<br>
+
+Recently, I needed to learn this completely new language **Clojure** but couldn't find what I wanted. So, I decided to create one while learning Clojure.
+
+I want to express my thanks to Mark McGranaghan who created [Go by Example](https://gobyexample.com/) which inspired me a lot.
+
+Hopefully, this helps you to start learning and writing Clojure.
+
 
 # Hello, world!
 
