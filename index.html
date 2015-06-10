@@ -21,7 +21,7 @@
       </span>
     </a>
     <div class="tocify-wrapper">
-      ## This is done by lazy Kim ##
+      <!-- This is done by lazy Kim -->
       <div style="margin-bottom : 25px">
         <font size="5" color=#60b325>Clojure</font><font size="5" color=#fff> By</font><font size="5" color=#5881d8> Example</font>
       </div>
@@ -40,19 +40,38 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="hello,-world!!">Hello, world!!</h1>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"hello, world"</span><span class="p">)</span><span class="w">
+        <h1 id="hello,-world!">Hello, world!</h1>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"Hello, world!"</span><span class="p">)</span><span class="w">
 </span><span class="n">hello,</span><span class="w"> </span><span class="n">world</span><span class="w">
 </span><span class="n">nil</span><span class="w">
+
+
+
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="s">"h"</span><span class="w">
+</span><span class="s">"h"</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="mi">100</span><span class="w">
+</span><span class="mi">100</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="n">true</span><span class="w">
+</span><span class="n">true</span><span class="w">
 </span></code></pre>
 
 <p><br></p>
 
-<p>Our first Clojure code is, of course, printing &ldquo;Hello, world!&rdquo;.</p>
+<p>Our first Clojure code is, of course, printing &ldquo;Hello, world!&rdquo;. Here, we invoke the <strong>function</strong> <code class="prettyprint">println</code> with the <strong>argument</strong> <code class="prettyprint">Hello, world!</code>. We call the invocation of function <strong><em>applying the function to data</em></strong> in Clojure or other functional programming language.</p>
+
+<p><br>
+<br></p>
+
+<p>The entire line of the code <code class="prettyprint">(....)</code> is called a <strong>form</strong> in Clojure. It&rsquo;s also called <strong>expression</strong> in a general sense, but there is no real problem to use them interchangeably.</p>
+
+<p>You can think of form as something that returns a value. <code class="prettyprint">&quot;h&quot;</code> <code class="prettyprint">100</code> <code class="prettyprint">true</code> are all forms as well.</p>
 
 <h1 id="bindings">Bindings</h1>
 
-<p>Giving names to values is called <strong>assignment</strong> in many programming languages. However, we call the mapping between names and values  <strong>binding</strong> in the world of Clojure.</p>
+<p>Giving names to values is called <strong>assignment</strong> in many programming languages. However, we call the mapping between names and values  <strong>binding</strong> in Clojure.</p>
 
 <h2 id="symbol">Symbol</h2>
 
@@ -72,7 +91,7 @@
 
 <p><br></p>
 
-<p>The reason why we are putting <code class="prettyprint">&#39;</code> single quote is that we want to treat symbols as data in order to pass them to <code class="prettyprint">type</code> function.</p>
+<p><code class="prettyprint">&#39;</code> will prevent a form from being evaluated. We are doing this here because we want to treat symbols as data in order to pass them to <code class="prettyprint">type</code> function.</p>
 <pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="s">"aaaaa"</span><span class="p">)</span><span class="w">
 </span><span class="o">#</span><span class="ss">'user/a</span><span class="w">
 
@@ -120,12 +139,11 @@
 <p><br>
 <br></p>
 
-<p>You cannot resolve the symbol outside the let. You can think of this as equivalent to <em>private variable</em> in other programming languages.</p>
+<p>You cannot resolve the symbol outside the let. This behavior is very similar to <em>private variable</em> in other programming languages.</p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">object1</span><span class="w"> </span><span class="s">"light"</span><span class="w">
-</span><span class="n">object2</span><span class="w"> </span><span class="s">"darkness"</span><span class="p">]</span><span class="w">
-
-</span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God said let there be "</span><span class="w"> </span><span class="n">object1</span><span class="p">))</span><span class="w">
-</span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God also said let there be "</span><span class="w"> </span><span class="n">object2</span><span class="p">)))</span><span class="w">
+             </span><span class="n">object2</span><span class="w"> </span><span class="s">"darkness"</span><span class="p">]</span><span class="w">
+             </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God said let there be "</span><span class="w"> </span><span class="n">object1</span><span class="p">))</span><span class="w">
+             </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God also said let there be "</span><span class="w"> </span><span class="n">object2</span><span class="p">)))</span><span class="w">
 </span><span class="n">God</span><span class="w"> </span><span class="n">said</span><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">light</span><span class="w">
 </span><span class="n">God</span><span class="w"> </span><span class="n">also</span><span class="w"> </span><span class="n">said</span><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">darkness</span><span class="w">
 </span><span class="n">nil</span><span class="w">
@@ -137,8 +155,8 @@
 
 <p>You can also provide multiple bindings.</p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">object</span><span class="w"> </span><span class="s">"light"</span><span class="p">]</span><span class="w">
-</span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">object</span><span class="w"> </span><span class="s">"darkness"</span><span class="p">])</span><span class="w">
-</span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God said let there be "</span><span class="w"> </span><span class="n">object</span><span class="p">)))</span><span class="w">
+        </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">object</span><span class="w"> </span><span class="s">"darkness"</span><span class="p">])</span><span class="w">
+        </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God said let there be "</span><span class="w"> </span><span class="n">object</span><span class="p">)))</span><span class="w">
 </span><span class="n">God</span><span class="w"> </span><span class="n">said</span><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">light</span><span class="w">
 </span><span class="n">nil</span><span class="w">
 </span></code></pre>
@@ -151,7 +169,7 @@
 <br>
 <br></p>
 
-<p>The most notable trait of <code class="prettyprint">let</code> is that its <strong><em>immutable</em></strong>: once you define, you never be able to change. Here, we tried to override object <code class="prettyprint">light</code> with <code class="prettyprint">darkness</code>, but we fail to do so.</p>
+<p>The most notable trait of <code class="prettyprint">let</code> is that its <strong>immutable</strong>: once you define, you never be able to change. Here, we tried to override object light with darkness, but we fail to do so.</p>
 
 <h2 id="def">Def</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="s">"light"</span><span class="p">)</span><span class="w">
@@ -180,7 +198,7 @@
 <br>
 <br></p>
 
-<p>The binding created by <code class="prettyprint">def</code> is <strong><em>mutable</em></strong>, so we can redefine later.</p>
+<p>The binding created by <code class="prettyprint">def</code> is <strong>mutable</strong>, so we can redefine later.</p>
 
 <p><br>
 <br>
@@ -368,7 +386,7 @@ such as passing to a function, returned from a function, and binding to variable
 
 <h2 id="closure">Closure</h2>
 
-<p>When a function (let&rsquo;s call this <em>inner</em> function) is returned from another function (let&rsquo;s call this <em>outer</em> function), and the inner function does somethings with the arguments given from outer function, then the inner function is called <code class="prettyprint">closure</code>.</p>
+<p>When a function (let&rsquo;s call this <em>inner</em> function) is returned from another function (let&rsquo;s call this <em>outer</em> function), and the inner function does somethings with the arguments given from outer function, then the inner function is called <strong>closure</strong>.</p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">inner</span><span class="w">
          </span><span class="p">[</span><span class="n">from-outer</span><span class="p">]</span><span class="w">
          </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">from-outer</span><span class="p">)))</span><span class="w">
@@ -432,9 +450,9 @@ such as passing to a function, returned from a function, and binding to variable
 <p>In Clojure, you can pass only one expression to a branch of <code class="prettyprint">if</code>. However, you often need to pass more than one expression in real programs. In this case, use <code class="prettyprint">do</code>.</p>
 
 <h2 id="if-let">If-Let</h2>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">if-let</span><span class="w"> </span><span class="p">[</span><span class="n">pos-nums</span><span class="w"> </span><span class="p">(</span><span class="nb">filter</span><span class="w"> </span><span class="nb">pos?</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">])]</span><span class="w">
-  </span><span class="n">pos-nums</span><span class="w">
-  </span><span class="s">"no positive numbers"</span><span class="p">)</span><span class="w">
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">if-let</span><span class="w"> </span><span class="p">[</span><span class="n">pos-nums</span><span class="w"> </span><span class="p">(</span><span class="nb">filter</span><span class="w"> </span><span class="nb">pos?</span><span class="w"> </span><span class="p">[</span><span class="mi">-1</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">])]</span><span class="w">
+          </span><span class="n">pos-nums</span><span class="w">
+          </span><span class="s">"no positive numbers"</span><span class="p">)</span><span class="w">
 </span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
@@ -485,9 +503,9 @@ such as passing to a function, returned from a function, and binding to variable
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">case-test-1</span><span class="w">
          </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w">
          </span><span class="p">(</span><span class="nf">case</span><span class="w"> </span><span class="n">n</span><span class="w">
-               </span><span class="mi">1</span><span class="w"> </span><span class="s">"n is 1"</span><span class="w">
-               </span><span class="mi">2</span><span class="w"> </span><span class="s">"n is 2"</span><span class="w">
-               </span><span class="s">"n is other"</span><span class="p">))</span><span class="w">
+            </span><span class="mi">1</span><span class="w"> </span><span class="s">"n is 1"</span><span class="w">
+            </span><span class="mi">2</span><span class="w"> </span><span class="s">"n is 2"</span><span class="w">
+            </span><span class="s">"n is other"</span><span class="p">))</span><span class="w">
 </span><span class="o">#</span><span class="ss">'user/case-test-1</span><span class="w">
 
 </span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nf">case-test-1</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">
@@ -505,7 +523,7 @@ such as passing to a function, returned from a function, and binding to variable
 
 <p><br></p>
 
-<p>There is also <code class="prettyprint">case</code> which works pretty much similar to that of other programming languages. <code class="prettyprint">case</code> compares the value with each condition with <code class="prettyprint">=</code>
+<p>There is also <code class="prettyprint">case</code> which works pretty much the same as the one in other programming languages. <code class="prettyprint">case</code> compares the value with each condition with <code class="prettyprint">=</code>
 and evaluates the expression in the matched branch.</p>
 
 <p><br>
@@ -520,7 +538,7 @@ and evaluates the expression in the matched branch.</p>
 <br>
 <br>
 <br>
-The expression in the last branch will be evaluated if none of other branch is matched.</p>
+The expression in the last branch will be evaluated if none of other branches are matched.</p>
 
 <h2 id="cond">Cond</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">cond-test</span><span class="w">
@@ -549,7 +567,7 @@ The expression in the last branch will be evaluated if none of other branch is m
 
 <p><br>
 <br>
-You use <code class="prettyprint">:else</code> symbol for default case.</p>
+You use <code class="prettyprint">:else</code> keyword for the default case.</p>
 
 <h2 id="condp">Condp</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">condp-test-2</span><span class="w">
@@ -570,7 +588,7 @@ You use <code class="prettyprint">:else</code> symbol for default case.</p>
 
 <p><br></p>
 
-<p>You can use predicate with <code class="prettyprint">condp</code> for condition, in this case <code class="prettyprint">contains?</code>.</p>
+<p>You can use predicate with <code class="prettyprint">condp</code> for condition. In this case <code class="prettyprint">contains?</code> is the predicate.</p>
 
 <p><br>
 <br>
@@ -594,54 +612,74 @@ You use <code class="prettyprint">:else</code> symbol for default case.</p>
 
 <p><br></p>
 
-<p><code class="prettyprint">true</code> and <code class="prettyprint">false</code> are values of <em>Boolean</em> type just like in other programming languages.</p>
+<p><code class="prettyprint">true</code> and <code class="prettyprint">false</code> are values of <strong>Boolean</strong> type just like in other programming languages.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">boolean</span><span class="w"> </span><span class="n">false</span><span class="p">)</span><span class="w">
+</span><span class="n">false</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">boolean</span><span class="w"> </span><span class="n">nil</span><span class="p">)</span><span class="w">
+</span><span class="n">false</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">boolean</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">
+</span><span class="n">true</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">boolean</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span><span class="n">true</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">boolean</span><span class="w"> </span><span class="s">"hi there"</span><span class="p">)</span><span class="w">
+</span><span class="n">true</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">boolean</span><span class="w"> </span><span class="no">:hi</span><span class="p">)</span><span class="w">
+</span><span class="n">true</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>In Clojure, everything except <code class="prettyprint">false</code> and <code class="prettyprint">nil</code> are <code class="prettyprint">true</code>.</p>
 
 <h1 id="strings">Strings</h1>
 
-<h2 id="literals">Literals</h2>
+<h2 id="literal">Literal</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="s">"Hi, there!"</span><span class="w">
-</span><span class="s">"Hi, there!"</span><span class="n">G</span><span class="w">
+</span><span class="s">"Hi, there!"</span><span class="w">
 </span></code></pre>
 
 <p></br></p>
 
-<p>You can create a string by double-quoting text.</p>
+<p>You can create a string by double-quoting texts.</p>
 
-<h2 id="concatenation">Concatenation</h2>
+<h2 id="str">Str</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"Good "</span><span class="w"> </span><span class="s">"morning"</span><span class="p">)</span><span class="w">
 </span><span class="s">"Good morning"</span><span class="w">
 </span></code></pre>
 
 <p><br></p>
 
-<p>One way to concatenate strings is using <code class="prettyprint">str</code>.</p>
-<pre class="highlight plaintext"><code>user=&gt; (use '[clojure.string :only [join]])
-nil
-
-user=&gt; (join "" ["Good " "morning"])
-"Good morning"
-</code></pre>
-
-<p></br>
-</br></p>
-
-<p>You can also use <code class="prettyprint">clojure.string/join</code>.</p>
+<p>To concatenate strings, use <code class="prettyprint">str</code>.</p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="s">"Good "</span><span class="w"> </span><span class="s">"morning"</span><span class="p">)</span><span class="w">
 
 </span><span class="n">ClassCastException</span><span class="w"> </span><span class="n">java.lang.String</span><span class="w"> </span><span class="n">cannot</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="nb">cast</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">java.lang.Number</span><span class="w">  </span><span class="n">clojure.lang.Numbers.add</span><span class="w"> </span><span class="p">(</span><span class="nf">Numbers.java</span><span class="no">:126</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
-<p></br>
-</br>
-</br>
-</br>
-</br></p>
+<p><br>
+<br></p>
 
-<p><code class="prettyprint">+</code> operator <em>doesn&rsquo;t</em> work to concat strings against your expectation.</p>
+<p><code class="prettyprint">+</code> operator doesn&rsquo;t work to concat strings against your expectation.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="nb">first</span><span class="w"> </span><span class="s">"Hirokuni"</span><span class="w">
+            </span><span class="nb">last</span><span class="w"> </span><span class="s">"Kim"</span><span class="p">]</span><span class="w">
+            </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"My name is "</span><span class="w"> </span><span class="nb">first</span><span class="w"> </span><span class="s">" "</span><span class="w"> </span><span class="nb">last</span><span class="p">))</span><span class="w">
+</span><span class="s">"My name is Hirokuni Kim"</span><span class="w">
+</span></code></pre>
 
-<h2 id="interpolation">Interpolation</h2>
+<p><br>
+<br>
+<br>
+<br></p>
 
-<p>Clojure doesn&rsquo;t have string interpolation. So, you need to use <a href="#concatenation">concatenation functions</a>.</p>
+<p>Clojure doesn&rsquo;t have string interpolation. <code class="prettyprint">str</code> works for you.</p>
 
 <h1 id="integers">Integers</h1>
 
@@ -728,26 +766,36 @@ user=&gt; (join "" ["Good " "morning"])
 
 <h1 id="lists">Lists</h1>
 
+<p>Lists are the most basic collection in Clojure which is a dialect of Lisp (List Processing language). However, you don&rsquo;t often use list as data collection because you have more useful collection data types in Clojure such as vectors or maps.</p>
+
 <h2 id="literal">Literal</h2>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
 </span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
 <p><br></p>
 
-<p>Lists are simple collection of values. You can create a list by grouping values with paren with <strong>`</strong> at the top. We need <code class="prettyprint">`</code> because list will be evaluated without it.</p>
+<p>Lists are simple collection of values. You can create a list by grouping values with parentheses with a single quote <code class="prettyprint">&#39;</code> at the top.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
+</span><span class="n">ClassCastException</span><span class="w"> </span><span class="n">java.lang.Long</span><span class="w"> </span><span class="n">cannot</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="nb">cast</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">clojure.lang.IFn</span><span class="w">  </span><span class="n">user/eval2843</span><span class="w"> </span><span class="p">(</span><span class="nf">NO_SOURCE_FILE</span><span class="no">:1</span><span class="p">)</span><span class="w">
+</span></code></pre>
 
-<h2 id="get-element">Get element</h2>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">nth</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+<p><br>
+<br></p>
+
+<p>We need <code class="prettyprint">&#39;</code> to prevent the list from being evaluated.</p>
+
+<h2 id="nth">Nth</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">nth</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
 </span><span class="mi">2</span><span class="w">
 </span></code></pre>
 
 <p><br></p>
 
-<p>To get a value from list, use <code class="prettyprint">nth</code> with index number. Index starts from 0</p>
+<p>To get a value from the list, use <code class="prettyprint">nth</code> with index number. Index starts from 0</p>
 
 <h2 id="count">Count</h2>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">count</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">count</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
 </span><span class="mi">3</span><span class="w">
 </span></code></pre>
 
@@ -755,8 +803,8 @@ user=&gt; (join "" ["Good " "morning"])
 
 <p>To count how many values in the list, use <code class="prettyprint">count</code>.</p>
 
-<h2 id="add-element">Add element</h2>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+<h2 id="conj">Conj</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
 </span><span class="p">(</span><span class="nf">4</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
@@ -767,11 +815,11 @@ user=&gt; (join "" ["Good " "morning"])
 <h2 id="remove-element">Remove element</h2>
 
 <p>How to remove a value from a list? You can&rsquo;t really remove a value from list in Clojure. That&rsquo;s not what list is supposed to do.
-If you are writing a program that needs to remove from collection, you should use other type of collection such as <code class="prettyprint">Set</code>.</p>
+If you are writing a program that needs to remove items from collection, you should use other type of collection such as vectors or sets.</p>
 
 <h1 id="vectors">Vectors</h1>
 
-<p>You can think of <code class="prettyprint">Vector</code> as efficient version of <code class="prettyprint">List</code>. It&rsquo;s more practical data storage of multiple values than <code class="prettyprint">List</code>.</p>
+<p>You can think of vectors as efficient and useful version of lists. It&rsquo;s more practical data storage of multiple values than lists.</p>
 
 <h2 id="literal">Literal</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w">
@@ -780,15 +828,15 @@ If you are writing a program that needs to remove from collection, you should us
 
 <p><br></p>
 
-<p>You can create a vector by grouping values with square brackets. Unlike list, you don&rsquo;t need <code class="prettyprint">`</code> because vector will not be evaluated unlike list.</p>
+<p>You can create a vector by grouping values with square brackets. Unlike lists, you don&rsquo;t need <code class="prettyprint">&#39;</code> because vectors will not be evaluated.</p>
 
-<h2 id="get-element">Get element</h2>
+<h2 id="nth">Nth</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">nth</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
 </span><span class="mi">2</span><span class="w">
 </span></code></pre>
 
 <p><br>
-To get a value from vector, you need to specify the index of the value.</p>
+To get a value from the vector, you need to specify the index of the value.</p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">first</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
 </span><span class="mi">1</span><span class="w">
 
@@ -797,27 +845,28 @@ To get a value from vector, you need to specify the index of the value.</p>
 </span></code></pre>
 
 <p><br>
+<br>
 <br></p>
 
-<p><code class="prettyprint">Vetor</code> has convenient functions to access elements. To get first and second element, use <code class="prettyprint">first</code> and <code class="prettyprint">second</code>.</p>
+<p>Vectors have convenient functions to access elements. To get the first and second elements, use <code class="prettyprint">first</code> and <code class="prettyprint">second</code>.</p>
 
-<h2 id="add-element">Add element</h2>
+<h2 id="conj">Conj</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
 </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w">
 </span></code></pre>
 
 <p><br></p>
 
-<p>To add a value, use <code class="prettyprint">conj</code> (conj[oin]). <strong>Note that the new value is added to the bottom.</strong></p>
+<p>To add a value, use <code class="prettyprint">conj</code> (conj[oin]). Note that the new value is added to the bottom while it is added to the top in lists.</p>
 
-<h2 id="get-index">Get index</h2>
+<h2 id=".indexof">.indexOf</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nf">.indexOf</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
 </span><span class="mi">1</span><span class="w">
 </span></code></pre>
 
 <p><br></p>
 
-<p>You can get the index of a value in vector with <code class="prettyprint">.indexOf</code>.</p>
+<p>You can get the index of a value with <code class="prettyprint">.indexOf</code>. The dot before indexOf indicates Java interop to access methods in Java.</p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nf">.indexOf</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
 </span><span class="mi">-1</span><span class="w">
 </span></code></pre>
@@ -829,7 +878,7 @@ To get a value from vector, you need to specify the index of the value.</p>
 
 <h1 id="sets">Sets</h1>
 
-<p><code class="prettyprint">Sets</code> are unordered collection of values, meaning that the order of values are not guaranteed.</p>
+<p>Sets are unordered collection of values, meaning that the order of values are not guaranteed.</p>
 
 <h2 id="literal">Literal</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w">
@@ -838,18 +887,18 @@ To get a value from vector, you need to specify the index of the value.</p>
 
 <p><br></p>
 
-<p>You can create a set by grouping values with <code class="prettyprint">#{}</code>. I get the order of 1 -&gt; 3 -&gt; 2 on my computer but you may get different order since the order is not guaranteed</p>
+<p>You can create a set by grouping values with <code class="prettyprint">#{}</code>. I get the order of 1 -&gt; 3 -&gt; 2 on my computer but you may the get different order since the order is not guaranteed</p>
 
-<h2 id="get-element">Get element</h2>
+<h2 id="sort">Sort</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">sort</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">4</span><span class="p">))</span><span class="w">
 </span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
 <p><br></p>
 
-<p>To get sorted order, use <code class="prettyprint">sort</code>.</p>
+<p>To get a sorted order, use <code class="prettyprint">sort</code>.</p>
 
-<h2 id="add-element">Add element</h2>
+<h2 id="conj">Conj</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
 </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -864,9 +913,9 @@ To get a value from vector, you need to specify the index of the value.</p>
 <p><br>
 <br></p>
 
-<p>One important trait of set is that <strong>it does not contain an element more than once.</strong></p>
+<p>One important trait of sets is that <strong>it does not contain an element more than once.</strong></p>
 
-<h2 id="remove-element">Remove element</h2>
+<h2 id="disj">Disj</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">disj</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
 </span><span class="o">#</span><span class="p">{</span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -881,9 +930,9 @@ To get a value from vector, you need to specify the index of the value.</p>
 <p><br>
 <br></p>
 
-<p>If <code class="prettyprint">disj</code> value that the set doesn&rsquo;t contain, it returns the original set.</p>
+<p>If trying to <code class="prettyprint">disj</code> a value that doesn&rsquo;t exist in the set, it returns the original set.</p>
 
-<h2 id="select-elements">Select elements</h2>
+<h2 id="select">Select</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">clojure.set/select</span><span class="w"> </span><span class="n">odd?</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="p">)</span><span class="w">
 </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -892,7 +941,7 @@ To get a value from vector, you need to specify the index of the value.</p>
 
 <p>To select certain values from a set, use <code class="prettyprint">select</code>. <code class="prettyprint">odd?</code> returns boolean for each element. This example returns a new set which only contains odd numbers.</p>
 
-<h2 id="check-if-element-exists">Check if element exists</h2>
+<h2 id="contains?">Contains?</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">contains?</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
 </span><span class="n">true</span><span class="w">
 
@@ -902,9 +951,9 @@ To get a value from vector, you need to specify the index of the value.</p>
 
 <p><br></p>
 
-<p>To check if a value is contained in a set, use <code class="prettyprint">contains?</code>.</p>
+<p>To check if a value is contained in the set, use <code class="prettyprint">contains?</code>.</p>
 
-<h2 id="check-if-a-set-is-part-of-other-set">Check if a set is part of other set</h2>
+<h2 id="subset?">Subset?</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nf">clojure.set/subset?</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">})</span><span class="w">
 </span><span class="n">true</span><span class="w">
 
@@ -914,9 +963,9 @@ To get a value from vector, you need to specify the index of the value.</p>
 
 <p><br></p>
 
-<p>To check if a set is part of another set, use <code class="prettyprint">subset?</code>.</p>
+<p>To check if a set is the part of another set, use <code class="prettyprint">subset?</code>.</p>
 
-<h2 id="check-if-a-set-includes-other-set">Check if a set includes other set</h2>
+<h2 id="superset?">Superset?</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nf">clojure.set/superset?</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">})</span><span class="w">
 </span><span class="n">true</span><span class="w">
 </span></code></pre>
@@ -927,7 +976,7 @@ To get a value from vector, you need to specify the index of the value.</p>
 
 <h1 id="maps">Maps</h1>
 
-<p><code class="prettyprint">Maps</code> are key-value data structure to store multiple values.</p>
+<p>Maps are key-value data structure to store multiple values.</p>
 
 <h2 id="literal">Literal</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
@@ -938,7 +987,7 @@ To get a value from vector, you need to specify the index of the value.</p>
 
 <p>You can create a map by grouping values with <code class="prettyprint">{}</code>.</p>
 
-<h2 id="get-element">Get element</h2>
+<h2 id="get">Get</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">get</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="s">"Apple"</span><span class="p">)</span><span class="w">
 </span><span class="s">"Mac"</span><span class="w">
 </span></code></pre>
@@ -963,7 +1012,7 @@ To get a value from vector, you need to specify the index of the value.</p>
 
 <p>When the key of a map is symbol, you can use the symbol just like a function to get the value.</p>
 
-<h2 id="add-element">Add element</h2>
+<h2 id="assoc">Assoc</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">assoc</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="s">"Commodore"</span><span class="w"> </span><span class="s">"Amiga"</span><span class="p">)</span><span class="w">
 </span><span class="p">{</span><span class="s">"Commodore"</span><span class="w"> </span><span class="s">"Amiga"</span><span class="n">,</span><span class="w"> </span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="n">,</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -978,9 +1027,9 @@ To get a value from vector, you need to specify the index of the value.</p>
 <p><br>
 <br></p>
 
-<p>If key already exists, it replace the value.</p>
+<p>If the key already exists, it replaces the value.</p>
 
-<h2 id="combine-maps">Combine maps</h2>
+<h2 id="merge">Merge</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">merge</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">})</span><span class="w">
 </span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="n">,</span><span class="w"> </span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="n">,</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -990,7 +1039,8 @@ To get a value from vector, you need to specify the index of the value.</p>
 <p>To combine two maps, use <code class="prettyprint">merge</code>.</p>
 
 <h2 id="keys">Keys</h2>
-<pre class="highlight clojure"><code><span class="p">(</span><span class="nb">keys</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">})</span><span class="w">
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">keys</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">})</span><span class="w">
+</span><span class="p">(</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
 <p><br></p>
@@ -998,7 +1048,8 @@ To get a value from vector, you need to specify the index of the value.</p>
 <p>To get all keys from a map, use <code class="prettyprint">keys</code>.</p>
 
 <h2 id="vals">Vals</h2>
-<pre class="highlight clojure"><code><span class="p">(</span><span class="nb">keys</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">})</span><span class="w">
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">vals</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">})</span><span class="w">
+</span><span class="p">(</span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
 <p><br></p>
@@ -1007,7 +1058,9 @@ To get a value from vector, you need to specify the index of the value.</p>
 
 <h1 id="sequences">Sequences</h1>
 
-<p><code class="prettyprint">Secuqnces</code> are logical lists that are not tied to a particular implementation. What does it mean? It means that you can apply the same functions to any types of collections without worrying about what types of collections that you are dealing with.</p>
+<p>Secuqnces are logical lists that are not tied to a particular implementation. What does it mean? It means that you can apply the same functions to any types of collections without worrying about what types of collections that you are dealing with.</p>
+
+<p><code class="prettyprint">Sequences</code> <strong>are the most important data abstraction in Clojure.</strong></p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">])</span><span class="w">
 </span><span class="p">(</span><span class="nf">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
 
@@ -1028,19 +1081,19 @@ To get a value from vector, you need to specify the index of the value.</p>
 
 <p><br></p>
 
-<p>Using map for <code class="prettyprint">Vectors</code>.</p>
+<p>Applying <code class="prettyprint">map</code> for the vector.</p>
 
 <p><br></p>
 
-<p>Using map for <code class="prettyprint">Lists</code>.</p>
+<p>Applying <code class="prettyprint">map</code> for the list.</p>
 
 <p><br></p>
 
-<p>Using map for <code class="prettyprint">Sets</code>.</p>
+<p>Applying map for the set.</p>
 
 <p><br></p>
 
-<p>Using map for <code class="prettyprint">Maps</code>. We are using <code class="prettyprint">println</code> for the function that we apply since <code class="prettyprint">inc</code> doesn&rsquo;t work here, but this doesn&rsquo;t hurt the idea that you can use <code class="prettyprint">map</code> for any collections.</p>
+<p>Applying <code class="prettyprint">map</code> for the map. We are using <code class="prettyprint">println</code> for the function that we apply since you cannot <code class="prettyprint">inc</code> a map, but this doesn&rsquo;t hurt the idea that you can use <code class="prettyprint">map</code> for any collections.</p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">type</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">]))</span><span class="w">
 </span><span class="n">clojure.lang.LazySeq</span><span class="w">
 
@@ -1057,15 +1110,6 @@ To get a value from vector, you need to specify the index of the value.</p>
 <br></p>
 
 <p>As you can see, the type of all returned values is <code class="prettyprint">LazySeq</code>.</p>
-
-<p><br>
-<br>
-<br>
-<br>
-<br>
-<br></p>
-
-<p><code class="prettyprint">Sequences</code> <strong>are the most important data abstraction in Clojure.</strong></p>
 
 <h2 id="map">Map</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">])</span><span class="w">
