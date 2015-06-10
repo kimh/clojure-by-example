@@ -1393,7 +1393,7 @@ user=> (iterate + 0)
 
 <br>
 
-You can get a sequence of infinite integers with `iterate`. Be careful, though. Running this example will freeze your terminal since the computation continues forever.
+You can get a sequence of infinite integers with `iterate`. Be careful, though. Running this example will freeze your terminal since the evaluation of this expression never returns.
 
 ## Range
 
@@ -1404,7 +1404,7 @@ user=> (range 5 10)
 
 <br>
 
-To generates a sequence of numbers between two points, you can use `range`.
+To generates a sequence of numbers between two points, use `range`.
 
 ```clojure
 user=> (range 0 100 5)
@@ -1562,7 +1562,6 @@ nil
 # Macros
 
 Clojure's Macros gives you the power to restructure your Clojure code as you like. For example, you can create your own code syntax, invent new control flow, new types of values, etc.
-So, it's not even impossible to create a programming language that looks like Ruby by using Clojure Macros!
 
 ## Defmacro
 
@@ -1716,7 +1715,7 @@ The `~@` unquote splice works just like `~` unquote, except it expands a sequenc
 
 ## Delay
 
-When you want to defer the evaluation of an expression, you can use `delay`.
+When you want to defer the evaluation of an expression, use `delay`.
 
 ```clojure
 user> (def later (do [] (prn "Adding") (+ 1 2)))
@@ -1769,7 +1768,7 @@ user> (later)
 <br>
 
 
-You may think that you can archive the same thing by using an anonymous function and `def`. Then, why do we get bothered with delay?
+You can archive the same thing by using an anonymous function and `def`. Then, why do we get bothered with delay?
 
 ```clojure
 user> (def later (delay (do [] (prn "Adding") (+ 1 2))))
