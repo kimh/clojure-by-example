@@ -245,7 +245,7 @@ nil
 
 To define a function, use `defn`.
 
-The first argument is the name of function `say-hello`, the second argument is the argument of the function `[name]`, and the third arugment is the function body ` (println (str "Hello, " name)))`.
+The first argument is the name of function `say-hello`, the second argument is the argument of the function `[name]`, and the third argument is the function body ` (println (str "Hello, " name)))`.
 
 ```clojure
 user=> (defn say-hello
@@ -387,7 +387,7 @@ user=> (let [plus-numbers #(+ 1 %1 %2 %3)]
 <br>
 <br>
 
-`%` will be replaced with arumgnets passed to the function. When the function takes multiple arugments, `%1` is for the first argument, `%2` is for the second and so on.
+`%` will be replaced with arumgnets passed to the function. When the function takes multiple arguments, `%1` is for the first argument, `%2` is for the second and so on.
 
 ```clojure
 user=> (def say-hello (fn [name] (println (str "Hello, " name))))
