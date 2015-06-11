@@ -123,7 +123,6 @@ If you don't append `'` single quote, you are telling Clojure to resolve the sym
 
 When we try to resolve symbols that are not bound to anything, Clojure complains with the exception.
 
-
 ## Let
 
 ```clojure
@@ -163,11 +162,64 @@ nil
 
 You can also provide multiple bindings.
 
+
+
+## Scope
+
+When Clojure tries to resolve symbols, the resolution will be done in the **scope** of symbols.
+
 ```clojure
-user=>  (let [object "light"]
-        (let [object "darkness"])
-        (println (str "God said let there be " object)))
-God said let there be light
+user> (let [a "aaa"]
+        (println a))
+aaa
+nil
+```
+
+<br>
+
+Clojure tries to evaluate `a` because it needs to pass the value to `println`. `a` is bound to `"aaa"`, so "aaa" is printed in your terminal. Very straight forward.
+
+```clojure
+user> (let [a "aaa"]
+        (let [a "AAA"]
+          (println a)))
+          
+AAA
+nil
+```
+
+<br>
+<br>
+<br>
+
+Now, `let` are nested. Like previous example, Clojure tries to resolve `a`. However, this time Clojure resolves `a` to `"AAA"`, instead of `aaa`. Each `let` will create a scope and symbol resolution is done inside the let where the symbol is resolved.
+
+
+<br>
+<br>
+
+The kind of scope is called **lexical scope**. For those whom English is not your first language, lexical means *words in a sentence*. The scope is **lexical** because the compiler relies on the physical location of the symbol (word) in a program (sentence) to resolve them.
+
+```clojure
+user> (let [a "aaa"]
+        (println a)
+        (let [a "AAA"]
+          (println a)))
+aaa
+AAA
+nil
+```
+
+<br>
+
+The symbol resolution is always upwards.
+
+
+```clojure
+user> (let [a "a"]
+        (let []
+          (println a)))
+a
 nil
 ```
 
@@ -179,7 +231,26 @@ nil
 <br>
 <br>
 
-The most notable trait of `let` is that its **immutable**: once you define, you never be able to change. Here, we tried to override object light with darkness, but we fail to do so.
+The symbol resolution bubbles up until it finds the binding. The inner `let` doesn't provide the binding for `a`, so it bubbles up to outer `let`. This happens because the scope of inner let is wrapped by the scope of outer let.
+
+```clojure
+user> (let [a "a"]
+        (let []
+          (println not-bound-symbol)))
+CompilerException java.lang.RuntimeException: Unable to resolve symbol: not-bound-symbol in this context, compiling:(NO_SOURCE_PATH:3:11) 
+```
+
+<br>
+<br>
+<br>
+
+Clojure complains with **Unable to resolve symbol** exception when it cannot find the binding inside the given scope.
+
+<br>
+<br>
+<br>
+
+You probably find the idea of lexical scope very familiar. This is because most of modern programming languages use lexical scope. There is also something called *dynamic scope* but you probably don't have to know right now.
 
 ## Def
 
@@ -194,7 +265,7 @@ nil
 
 <br>
 
-You can also bind values to names with `def`. Unlike `let`, you can access it outside `def`.
+You can also bind symbols to values with `def`. While you can access the symbol only from within the `let` where it's declared , you can access the symbol declared with `def` from anywhere.
 
 ```clojure
 user=> (def object "darkness")
@@ -211,19 +282,15 @@ nil
 <br>
 <br>
 <br>
-<br>
 
-
-The binding created by `def` is **mutable**, so we can redefine later.
+You can also override the one already declared later.
 
 <br>
 <br>
 <br>
 <br>
 
-The rule of thumb in Clojure is avoiding the use of `def` as much as possible. `defn` will introduce state and the abusing of state will make our code difficult to maintain.
-
-
+The rule of thumb in Clojure is avoiding the use of `def` as much as possible. `def` will introduce the state and the abusing of the state will make our code difficult to maintain.
 
 # Functions
 
