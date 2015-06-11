@@ -221,7 +221,7 @@ The binding created by `def` is **mutable**, so we can redefine later.
 <br>
 <br>
 
-The rule of thumb in Clojure is avoiding the use of `def` as much as possible. `defn` will introduce state and the abusing of state will make our code difficult to maintain.
+The rule of thumb in Clojure is avoiding the use of `def` as much as possible. `def` will introduce state and the abusing of state will make our code difficult to maintain.
 
 
 
