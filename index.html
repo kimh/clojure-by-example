@@ -176,10 +176,53 @@
 <br></p>
 
 <p>You can also provide multiple bindings.</p>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">object</span><span class="w"> </span><span class="s">"light"</span><span class="p">]</span><span class="w">
-        </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">object</span><span class="w"> </span><span class="s">"darkness"</span><span class="p">])</span><span class="w">
-        </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God said let there be "</span><span class="w"> </span><span class="n">object</span><span class="p">)))</span><span class="w">
-</span><span class="n">God</span><span class="w"> </span><span class="n">said</span><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">light</span><span class="w">
+
+<h2 id="scope">Scope</h2>
+
+<p>When Clojure tries to resolve symbols, the resolution will be done in the <strong>scope</strong> of symbols.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="s">"aaa"</span><span class="p">]</span><span class="w">
+        </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">a</span><span class="p">))</span><span class="w">
+</span><span class="n">aaa</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Clojure tries to evaluate <code class="prettyprint">a</code> because it needs to pass the value to <code class="prettyprint">println</code>. <code class="prettyprint">a</code> is bound to <code class="prettyprint">&quot;aaa&quot;</code>, so &ldquo;aaa&rdquo; is printed in your terminal. Very straight forward.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="s">"aaa"</span><span class="p">]</span><span class="w">
+        </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="s">"AAA"</span><span class="p">]</span><span class="w">
+          </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">a</span><span class="p">)))</span><span class="w">
+
+</span><span class="n">AAA</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br></p>
+
+<p>Now, <code class="prettyprint">let</code> are nested. Like previous example, Clojure tries to resolve <code class="prettyprint">a</code>. However, this time Clojure resolves <code class="prettyprint">a</code> to <code class="prettyprint">&quot;AAA&quot;</code>, instead of <code class="prettyprint">aaa</code>. Each <code class="prettyprint">let</code> will create a scope and symbol resolution is done inside the let where the symbol is resolved.</p>
+
+<p><br>
+<br></p>
+
+<p>The kind of scope is called <strong>lexical scope</strong>. For those whom English is not your first language, lexical means <em>words in a sentence</em>. The scope is <strong>lexical</strong> because the compiler relies on the physical location of the symbol (word) in a program (sentence) to resolve them.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="s">"aaa"</span><span class="p">]</span><span class="w">
+        </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w">
+        </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="s">"AAA"</span><span class="p">]</span><span class="w">
+          </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">a</span><span class="p">)))</span><span class="w">
+</span><span class="n">aaa</span><span class="w">
+</span><span class="n">AAA</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>The symbol resolution is always upwards.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="s">"a"</span><span class="p">]</span><span class="w">
+        </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[]</span><span class="w">
+          </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">a</span><span class="p">)))</span><span class="w">
+</span><span class="n">a</span><span class="w">
 </span><span class="n">nil</span><span class="w">
 </span></code></pre>
 
@@ -191,7 +234,24 @@
 <br>
 <br></p>
 
-<p>The most notable trait of <code class="prettyprint">let</code> is that its <strong>immutable</strong>: once you define, you never be able to change. Here, we tried to override object light with darkness, but we fail to do so.</p>
+<p>The symbol resolution bubbles up until it finds the binding. The inner <code class="prettyprint">let</code> doesn&rsquo;t provide the binding for <code class="prettyprint">a</code>, so it bubbles up to outer <code class="prettyprint">let</code>. This happens because the scope of inner let is wrapped by the scope of outer let.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="s">"a"</span><span class="p">]</span><span class="w">
+        </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[]</span><span class="w">
+          </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">not-bound-symbol</span><span class="p">)))</span><span class="w">
+</span><span class="n">CompilerException</span><span class="w"> </span><span class="n">java.lang.RuntimeException</span><span class="err">:</span><span class="w"> </span><span class="n">Unable</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="nb">resolve</span><span class="w"> </span><span class="nb">symbol</span><span class="err">:</span><span class="w"> </span><span class="n">not-bound-symbol</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">context,</span><span class="w"> </span><span class="n">compiling</span><span class="err">:</span><span class="p">(</span><span class="nf">NO_SOURCE_PATH</span><span class="no">:3:11</span><span class="p">)</span><span class="w"> 
+</span></code></pre>
+
+<p><br>
+<br>
+<br></p>
+
+<p>Clojure complains with <strong>Unable to resolve symbol</strong> exception when it cannot find the binding inside the given scope.</p>
+
+<p><br>
+<br>
+<br></p>
+
+<p>You probably find the idea of lexical scope very familiar. This is because most of modern programming languages use lexical scope. There is also something called <em>dynamic scope</em> but you probably don&rsquo;t have to know right now.</p>
 
 <h2 id="def">Def</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="s">"light"</span><span class="p">)</span><span class="w">
@@ -204,7 +264,7 @@
 
 <p><br></p>
 
-<p>You can also bind values to names with <code class="prettyprint">def</code>. Unlike <code class="prettyprint">let</code>, you can access it outside <code class="prettyprint">def</code>.</p>
+<p>You can also bind symbols to values with <code class="prettyprint">def</code>. While you can access the symbol only from within the <code class="prettyprint">let</code> where it&rsquo;s declared , you can access the symbol declared with <code class="prettyprint">def</code> from anywhere.</p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="s">"darkness"</span><span class="p">)</span><span class="w">
 </span><span class="o">#</span><span class="ss">'user/object</span><span class="w">
 
@@ -217,17 +277,16 @@
 <br>
 <br>
 <br>
-<br>
 <br></p>
 
-<p>The binding created by <code class="prettyprint">def</code> is <strong>mutable</strong>, so we can redefine later.</p>
+<p>You can also override the one already declared later.</p>
 
 <p><br>
 <br>
 <br>
 <br></p>
 
-<p>The rule of thumb in Clojure is avoiding the use of <code class="prettyprint">def</code> as much as possible. <code class="prettyprint">defn</code> will introduce state and the abusing of state will make our code difficult to maintain.</p>
+<p>The rule of thumb in Clojure is avoiding the use of <code class="prettyprint">def</code> as much as possible. <code class="prettyprint">def</code> will introduce the state and the abusing of the state will make our code difficult to maintain.</p>
 
 <h1 id="functions">Functions</h1>
 
