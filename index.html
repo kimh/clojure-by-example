@@ -306,7 +306,7 @@
 
 <p>To define a function, use <code class="prettyprint">defn</code>.</p>
 
-<p>The first argument is the name of function <code class="prettyprint">say-hello</code>, the second argument is the argument of the function <code class="prettyprint">[name]</code>, and the third arugment is the function body <code class="prettyprint">(println (str &quot;Hello, &quot; name)))</code>.</p>
+<p>The first argument is the name of function <code class="prettyprint">say-hello</code>, the second argument is the argument of the function <code class="prettyprint">[name]</code>, and the third argument is the function body <code class="prettyprint">(println (str &quot;Hello, &quot; name)))</code>.</p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">say-hello</span><span class="w">
          </span><span class="s">"Takes name argument and say hello to the name"</span><span class="w">
          </span><span class="p">[</span><span class="nb">name</span><span class="p">]</span><span class="w">
@@ -426,7 +426,7 @@ such as passing to a function, returned from a function, and binding to variable
 <br>
 <br></p>
 
-<p><code class="prettyprint">%</code> will be replaced with arumgnets passed to the function. When the function takes multiple arugments, <code class="prettyprint">%1</code> is for the first argument, <code class="prettyprint">%2</code> is for the second and so on.</p>
+<p><code class="prettyprint">%</code> will be replaced with arguments passed to the function. When the function takes multiple arguments, <code class="prettyprint">%1</code> is for the first argument, <code class="prettyprint">%2</code> is for the second and so on.</p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">say-hello</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="nb">name</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"Hello, "</span><span class="w"> </span><span class="nb">name</span><span class="p">))))</span><span class="w">
 </span><span class="o">#</span><span class="ss">'user/say-hello</span><span class="w">
 
@@ -455,7 +455,7 @@ such as passing to a function, returned from a function, and binding to variable
 <br>
 <br></p>
 
-<p>You can also pass a function to another function. We define two functions and bind to <code class="prettyprint">say-hello</code> and <code class="prettyprint">say-bye</code> vars. We also define a generic function and bind to <code class="prettyprint">geeting</code>.</p>
+<p>You can also pass a function to another function. We define two functions and bind to <code class="prettyprint">say-hello</code> and <code class="prettyprint">say-bye</code> vars. We also define a generic function and bind to <code class="prettyprint">greeting</code>.</p>
 
 <p><br>
 <br>
@@ -539,7 +539,7 @@ such as passing to a function, returned from a function, and binding to variable
 
 <p><br></p>
 
-<p>After testing condition, you often want to reuse it later. <code class="prettyprint">if-let</code> binds the evaluated condition to var when it&rsquo;s truthy. The result of <code class="prettyprint">filter</code> will be binded to <code class="prettyprint">pos-nums</code>.</p>
+<p>After testing condition, you often want to reuse it later. <code class="prettyprint">if-let</code> binds the evaluated condition to var when it&rsquo;s truthy. The result of <code class="prettyprint">filter</code> will be bound to <code class="prettyprint">pos-nums</code>.</p>
 
 <h2 id="when">When</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="n">true</span><span class="w">
@@ -1139,7 +1139,7 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <h1 id="sequences">Sequences</h1>
 
-<p>Secuqnces are logical lists that are not tied to a particular implementation. What does it mean? It means that you can apply the same functions to any types of collections without worrying about what types of collections that you are dealing with.</p>
+<p>Sequences are logical lists that are not tied to a particular implementation. What does it mean? It means that you can apply the same functions to any types of collections without worrying about what types of collections that you are dealing with.</p>
 
 <p><code class="prettyprint">Sequences</code> <strong>are the most important data abstraction in Clojure.</strong></p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">])</span><span class="w">
@@ -2131,7 +2131,7 @@ You can signal the promise to return delivered values with <code class="prettypr
 
 <p><br></p>
 
-<p>Suppose we are trying to create an user record in database. Each <code class="prettyprint">alter</code> tries to update user-recrod ref with user info and you want the ref to be updated only when both <code class="prettyprint">alter</code> succeed.</p>
+<p>Suppose we are trying to create an user record in database. Each <code class="prettyprint">alter</code> tries to update user-record ref with user info and you want the ref to be updated only when both <code class="prettyprint">alter</code> succeed.</p>
 
 <p><br></p>
 
@@ -2140,7 +2140,7 @@ You can signal the promise to return delivered values with <code class="prettypr
 <p><br>
 <br></p>
 
-<p>As you see, the user-record ref is still empty. This is because <code class="prettyprint">alter</code> inside <code class="prettyprint">dosync</code> doesn&rsquo;t update the ref until getting out of <code class="prettyprint">dosycn</code> block successfully.</p>
+<p>As you see, the user-record ref is still empty. This is because <code class="prettyprint">alter</code> inside <code class="prettyprint">dosync</code> doesn&rsquo;t update the ref until getting out of <code class="prettyprint">dosync</code> block successfully.</p>
 <pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">user-record</span><span class="w"> </span><span class="p">(</span><span class="nf">atom</span><span class="w"> </span><span class="p">{}))</span><span class="w">
 </span><span class="o">#</span><span class="ss">'user/user-record</span><span class="w">
 
@@ -2209,7 +2209,7 @@ You can signal the promise to return delivered values with <code class="prettypr
 
 <p><a href="http://www.braveclojure.com/">CLOJURE for the BRAVE and TRUE</a></p>
 
-<p><a href="http://clojure.org/cheatsheet">Clojure Cheetsheet</a></p>
+<p><a href="http://clojure.org/cheatsheet">Clojure Cheatsheet</a></p>
 
 <p>And many other great articles and pages made by the Clojure community.</p>
 
