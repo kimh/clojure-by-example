@@ -126,7 +126,7 @@ When we try to resolve symbols that are not bound to anything, Clojure complains
 ## Let
 
 ```clojure
-user=> (let [object "light"] (println (str "God said let there be " object)))
+user=> (let [l "light"] (println (str "God said let there be " l)))
 God said let there be light
 nil
 ```
@@ -136,9 +136,9 @@ nil
 To bind values to names, use `let`. Let takes a vector which takes a symbol in the first element and a value in the second element.
 
 ```clojure
-user=> (println object)
+user=> (println l)
 
-CompilerException java.lang.RuntimeException: Unable to resolve symbol: object in this context, compiling:(NO_SOURCE_PATH:1:1)
+CompilerException java.lang.RuntimeException: Unable to resolve symbol: l in this context, compiling:(NO_SOURCE_PATH:1:1)
 ```
 
 <br>
@@ -147,10 +147,10 @@ CompilerException java.lang.RuntimeException: Unable to resolve symbol: object i
 You cannot resolve the symbol outside the let. This behavior is very similar to *private variable* in other programming languages.
 
 ```clojure
-user=> (let [object1 "light"
-             object2 "darkness"]
-             (println (str "God said let there be " object1))
-             (println (str "God also said let there be " object2)))
+user=> (let [l "light"
+             d "darkness"]
+             (println (str "God said let there be " l))
+             (println (str "God also said let there be " d)))
 God said let there be light
 God also said let there be darkness
 nil
@@ -162,11 +162,27 @@ nil
 
 You can also provide multiple bindings.
 
+```clojure
+user> (let [l "light"
+            l_d (str l " and" " darkness")]
+            (println (str "God also said let there be " l_d)))
+God also said let there be light and darkness
+nil
+```
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+The binding will be immediately available, so each binding can see the prior bindings.
 
 ## Scope
 
-When Clojure tries to resolve symbols, the resolution will be done in the **scope** of symbols.
+When Clojure tries to resolve a symbol, the resolution will be done in the **scope** of the symbol.
 
 ```clojure
 user> (let [a "aaa"]
@@ -195,25 +211,32 @@ nil
 Now, `let` are nested. Like previous example, Clojure tries to resolve `a`. However, this time Clojure resolves `a` to `"AAA"`, instead of `aaa`. Each `let` will create a scope and symbol resolution is done inside the let where the symbol is resolved.
 
 
-<br>
-<br>
-
-The kind of scope is called **lexical scope**. For those whom English is not your first language, lexical means *words in a sentence*. The scope is **lexical** because the compiler relies on the physical location of the symbol (word) in a program (sentence) to resolve them.
 
 ```clojure
 user> (let [a "aaa"]
-        (println a)
         (let [a "AAA"]
-          (println a)))
-aaa
+          (println a))
+        (println a))
 AAA
+aaa
 nil
 ```
 
 <br>
+<br>
+<br>
+<br>
 
-The symbol resolution is always upwards.
+Also notice that the inner `let` does not override the scope of outer `let`.
 
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+The kind of scope is called **lexical scope**. For those whom English is not your first language, lexical means *words in a sentence*. The scope is **lexical** because the compiler relies on the physical location of the symbol (word) in a program (sentence) to resolve them.
 
 ```clojure
 user> (let [a "a"]
@@ -224,14 +247,8 @@ nil
 ```
 
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
-The symbol resolution bubbles up until it finds the binding. The inner `let` doesn't provide the binding for `a`, so it bubbles up to outer `let`. This happens because the scope of inner let is wrapped by the scope of outer let.
+The resolution look up bubbles up until it finds the binding. The inner `let` doesn't provide the binding for `a`, so it bubbles up to outer `let`. This happens because the scope of inner let is wrapped by the scope of outer `let`.
 
 ```clojure
 user> (let [a "a"]
