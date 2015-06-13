@@ -1285,7 +1285,7 @@ To get all values from a map, use `vals`.
 
 # Sequences
 
-Secuqnces are logical lists that are not tied to a particular implementation. What does it mean? It means that you can apply the same functions to any types of collections without worrying about what types of collections that you are dealing with.
+Sequences are logical lists that are not tied to a particular implementation. What does it mean? It means that you can apply the same functions to any types of collections without worrying about what types of collections that you are dealing with.
 
 `Sequences` **are the most important data abstraction in Clojure.**
 
