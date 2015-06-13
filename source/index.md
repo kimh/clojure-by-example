@@ -753,7 +753,7 @@ You can use predicate with `condp` for condition. In this case `contains?` is th
 
 `(contains? [1 2 3] 5)` will be evaluated falsey, thus default branch will be evaluated.
 
-# Booleans
+# Boolean
 
 ```clojure
 user=> true
