@@ -145,7 +145,7 @@
 <p>When we try to resolve symbols that are not bound to anything, Clojure complains with the exception.</p>
 
 <h2 id="let">Let</h2>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">object</span><span class="w"> </span><span class="s">"light"</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God said let there be "</span><span class="w"> </span><span class="n">object</span><span class="p">)))</span><span class="w">
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">l</span><span class="w"> </span><span class="s">"light"</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God said let there be "</span><span class="w"> </span><span class="n">l</span><span class="p">)))</span><span class="w">
 </span><span class="n">God</span><span class="w"> </span><span class="n">said</span><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">light</span><span class="w">
 </span><span class="n">nil</span><span class="w">
 </span></code></pre>
@@ -153,19 +153,19 @@
 <p><br></p>
 
 <p>To bind values to names, use <code class="prettyprint">let</code>. Let takes a vector which takes a symbol in the first element and a value in the second element.</p>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">object</span><span class="p">)</span><span class="w">
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">l</span><span class="p">)</span><span class="w">
 
-</span><span class="n">CompilerException</span><span class="w"> </span><span class="n">java.lang.RuntimeException</span><span class="err">:</span><span class="w"> </span><span class="n">Unable</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="nb">resolve</span><span class="w"> </span><span class="nb">symbol</span><span class="err">:</span><span class="w"> </span><span class="n">object</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">context,</span><span class="w"> </span><span class="n">compiling</span><span class="err">:</span><span class="p">(</span><span class="nf">NO_SOURCE_PATH</span><span class="no">:1:1</span><span class="p">)</span><span class="w">
+</span><span class="n">CompilerException</span><span class="w"> </span><span class="n">java.lang.RuntimeException</span><span class="err">:</span><span class="w"> </span><span class="n">Unable</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="nb">resolve</span><span class="w"> </span><span class="nb">symbol</span><span class="err">:</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">context,</span><span class="w"> </span><span class="n">compiling</span><span class="err">:</span><span class="p">(</span><span class="nf">NO_SOURCE_PATH</span><span class="no">:1:1</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
 <p><br>
 <br></p>
 
 <p>You cannot resolve the symbol outside the let. This behavior is very similar to <em>private variable</em> in other programming languages.</p>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">object1</span><span class="w"> </span><span class="s">"light"</span><span class="w">
-             </span><span class="n">object2</span><span class="w"> </span><span class="s">"darkness"</span><span class="p">]</span><span class="w">
-             </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God said let there be "</span><span class="w"> </span><span class="n">object1</span><span class="p">))</span><span class="w">
-             </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God also said let there be "</span><span class="w"> </span><span class="n">object2</span><span class="p">)))</span><span class="w">
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">l</span><span class="w"> </span><span class="s">"light"</span><span class="w">
+             </span><span class="n">d</span><span class="w"> </span><span class="s">"darkness"</span><span class="p">]</span><span class="w">
+             </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God said let there be "</span><span class="w"> </span><span class="n">l</span><span class="p">))</span><span class="w">
+             </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God also said let there be "</span><span class="w"> </span><span class="n">d</span><span class="p">)))</span><span class="w">
 </span><span class="n">God</span><span class="w"> </span><span class="n">said</span><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">light</span><span class="w">
 </span><span class="n">God</span><span class="w"> </span><span class="n">also</span><span class="w"> </span><span class="n">said</span><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">darkness</span><span class="w">
 </span><span class="n">nil</span><span class="w">
@@ -176,10 +176,26 @@
 <br></p>
 
 <p>You can also provide multiple bindings.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">l</span><span class="w"> </span><span class="s">"light"</span><span class="w">
+            </span><span class="n">l_d</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="s">" and"</span><span class="w"> </span><span class="s">" darkness"</span><span class="p">)]</span><span class="w">
+            </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"God also said let there be "</span><span class="w"> </span><span class="n">l_d</span><span class="p">)))</span><span class="w">
+</span><span class="n">God</span><span class="w"> </span><span class="n">also</span><span class="w"> </span><span class="n">said</span><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">light</span><span class="w"> </span><span class="nb">and</span><span class="w"> </span><span class="n">darkness</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>The binding will be immediately available, so each binding can see the prior bindings.</p>
 
 <h2 id="scope">Scope</h2>
 
-<p>When Clojure tries to resolve symbols, the resolution will be done in the <strong>scope</strong> of symbols.</p>
+<p>When Clojure tries to resolve a symbol, the resolution will be done in the <strong>scope</strong> of the symbol.</p>
 <pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="s">"aaa"</span><span class="p">]</span><span class="w">
         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">a</span><span class="p">))</span><span class="w">
 </span><span class="n">aaa</span><span class="w">
@@ -202,23 +218,29 @@
 <br></p>
 
 <p>Now, <code class="prettyprint">let</code> are nested. Like previous example, Clojure tries to resolve <code class="prettyprint">a</code>. However, this time Clojure resolves <code class="prettyprint">a</code> to <code class="prettyprint">&quot;AAA&quot;</code>, instead of <code class="prettyprint">aaa</code>. Each <code class="prettyprint">let</code> will create a scope and symbol resolution is done inside the let where the symbol is resolved.</p>
-
-<p><br>
-<br></p>
-
-<p>The kind of scope is called <strong>lexical scope</strong>. For those whom English is not your first language, lexical means <em>words in a sentence</em>. The scope is <strong>lexical</strong> because the compiler relies on the physical location of the symbol (word) in a program (sentence) to resolve them.</p>
 <pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="s">"aaa"</span><span class="p">]</span><span class="w">
-        </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w">
         </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="s">"AAA"</span><span class="p">]</span><span class="w">
-          </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">a</span><span class="p">)))</span><span class="w">
-</span><span class="n">aaa</span><span class="w">
+          </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">a</span><span class="p">))</span><span class="w">
+        </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">a</span><span class="p">))</span><span class="w">
 </span><span class="n">AAA</span><span class="w">
+</span><span class="n">aaa</span><span class="w">
 </span><span class="n">nil</span><span class="w">
 </span></code></pre>
 
-<p><br></p>
+<p><br>
+<br>
+<br>
+<br></p>
 
-<p>The symbol resolution is always upwards.</p>
+<p>Also notice that the inner <code class="prettyprint">let</code> does not override the scope of outer <code class="prettyprint">let</code>.</p>
+
+<p><br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>The kind of scope is called <strong>lexical scope</strong>. For those whom English is not your first language, lexical means <em>words in a sentence</em>. The scope is <strong>lexical</strong> because the compiler relies on the physical location of the symbol (word) in a program (sentence) to resolve them.</p>
 <pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="s">"a"</span><span class="p">]</span><span class="w">
         </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[]</span><span class="w">
           </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">a</span><span class="p">)))</span><span class="w">
@@ -226,15 +248,9 @@
 </span><span class="n">nil</span><span class="w">
 </span></code></pre>
 
-<p><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br></p>
+<p><br></p>
 
-<p>The symbol resolution bubbles up until it finds the binding. The inner <code class="prettyprint">let</code> doesn&rsquo;t provide the binding for <code class="prettyprint">a</code>, so it bubbles up to outer <code class="prettyprint">let</code>. This happens because the scope of inner let is wrapped by the scope of outer let.</p>
+<p>The resolution look up bubbles up until it finds the binding. The inner <code class="prettyprint">let</code> doesn&rsquo;t provide the binding for <code class="prettyprint">a</code>, so it bubbles up to outer <code class="prettyprint">let</code>. This happens because the scope of inner let is wrapped by the scope of outer <code class="prettyprint">let</code>.</p>
 <pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="s">"a"</span><span class="p">]</span><span class="w">
         </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[]</span><span class="w">
           </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">not-bound-symbol</span><span class="p">)))</span><span class="w">
