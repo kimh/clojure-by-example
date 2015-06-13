@@ -454,7 +454,7 @@ user=> (let [plus-numbers #(+ 1 %1 %2 %3)]
 <br>
 <br>
 
-`%` will be replaced with arumgnets passed to the function. When the function takes multiple arguments, `%1` is for the first argument, `%2` is for the second and so on.
+`%` will be replaced with arguments passed to the function. When the function takes multiple arguments, `%1` is for the first argument, `%2` is for the second and so on.
 
 ```clojure
 user=> (def say-hello (fn [name] (println (str "Hello, " name))))
@@ -486,7 +486,7 @@ nil
 <br>
 
 
-You can also pass a function to another function. We define two functions and bind to `say-hello` and `say-bye` vars. We also define a generic function and bind to `geeting`.
+You can also pass a function to another function. We define two functions and bind to `say-hello` and `say-bye` vars. We also define a generic function and bind to `greeting`.
 
 <br>
 <br>
@@ -579,7 +579,7 @@ user=> (if-let [pos-nums (filter pos? [-1 -2 1 2])]
 
 <br>
 
-After testing condition, you often want to reuse it later. `if-let` binds the evaluated condition to var when it's truthy. The result of `filter` will be binded to `pos-nums`.
+After testing condition, you often want to reuse it later. `if-let` binds the evaluated condition to var when it's truthy. The result of `filter` will be bound to `pos-nums`.
 
 ## When
 
@@ -2420,7 +2420,7 @@ user> @user
 
 <br>
 
-Suppose we are trying to create an user record in database. Each `alter` tries to update user-recrod ref with user info and you want the ref to be updated only when both `alter` succeed.
+Suppose we are trying to create an user record in database. Each `alter` tries to update user-record ref with user info and you want the ref to be updated only when both `alter` succeed.
 
 <br>
 
@@ -2429,7 +2429,7 @@ But, let's assume something wrong occurs between the first and the second alter.
 <br>
 <br>
 
-As you see, the user-record ref is still empty. This is because `alter` inside `dosync` doesn't update the ref until getting out of `dosycn` block successfully.
+As you see, the user-record ref is still empty. This is because `alter` inside `dosync` doesn't update the ref until getting out of `dosync` block successfully.
 
 
 ```clojure
@@ -2503,7 +2503,7 @@ The value of the ref is still 0 at this moment because the update to the ref is 
 
 [CLOJURE for the BRAVE and TRUE](http://www.braveclojure.com/)
 
-[Clojure Cheetsheet](http://clojure.org/cheatsheet)
+[Clojure Cheatsheet](http://clojure.org/cheatsheet)
 
 
 And many other great articles and pages made by the Clojure community.
