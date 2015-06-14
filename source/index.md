@@ -34,7 +34,7 @@ Hopefully, this helps you to start learning and writing Clojure.
 
 ```clojure
 user=> (println "Hello, world!")
-hello, world
+Hello, world!
 nil
 
 
