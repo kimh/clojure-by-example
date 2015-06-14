@@ -1,0 +1,13 @@
+# Deployment
+git config --global user.email "kimh-machine1@kimh.33mail.com"
+git config --global user.name "kimh-machine1"
+mkdir -p /home/rof/src/github.com/kimh/clojure-by-example/build
+cd /home/rof/src/github.com/kimh/clojure-by-example
+cd -
+cd /home/rof/src/github.com/kimh/clojure-by-example/build
+git init
+git remote add origin git@github.com:kimh/clojure-by-example.git
+git fetch --unshallow || true
+git fetch origin "+refs/heads/*:refs/remotes/origin/*"
+git checkout --orphan gh-pages
+bundle exec rake publish
