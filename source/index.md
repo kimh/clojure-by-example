@@ -28,10 +28,7 @@ These are very basic questions, but enough to start hacking with the new languag
 
 Recently, I needed to learn this completely new language **Clojure** but couldn't find what I wanted. So, I decided to create one while learning Clojure.
 
-I want to express my thanks to Mark McGranaghan who created [Go by Example](https://gobyexample.com/) which inspired me a lot.
-
 Hopefully, this helps you to start learning and writing Clojure.
-
 
 # Hello, world!
 
