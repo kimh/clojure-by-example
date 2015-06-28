@@ -588,13 +588,13 @@ In Clojure, you can pass only one expression to a branch of `if`. However, you o
 user=> (defn positive-number-seq [numbers]
          (if-let [pos-nums (seq (filter pos? numbers))]
           pos-nums
-          "no posivie numbers"))
+          "no positive numbers"))
 
 user=> (positive-number-seq [-1 -2 1 2])
 (1 2)
 
 user=> (positive-number-seq [-1 -2])
-"no posivie numbers"
+"no positive numbers"
 ```
 
 <br>
