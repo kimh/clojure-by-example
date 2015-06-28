@@ -585,15 +585,40 @@ In Clojure, you can pass only one expression to a branch of `if`. However, you o
 ## If-Let
 
 ```clojure
-user=> (if-let [pos-nums (filter pos? [-1 -2 1 2])]
+user=> (defn positive-number-seq [numbers]
+         (if-let [pos-nums (seq (filter pos? numbers))]
           pos-nums
-          "no positive numbers")
+          "no posivie numbers"))
+
+user=> (positive-number-seq [-1 -2 1 2])
 (1 2)
+
+user=> (positive-number-seq [-1 -2])
+"no posivie numbers"
 ```
 
 <br>
 
-After testing condition, you often want to reuse it later. `if-let` binds the evaluated condition to var when it's truthy. The result of `filter` will be bound to `pos-nums`.
+After testing condition, you often want to reuse it later. `if-let` binds the evaluated condition to var when it's truthy. In this example, when `positive-number-seq` receives a collection which contains positive numbers, the result of `(seq (filter pos? numbers)` will be bound to `pos-nums`.
+
+<br>
+
+`pos-nums` is returned since the collection contains positive numbers `1 2`.
+<br>
+<br>
+The second argument is for **else** branch. It will be evaluated when the first argument is evaluated to be false.
+
+```
+user=> (seq [1 2])
+(1 2)
+
+user=> (seq [])
+nil
+```
+
+<br>
+
+Note that `seq` will return `nil` when empty collection is passed.
 
 ## When
 
