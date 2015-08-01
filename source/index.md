@@ -2065,21 +2065,20 @@ When you want to defer the evaluation of expressions until you obtain values to 
 
 ```clojure
 user> (def my-promise (promise))
-
 #'user/my-promise
-user> (def listener (fn []
+
+user> (def listen-and-callback (fn []
   (println "Start listening...")
   (future (println "Callback fired: " @my-promise))))
-  ;; Start listening
-  (listener)
-  ;; Suppose doing things that takes time
-  (Thread/sleep 2000)
+#'user/listen-and-callback
 
-  (deliver my-promise "delivered value")
+user> (defn do-time-consuming-job []
+  (Thread/sleep 5000)
+  (deliver my-promise "delivered value"))
+#'user/do-time-consuming-job
 
-
+user> (listen-and-callback) (do-time-consuming-job)
 Start listening...
-;; Waiting two seconds here...
 Callback fired:  delivered value
 ```
 
@@ -2088,13 +2087,16 @@ Callback fired:  delivered value
 First, you make a promise with `promise`.
 
 <br>
-Creating a listener that listens to the promise and fire the callback when a value is delivered to the promise.
+Creating a listener that listens to the promise and fire the callback when a value is delivered to the promise. Just like future, promise will block when you dereference it.
 
 <br>
-Just like future, promise will block when you dereference it. Calling `(listener)` will block at the dereference of `@my-promise`.
+<br>
+Defining a job that takes 5 seconds to finish.
 
 <br>
-You can signal the promise to return delivered values with `deliver`.
+<br>
+<br>
+Now let's start the listener and wait for the time consuming job. After being blocked by the dereference of `@my-promise` for 5 seconds, you will see the callback is fired.
 
 # Atoms
 ## Atom
