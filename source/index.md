@@ -326,7 +326,7 @@ nil
 
 To define a function, use `defn`.
 
-The first argument is the name of function `say-hello`, the second argument is the argument of the function `[name]`, and the third argument is the function body ` (println (str "Hello, " name)))`.
+The first argument is the name of function `say-hello`, the second argument is the argument of the function `[name]`, and the third argument is the function body ` (println (str "Hello, " name))`.
 
 ```clojure
 user=> (defn say-hello
