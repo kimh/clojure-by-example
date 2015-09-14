@@ -34,7 +34,7 @@ Hopefully, this helps you to start learning and writing Clojure.
 
 ```clojure
 user=> (println "Hello, world!")
-hello, world
+Hello, world!
 nil
 
 
@@ -80,7 +80,7 @@ clojure.lang.Symbol
 user> (type 'my-cool-function)
 clojure.lang.Symbol
 
-user> (type 'my-cool-function)
+user> (type 'nyncat)
 clojure.lang.Symbol
 ```
 
@@ -92,11 +92,11 @@ clojure.lang.Symbol
 user> (def a "aaaaa")
 #'user/a
 
-user> (print a)
+user> (println a)
 aaaaa
 nil
 
-user> (print b)
+user> (println b)
 CompilerException java.lang.RuntimeException: Unable to resolve symbol: b in this context, compiling:(NO_SOURCE_PATH:1:1)
 ```
 
