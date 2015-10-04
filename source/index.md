@@ -1895,7 +1895,7 @@ user> (later)
 <br>
 
 
-You can archive the same thing by using an anonymous function and `def`. Then, why do we get bothered with delay?
+You can achieve the same thing by using an anonymous function and `def`. Then, why do we get bothered with delay?
 
 ```clojure
 user> (def later (delay (do [] (prn "Adding") (+ 1 2))))
