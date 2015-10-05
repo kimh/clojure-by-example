@@ -1661,7 +1661,7 @@ Using fully qualified namespace is very important in order to avoid name conflic
 <br>
 <br></p>
 
-<p>You can archive the same thing by using an anonymous function and <code class="prettyprint">def</code>. Then, why do we get bothered with delay?</p>
+<p>You can achieve the same thing by using an anonymous function and <code class="prettyprint">def</code>. Then, why do we get bothered with delay?</p>
 <pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">later</span><span class="w"> </span><span class="p">(</span><span class="nf">delay</span><span class="w"> </span><span class="p">(</span><span class="nf">do</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nb">prn</span><span class="w"> </span><span class="s">"Adding"</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">))))</span><span class="w">
 </span><span class="o">#</span><span class="ss">'user/later</span><span class="w">
 
