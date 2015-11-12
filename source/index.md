@@ -435,7 +435,7 @@ You can bind functions to var just like other values. This works just like `defn
 user=> #(+ 1 1)
 #<user$eval2902$fn__2903 user$eval2902$fn__2903@1cc9a623>
 
-user=> (fn [] (+ 1 + 1))
+user=> (fn [] (+ 1 1))
 #<user$eval2920$fn__2921 user$eval2920$fn__2921@40bd9db>
 ```
 
