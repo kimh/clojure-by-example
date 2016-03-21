@@ -252,7 +252,7 @@
 <pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="s">"a"</span><span class="p">]</span><span class="w">
         </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[]</span><span class="w">
           </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">not-bound-symbol</span><span class="p">)))</span><span class="w">
-</span><span class="n">CompilerException</span><span class="w"> </span><span class="n">java.lang.RuntimeException</span><span class="err">:</span><span class="w"> </span><span class="n">Unable</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="nb">resolve</span><span class="w"> </span><span class="nb">symbol</span><span class="err">:</span><span class="w"> </span><span class="n">not-bound-symbol</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">context,</span><span class="w"> </span><span class="n">compiling</span><span class="err">:</span><span class="p">(</span><span class="nf">NO_SOURCE_PATH</span><span class="no">:3:11</span><span class="p">)</span><span class="w"> 
+</span><span class="n">CompilerException</span><span class="w"> </span><span class="n">java.lang.RuntimeException</span><span class="err">:</span><span class="w"> </span><span class="n">Unable</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="nb">resolve</span><span class="w"> </span><span class="nb">symbol</span><span class="err">:</span><span class="w"> </span><span class="n">not-bound-symbol</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">context,</span><span class="w"> </span><span class="n">compiling</span><span class="err">:</span><span class="p">(</span><span class="nf">NO_SOURCE_PATH</span><span class="no">:3:11</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
 <p><br>
@@ -842,7 +842,7 @@ You use <code class="prettyprint">:else</code> keyword for the default case.</p>
 <p>Get modulus with <code class="prettyprint">mod</code></p>
 
 <h2 id="max">Max</h2>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">max</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">  
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">max</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">
 </span><span class="mi">5</span><span class="w">
 </span></code></pre>
 
@@ -1776,6 +1776,27 @@ This is because Clojure puts the expression grouped by <code class="prettyprint"
 <br></p>
 
 <p>You can tell <code class="prettyprint">deref</code> how long you want to wait along with a value to return if it does time out.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">sleep-and-wait</span><span class="w">
+         </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="nb">time</span><span class="p">]</span><span class="w">
+           </span><span class="p">(</span><span class="nf">future</span><span class="w">
+             </span><span class="p">(</span><span class="nf">Thread/sleep</span><span class="w"> </span><span class="nb">time</span><span class="p">)</span><span class="w">
+             </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"slept "</span><span class="w"> </span><span class="nb">time</span><span class="w"> </span><span class="s">" sec"</span><span class="w"> </span><span class="p">))))</span><span class="w">
+               </span><span class="p">[</span><span class="mi">1000</span><span class="w"> </span><span class="mi">2000</span><span class="p">])]</span><span class="w">
+     </span><span class="p">(</span><span class="nb">doall</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">deref</span><span class="w"> </span><span class="n">sleep-and-wait</span><span class="p">))</span><span class="w">
+     </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"done"</span><span class="p">))</span><span class="w">
+</span><span class="n">slept</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="n">sec</span><span class="w">
+</span><span class="n">slept</span><span class="w"> </span><span class="mi">2000</span><span class="w"> </span><span class="n">sec</span><span class="w">
+</span><span class="n">done</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>Finally, you can do a useful thing by combining <code class="prettyprint">future</code> and <code class="prettyprint">deref</code>. You can run multiple time consuming tasks in different threads and block until they finish.</p>
 
 <h2 id="realized?">Realized?</h2>
 <pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">my-future</span><span class="w"> </span><span class="p">(</span><span class="nf">future</span><span class="w"> </span><span class="p">(</span><span class="nf">Thread/sleep</span><span class="w"> </span><span class="mi">5000</span><span class="p">)</span><span class="w"> </span><span class="p">))</span><span class="w">
