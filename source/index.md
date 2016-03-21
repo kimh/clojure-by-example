@@ -196,7 +196,7 @@ Clojure tries to evaluate `a` because it needs to pass the value to `println`. `
 user> (let [a "aaa"]
         (let [a "AAA"]
           (println a)))
-          
+
 AAA
 nil
 ```
@@ -251,7 +251,7 @@ The resolution look up bubbles up until it finds the binding. The inner `let` do
 user> (let [a "a"]
         (let []
           (println not-bound-symbol)))
-CompilerException java.lang.RuntimeException: Unable to resolve symbol: not-bound-symbol in this context, compiling:(NO_SOURCE_PATH:3:11) 
+CompilerException java.lang.RuntimeException: Unable to resolve symbol: not-bound-symbol in this context, compiling:(NO_SOURCE_PATH:3:11)
 ```
 
 <br>
@@ -923,7 +923,7 @@ Get modulus with `mod`
 ## Max
 
 ```clojure
-user=> (max 1 2 3 4 5)  
+user=> (max 1 2 3 4 5)
 5
 ```
 
@@ -2026,6 +2026,30 @@ user>  (deref (future (Thread/sleep 3000) "I made it!") 2000 "Can't wait anymore
 
 You can tell `deref` how long you want to wait along with a value to return if it does time out.
 
+
+```clojure
+user> (let [sleep-and-wait
+         (map (fn [time]
+           (future
+             (Thread/sleep time)
+             (println (str "slept " time " sec" ))))
+               [1000 2000])]
+     (doall (map deref sleep-and-wait))
+     (println "done"))
+slept 1000 sec
+slept 2000 sec
+done
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Finally, you can do a useful thing by combining `future` and `deref`. You can run multiple time consuming tasks in different threads and block until they finish.
+
 ## Realized?
 
 ```clojure
@@ -2548,4 +2572,3 @@ The value of the ref is still 0 at this moment because the update to the ref is 
 
 
 And many other great articles and pages made by the Clojure community.
-
