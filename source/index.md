@@ -2427,7 +2427,7 @@ user> @my-ref
 <br>
 
 
-The function that you pass to `alter` will take an argument which is the current atom.
+The function that you pass to `alter` will take an argument which is the current ref.
 
 <br>
 <br>
