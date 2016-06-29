@@ -114,7 +114,7 @@ CompilerException java.lang.RuntimeException: Unable to resolve symbol: b in thi
 <br>
 
 
-If you don't append `'` single quote, you are telling Clojure to resolve the symbol. You can obtain bound values by resolving symbols.
+If you don't prepend a `'` single quote, you are telling Clojure to resolve the symbol. You can obtain bound values by resolving symbols.
 
 <br>
 
