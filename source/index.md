@@ -233,7 +233,7 @@ Also notice that the inner `let` does not override the scope of outer `let`.
 <br>
 <br>
 
-The kind of scope is called **lexical scope**. For those whom English is not your first language, lexical means *words in a sentence*. The scope is **lexical** because the compiler relies on the physical location of the symbol (word) in a program (sentence) to resolve them.
+This kind of scope is called **lexical scope**. For those whom English is not your first language, lexical means *words in a sentence*. The scope is **lexical** because the compiler relies on the physical location of the symbol (word) in a program (sentence) to resolve them.
 
 ```clojure
 user> (let [a "a"]
@@ -245,7 +245,7 @@ nil
 
 <br>
 
-The resolution look up bubbles up until it finds the binding. The inner `let` doesn't provide the binding for `a`, so it bubbles up to outer `let`. This happens because the scope of inner let is wrapped by the scope of outer `let`.
+The resolution look up bubbles up until it finds the binding. The inner `let` doesn't provide the binding for `a`, so it bubbles up to the outer `let`. This happens because the scope of inner let is wrapped by the scope of outer `let`.
 
 ```clojure
 user> (let [a "a"]
@@ -264,7 +264,7 @@ Clojure complains with **Unable to resolve symbol** exception when it cannot fin
 <br>
 <br>
 
-You probably find the idea of lexical scope very familiar. This is because most of modern programming languages use lexical scope. There is also something called *dynamic scope* but you probably don't have to know right now.
+You probably find the idea of lexical scope very familiar. This is because most modern programming languages use lexical scope. There is also something called *dynamic scope* but you probably don't have to know that right now.
 
 ## Def
 
