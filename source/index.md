@@ -967,7 +967,7 @@ user=> (+ (bigint Long/MAX_VALUE) 10)
 
 <br>
 
-You can use `bigint` to handle really big number.
+You can use `bigint` to handle really big numbers.
 
 # Lists
 
@@ -982,7 +982,7 @@ user=> '(1 2 3)
 
 <br>
 
-Lists are simple collection of values. You can create a list by grouping values with parentheses with a single quote `'` at the top.
+A list is a simple collection of values. You can create a list by grouping values with parentheses and a single quote `'` at the beginning.
 
 ```clojure
 user> (1 2 3)
@@ -1003,7 +1003,7 @@ user=> (nth '(1 2 3) 1)
 
 <br>
 
-To get a value from the list, use `nth` with index number. Index starts from 0
+To get a value from the list, use `nth` with it's index number. Index starts from 0
 
 ## Count
 
@@ -1014,7 +1014,7 @@ user=> (count '(1 2 3) )
 
 <br>
 
-To count how many values in the list, use `count`.
+To count how many values are in a list, use `count`.
 
 ## Conj
 
@@ -1029,12 +1029,12 @@ To add a value to the list, use `conj` (conj[oin]). Note that the new value is a
 
 ## Remove element
 
-How to remove a value from a list? You can't really remove a value from list in Clojure. That's not what list is supposed to do.
-If you are writing a program that needs to remove items from collection, you should use other type of collection such as vectors or sets.
+How to remove a value from a list? You can't really remove a value from a list in Clojure. That's not what lists are supposed to do.
+If you are writing a program that needs to remove items from a collection, you should use a different type of data structure such as a vector or set.
 
 # Vectors
 
-You can think of vectors as efficient and useful version of lists. It's more practical data storage of multiple values than lists.
+You can think of vectors as a more efficient and useful version of lists. It's more practical to store multiple values in a vector.
 
 ## Literal
 
@@ -1079,7 +1079,7 @@ user=> (conj [1 2 3] 4)
 
 <br>
 
-To add a value, use `conj` (conj[oin]). Note that the new value is added to the bottom while it is added to the top in lists.
+To add a value, use `conj` (conj[oin]). Note that the new value is added to the end while it is added to the beginning in lists.
 
 ## .indexOf
 
@@ -1105,7 +1105,7 @@ Returns `-1` if the value doesn't exist.
 
 # Sets
 
-Sets are unordered collection of values, meaning that the order of values are not guaranteed.
+Sets are unordered collections of values, meaning that the order of values is not guaranteed.
 
 ## Literal
 
@@ -1116,7 +1116,7 @@ user=> #{1 2 3}
 
 <br>
 
-You can create a set by grouping values with `#{}`. I get the order of 1 -> 3 -> 2 on my computer but you may the get different order since the order is not guaranteed
+You can create a set by grouping values with `#{}`. I get the order of 1 -> 3 -> 2 on my computer but you may get different order since the order is not guaranteed
 
 ## Sort
 
@@ -1148,7 +1148,7 @@ user=> (conj (conj #{1 2 3} 4) 4)
 <br>
 <br>
 
-One important trait of sets is that **it does not contain an element more than once.**
+One important trait of sets is that **they do not contain duplicates of an element.**
 
 ## Disj
 
