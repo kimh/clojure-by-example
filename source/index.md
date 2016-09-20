@@ -512,7 +512,7 @@ Then we pass `say-hello` and `say-bye` to `greeting`.
 
 ## Closure
 
-When a function (let's call this *inner* function) is returned from another function (let's call this *outer* function), and the inner function does somethings with the arguments given from outer function, then the inner function is called **closure**.
+When a function (let's call this *inner* function) is returned from another function (let's call this *outer* function), and the inner function does somethings with the arguments given from outer function, then the inner function is called a **closure**.
 
 ```clojure
 user=> (defn inner
@@ -537,7 +537,7 @@ nil
 
 <br>
 
-We define a function called `inner`. `inner` function prints `from-outer` var which is supposed to be given by outer function.
+We define a function called `inner`. `inner` function prints `from-outer` var which is supposed to be given by the outer function.
 
 <br>
 <br>
@@ -547,7 +547,7 @@ We also define two functions, `outer1` and `outer2`. These functions both call `
 <br>
 <br>
 
-As a result, even if `from-outer` var doesn't change, `inner` prints different things.
+As a result, even if the `from-outer` var doesn't change, `inner` prints different things.
 
 
 # Control Flow
@@ -564,7 +564,7 @@ nil
 
 <br>
 
-`if` takes a predicate (`true` or `false`) in the first argument. The second argument will be evaluated if the predicate is evaluated to `true`. The third argument is equivalent to **else** in many programming language which is evaluated when the predicate is evaluated to `false`.
+`if` takes a predicate (`true` or `false`) as the first argument. The second argument will be evaluated if the predicate is evaluated to `true`. The third argument is equivalent to **else** in many programming languages which is evaluated when the predicate evaluates to `false`.
 
 ```clojure
 user=> (if true
@@ -580,7 +580,7 @@ nil
 <br>
 <br>
 
-In Clojure, you can pass only one expression to a branch of `if`. However, you often need to pass more than one expression in real programs. In this case, use `do`.
+In Clojure, you can only pass one expression to a branch of `if`. However, you often need to pass more than one expression in real programs. In this case, use `do`.
 
 ## If-Let
 
@@ -633,7 +633,7 @@ nil
 
 <br>
 
-When you only care about the case when the condition is truthy, you can use `when`. `when` is similar to `if` but no **else** branch and already wrapped by `do`, so you can pass multiple expression.
+When you only care about the case when the condition is truthy, you can use `when`. `when` is similar to `if` but does not contain an **else** branch and is already wrapped by `do`, so you can pass multiple expressions.
 
 ```clojure
 user=> (when false
@@ -663,7 +663,7 @@ nil
 
 <br>
 
-There is also `when-let` which is similar to `if-let` but no **else** branch.
+There is also `when-let` which is similar to `if-let` but does not contain an **else** branch.
 
 ## Case
 
@@ -706,7 +706,7 @@ and evaluates the expression in the matched branch.
 <br>
 <br>
 <br>
-The expression in the last branch will be evaluated if none of other branches are matched.
+The expression in the last branch will be evaluated if none of the conditions are matched.
 
 ## Cond
 
@@ -733,7 +733,7 @@ nil
 
 <br>
 
-When you want to do similar thing to `case` but want to write your own test case rather than `=`, you can use `cond`. You can write different test case in each branch with `cond`.
+When you want to do similar thing to `case` but want to write your own test case rather than `=`, you can use `cond`. You can write a different test case in each branch with `cond`.
 
 <br>
 <br>
@@ -760,7 +760,7 @@ nil
 
 <br>
 
-You can use predicate with `condp` for condition. In this case `contains?` is the predicate.
+You can use a predicate with `condp` for condition. In this case `contains?` is the predicate.
 
 
 <br>
@@ -773,7 +773,7 @@ You can use predicate with `condp` for condition. In this case `contains?` is th
 <br>
 <br>
 
-`(contains? [1 2 3] 5)` will be evaluated falsey, thus default branch will be evaluated.
+`(contains? [1 2 3] 5)` will be evaluated falsey, thus the default branch will be evaluated.
 
 # Boolean
 
