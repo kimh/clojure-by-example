@@ -828,7 +828,7 @@ user=> "Hi, there!"
 
 </br>
 
-You can create a string by double-quoting texts.
+You can create a string by double-quoting text.
 
 ## Str
 
@@ -907,7 +907,7 @@ user=> (/ 4 3)
 </br>
 </br>
 
-Interesting thing is that fraction is represented by ratio.
+Interesting thing is that fractions are represented by ratio.
 
 ## Modulo
 
@@ -929,7 +929,7 @@ user=> (max 1 2 3 4 5)
 
 <br>
 
-Get the greatest and smallest number with `max`.
+Get the greatest number with `max`.
 
 ## Min
 
