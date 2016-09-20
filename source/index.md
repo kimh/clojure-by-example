@@ -304,7 +304,7 @@ You can also override the one already declared later.
 <br>
 <br>
 
-The rule of thumb in Clojure is avoiding the use of `def` as much as possible. `def` will introduce the state and the abusing of the state will make our code difficult to maintain.
+The rule of thumb in Clojure is avoiding the use of `def` as much as possible. `def` introduces state and abusing state will make our code difficult to maintain.
 
 # Functions
 
@@ -403,8 +403,8 @@ user> (meta #'say-hello)
 
 ## Anonymous Function
 
-Functions are first class object in Clojure. When you say something is *a first class object in programming language X*, it means that you can do the all basic operations with the object
-such as passing to a function, returned from a function, and binding to variable, etc.
+Functions are first class objects in Clojure. When you say something is *a first class object in programming language X*, it means that you can do all the basic operations with the object
+such as passing it to a function, returned from a function, and binding it to a variable, etc.
 
 
 ```clojure
