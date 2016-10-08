@@ -1838,6 +1838,55 @@ user=> `(+ ~@(list 1 2 3))
 
 The `~@` unquote splice works just like `~` unquote, except it expands a sequence and splice the contents of the sequence into the enclosing syntax-quoted data structure.
 
+# Threading Macros
+
+Threading Macros are macros that helps you to write nested forms in a cleaner and more readable way. Despite it's name, threading macros are nothing to do with threads in the parallel computing.
+
+## ->
+
+`->` is called thread-first macro. It's *first* because it's passing down the evaluation of former forms to the first argument of preceding forms.
+
+```clojure
+user> (conj (conj (conj [] 1) 2) 3)
+[1 2 3]
+```
+
+Suppose if you want to start from an empty vector and adding numbers to the vector one by one. Here is nested version of the code.
+
+<br>
+
+As you add more numbers, the nesting gets deeper and makes your code harder to read. The thread-first macro solves this nesting problem.
+
+
+```clojure
+user> (-> []
+          (conj 1)
+          (conj 2)
+          (conj 3))
+[1 2 3]
+```
+
+Here is the same code with thread-first macro.
+
+The first argument is the initial value that you want to start from. After the first argument is evaluated, it is then passed to the first argument of `(conj 1)`. This is equivalent to `(conj [] 1)`. The evaluated value is then passed to to the first argument of `(conj 2)`. This is equivalent to `(conj [1] 2)`. Finally, we are evaluating `(conj [1 2] 3)` which returns `[1 2 3]`.
+
+## ->>
+
+`->>` is called thread-last macro. It's *last* because it's passing down the evaluation of former forms to the last argument of preceding forms.
+
+`map` is an example of such function that takes a collection in the last argument and apply the function in the first argument.
+
+```clojure
+user> (->> ["japan" "china" "korea"]
+           (map clojure.string/upper-case)
+           (map #(str "Hello " %)))
+("Hello JAPAN!" "Hello CHINA!" "Hello KOREA!")
+```
+
+This code converts country names to upper case and say hello to the countries. The vector of country names are passed to the last argument of the first map which is equivalent to `(map clojure.string/upper-case ["japan" "china" "korea"])`. Then it's passed to the second map which is equivalent to `(map #(str "Hello " %) ["JAPAN" "CHINA" "KOREA"])`.
+
+Remember that `#()` is another way to write a anonymous function.
+
 # Delays
 
 ## Delay
