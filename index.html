@@ -1613,6 +1613,48 @@ Using fully qualified namespace is very important in order to avoid name conflic
 
 <p>The <code class="prettyprint">~@</code> unquote splice works just like <code class="prettyprint">~</code> unquote, except it expands a sequence and splice the contents of the sequence into the enclosing syntax-quoted data structure.</p>
 
+<h1 id="threading-macros">Threading Macros</h1>
+
+<p>Threading Macros are macros that helps you to write nested forms in a cleaner and more readable way. Despite it&rsquo;s name, threading macros are nothing to do with threads in the parallel computing.</p>
+
+<h2 id="-&gt;">-&gt;</h2>
+
+<p><code class="prettyprint">-&gt;</code> is called thread-first macro. It&rsquo;s <em>first</em> because it&rsquo;s passing down the evaluation of former forms to the first argument of preceding forms.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
+</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Suppose if you want to start from an empty vector and adding numbers to the vector one by one. Here is nested version of the code.</p>
+
+<p><br></p>
+
+<p>As you add more numbers, the nesting gets deeper and makes your code harder to read. The thread-first macro solves this nesting problem.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">-&gt;</span><span class="w"> </span><span class="p">[]</span><span class="w">
+          </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+          </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+          </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w">
+</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p>Here is the same code with thread-first macro.</p>
+
+<p>The first argument is the initial value that you want to start from. After the first argument is evaluated, it is then passed to the first argument of <code class="prettyprint">(conj 1)</code>. This is equivalent to <code class="prettyprint">(conj [] 1)</code>. The evaluated value is then passed to to the first argument of <code class="prettyprint">(conj 2)</code>. This is equivalent to <code class="prettyprint">(conj [1] 2)</code>. Finally, we are evaluating <code class="prettyprint">(conj [1 2] 3)</code> which returns <code class="prettyprint">[1 2 3]</code>.</p>
+
+<h2 id="-&gt;&gt;">-&gt;&gt;</h2>
+
+<p><code class="prettyprint">-&gt;&gt;</code> is called thread-last macro. It&rsquo;s <em>last</em> because it&rsquo;s passing down the evaluation of former forms to the last argument of preceding forms.</p>
+
+<p><code class="prettyprint">map</code> is an example of such function that takes a collection in the last argument and apply the function in the first argument.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">-&gt;&gt;</span><span class="w"> </span><span class="p">[</span><span class="s">"japan"</span><span class="w"> </span><span class="s">"china"</span><span class="w"> </span><span class="s">"korea"</span><span class="p">]</span><span class="w">
+           </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="n">clojure.string/upper-case</span><span class="p">)</span><span class="w">
+           </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"Hello "</span><span class="w"> </span><span class="n">%</span><span class="p">)))</span><span class="w">
+</span><span class="p">(</span><span class="s">"Hello JAPAN!"</span><span class="w"> </span><span class="s">"Hello CHINA!"</span><span class="w"> </span><span class="s">"Hello KOREA!"</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p>This code converts country names to upper case and say hello to the countries. The vector of country names are passed to the last argument of the first map which is equivalent to <code class="prettyprint">(map clojure.string/upper-case [&quot;japan&quot; &quot;china&quot; &quot;korea&quot;])</code>. Then it&rsquo;s passed to the second map which is equivalent to <code class="prettyprint">(map #(str &quot;Hello &quot; %) [&quot;JAPAN&quot; &quot;CHINA&quot; &quot;KOREA&quot;])</code>.</p>
+
+<p>Remember that <code class="prettyprint">#()</code> is another way to write a anonymous function.</p>
+
 <h1 id="delays">Delays</h1>
 
 <h2 id="delay">Delay</h2>
