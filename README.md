@@ -1,6 +1,6 @@
 # Clojure by Example
 
-[![Codeship Status](https://www.codeship.io/projects/2975f190-646d-0131-452c-7a6d2bba8338/status?branch=master)](https://codeship.com/projects/85514)
+[ ![Codeship Status for kimh/clojure-by-example](https://app.codeship.com/projects/e22ef5b0-f40c-0132-2194-16cf317d1634/status?branch=master)](https://app.codeship.com/projects/85514)
 
 This repository hosts code for [Clojure by Example](http://kimh.github.io/clojure-by-example/)
 
