@@ -1877,7 +1877,7 @@ The first argument is the initial value that you want to start from. After the f
 `map` is an example of such function that takes a collection in the last argument and apply the function in the first argument.
 
 ```clojure
-user> (->> ["japan" "china" "korea"]
+user> (->> ["Japan" "China" "Korea"]
            (map clojure.string/upper-case)
            (map #(str "Hello " %)))
 ("Hello JAPAN!" "Hello CHINA!" "Hello KOREA!")
