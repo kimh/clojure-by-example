@@ -879,7 +879,7 @@ Like many other languages, Clojure supports string formatting with `format` func
 
 <br>
 
-The first argument tells `format` function the format you want to apply to your strings. `%s` is called format speficier and it specifys the type of data to be formatted. The rest of arguments will replace format specifiers.
+The first argument tells `format` function the format you want to apply to your strings. `%s` is called format specifier and it specifies the type of data to be formatted. The rest of arguments will replace format specifiers.
 
 ```clojure
 user=> (format "My favorite fruit is %s" "apple")
@@ -889,7 +889,7 @@ user=> (format "My favorite fruit is %s" "apple")
 
 <br>
 
-`%s` is a format speficier for string.
+`%s` is a format specifier for string.
 
 ```clojure
 user=> (format "I ate %d apples" 2)
@@ -913,7 +913,7 @@ user=> (format "Pi: %.5f" 3.14159265)
 <br>
 <br>
 
-`%.Nf` is a format speficier for floating numbers where N specifies how floating points to print.
+`%.Nf` is a format specifier for floating numbers where N specifies how floating points to print.
 
 <br>
 
@@ -1750,7 +1750,7 @@ nil
 
 ## For
 
-If you are looking for how to write for loop in Clojure, I'm sorry, but this is not what you are looing for. Clojure doesn't have for loop because there is no mutable variable that you need inside for loop in Clojure. But more importantly, you can archive the same thing that for loop can archive with more elegant way.
+If you are looking for how to write for loop in Clojure, I'm sorry, but this is not what you are looking for. Clojure doesn't have for loop because there is no mutable variable that you need inside for loop in Clojure. But more importantly, you can archive the same thing that for loop can archive with more elegant way.
 
 In Clojure, `for` is **list comprehension**. What is list comprehension? Let's look at an example of `for` first.
 
@@ -1767,7 +1767,7 @@ user=> (for [x '(1 2 3)]
 
 <br>
 
-In short, **list comprehention** is a way to create a list from existing lists. The idea of list comprehention comes from math world. It's used in order to write sets in simpler and easier way.
+In short, **list comprehension** is a way to create a list from existing lists. The idea of list comprehension comes from math world. It's used in order to write sets in simpler and easier way.
 
 For example, `{x | x >0}` means the set of all `x` that is bigger than than 0. So if `x` is the set of -1, 1, and 2, then the notation refers to the set of 1 and 2 but not -1.
 
@@ -1779,7 +1779,7 @@ user=> (for [x '(-1 1 2) :when (< 0 x)]
 
 <br>
 
-This is a list comprehention that means the same thing as `{x | x >0}` in math.
+This is a list comprehension that means the same thing as `{x | x >0}` in math.
 
 `:when` modifier evaluates the body only for values where the predicate is true.
 
@@ -1793,7 +1793,7 @@ user=> (for [x [0 1 2 3 4 5]
 
 <br>
 
-`let` modifier can be used to bind intermidiate values.
+`let` modifier can be used to bind intermediate values.
 
 ```clojure
 user=> (for [x (range 10) :while (not= x 5)]
@@ -1807,7 +1807,7 @@ user=> (for [x (range 10) :while (not= x 5)]
 <br>
 <br>
 
-`while` modifier stops the evaulation of the body when the predicate is false.
+`while` modifier stops the evaluation of the body when the predicate is false.
 
 ```clojure
 user=> (for [x ['a 'b 'c]
