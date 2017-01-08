@@ -866,6 +866,71 @@ user> (let [first "Hirokuni"
 
 Clojure doesn't have string interpolation. `str` works for you.
 
+## Format
+
+```clojure
+user=> (format "My name is %s %s" "Hirokuni" "Kim")
+"My name is Hirokuni Kim"
+```
+
+<br>
+
+Like many other languages, Clojure supports string formatting with `format` function. The concat example above can also be archived by using `format` function.
+
+<br>
+
+The first argument tells `format` function the format you want to apply to your strings. `%s` is called format speficier and it specifys the type of data to be formatted. The rest of arguments will replace format specifiers.
+
+```clojure
+user=> (format "My favorite fruit is %s" "apple")
+"My favorite fruit is apple"
+
+```
+
+<br>
+
+`%s` is a format speficier for string.
+
+```clojure
+user=> (format "I ate %d apples" 2)
+"I ate 2 apples"
+```
+
+<br>
+<br>
+<br>
+
+`%d` is a format specifier for integer.
+
+```clojure
+user=> (format "Pi: %.3f" 3.14159265)
+"Pi: 3.142"
+
+user=> (format "Pi: %.5f" 3.14159265)
+"Pi: 3.14159"
+```
+
+<br>
+<br>
+
+`%.Nf` is a format speficier for floating numbers where N specifies how floating points to print.
+
+<br>
+
+```clojure
+user=> (format "Boolean representation of 1: %b" 1)
+"Boolean representation of 1: true"
+
+user=> (format "Boolean representation of nil: %b" nil)
+"Boolean representation of nil: false"
+```
+
+<br>
+<br>
+<br>
+
+`%b` is a format specifier for boolean.
+
 # Integers
 
 ## Addition
@@ -2224,7 +2289,8 @@ user> @atom-int
 
 <br>
 
-You can update the value of an atom with `reset!`.
+You can set the value of an atom with `reset!`. It is used when you are setting the value without regard for the
+current value, normally the first time you create the atom.
 
 ```clojure
 user> (reset! atom-int 100)
