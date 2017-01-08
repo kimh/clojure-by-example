@@ -1748,8 +1748,79 @@ nil
 
 <br>
 
+## For
 
-**Note:** In Clojure 1.1+, lazy sequences returns chunked values rather than one by one as mentioned above, but that's not you have to worry about reading this guide.
+If you are looking for how to write for loop in Clojure, I'm sorry, but this is not what you are looing for. Clojure doesn't have for loop because there is no mutable variable that you need inside for loop in Clojure. But more importantly, you can archive the same thing that for loop can archive with more elegant way.
+
+In Clojure, `for` is **list comprehension**. What is list comprehension? Let's look at an example of `for` first.
+
+```clojure
+user=> (for [x '(1 2 3)]
+         (+ 10 x))
+(11 12 13)
+
+```
+
+<br>
+
+`for` takes a vector of one or more collections and iterate over collections while binding each value to symbols.
+
+<br>
+
+In short, **list comprehention** is a way to create a list from existing lists. The idea of list comprehention comes from math world. It's used in order to write sets in simpler and easier way.
+
+For example, `{x | x >0}` means the set of all `x` that is bigger than than 0. So if `x` is the set of -1, 1, and 2, then the notation refers to the set of 1 and 2 but not -1.
+
+```clojure
+user=> (for [x '(-1 1 2) :when (< 0 x)]
+         x)
+(1 2)
+```
+
+<br>
+
+This is a list comprehention that means the same thing as `{x | x >0}` in math.
+
+`:when` modifier evaluates the body only for values where the predicate is true.
+
+```clojure
+user=> (for [x [0 1 2 3 4 5]
+             :let [y (* x 3)]
+             :when (even? y)]
+         y)
+(0 6 12)
+```
+
+<br>
+
+`let` modifier can be used to bind intermidiate values.
+
+```clojure
+user=> (for [x (range 10) :while (not= x 5)]
+         x)
+(0 1 2 3 4)
+````
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+`while` modifier stops the evaulation of the body when the predicate is false.
+
+```clojure
+user=> (for [x ['a 'b 'c]
+             y [1 2 3]]
+        [x y])
+([a 1] [a 2] [a 3] [b 1] [b 2] [b 3] [c 1] [c 2] [c 3])
+```
+
+<br>
+<br>
+<br>
+
+`for` iterates collections in a nested fashion. It's useful to create the combination of all elements in the given collections.
 
 # Macros
 
