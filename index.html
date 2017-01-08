@@ -799,6 +799,61 @@ You use <code class="prettyprint">:else</code> keyword for the default case.</p>
 
 <p>Clojure doesn&rsquo;t have string interpolation. <code class="prettyprint">str</code> works for you.</p>
 
+<h2 id="format">Format</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">"My name is %s %s"</span><span class="w"> </span><span class="s">"Hirokuni"</span><span class="w"> </span><span class="s">"Kim"</span><span class="p">)</span><span class="w">
+</span><span class="s">"My name is Hirokuni Kim"</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Like many other languages, Clojure supports string formatting with <code class="prettyprint">format</code> function. The concat example above can also be archived by using <code class="prettyprint">format</code> function.</p>
+
+<p><br></p>
+
+<p>The first argument tells <code class="prettyprint">format</code> function the format you want to apply to your strings. <code class="prettyprint">%s</code> is called format specifier and it specifies the type of data to be formatted. The rest of arguments will replace format specifiers.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">"My favorite fruit is %s"</span><span class="w"> </span><span class="s">"apple"</span><span class="p">)</span><span class="w">
+</span><span class="s">"My favorite fruit is apple"</span><span class="w">
+
+</span></code></pre>
+
+<p><br></p>
+
+<p><code class="prettyprint">%s</code> is a format specifier for string.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">"I ate %d apples"</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span><span class="s">"I ate 2 apples"</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br></p>
+
+<p><code class="prettyprint">%d</code> is a format specifier for integer.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">"Pi: %.3f"</span><span class="w"> </span><span class="mf">3.14159265</span><span class="p">)</span><span class="w">
+</span><span class="s">"Pi: 3.142"</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">"Pi: %.5f"</span><span class="w"> </span><span class="mf">3.14159265</span><span class="p">)</span><span class="w">
+</span><span class="s">"Pi: 3.14159"</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p><code class="prettyprint">%.Nf</code> is a format specifier for floating numbers where N specifies how floating points to print.</p>
+
+<p><br></p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">"Boolean representation of 1: %b"</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span><span class="s">"Boolean representation of 1: true"</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">format</span><span class="w"> </span><span class="s">"Boolean representation of nil: %b"</span><span class="w"> </span><span class="n">nil</span><span class="p">)</span><span class="w">
+</span><span class="s">"Boolean representation of nil: false"</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br></p>
+
+<p><code class="prettyprint">%b</code> is a format specifier for boolean.</p>
+
 <h1 id="integers">Integers</h1>
 
 <h2 id="addition">Addition</h2>
@@ -1477,7 +1532,69 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <p><br></p>
 
-<p><strong>Note:</strong> In Clojure 1.1+, lazy sequences returns chunked values rather than one by one as mentioned above, but that&rsquo;s not you have to worry about reading this guide.</p>
+<h2 id="for">For</h2>
+
+<p>If you are looking for how to write for loop in Clojure, I&rsquo;m sorry, but this is not what you are looking for. Clojure doesn&rsquo;t have for loop because there is no mutable variable that you need inside for loop in Clojure. But more importantly, you can archive the same thing that for loop can archive with more elegant way.</p>
+
+<p>In Clojure, <code class="prettyprint">for</code> is <strong>list comprehension</strong>. What is list comprehension? Let&rsquo;s look at an example of <code class="prettyprint">for</code> first.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">for</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)]</span><span class="w">
+         </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">x</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">11</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="mi">13</span><span class="p">)</span><span class="w">
+
+</span></code></pre>
+
+<p><br></p>
+
+<p><code class="prettyprint">for</code> takes a vector of one or more collections and iterate over collections while binding each value to symbols.</p>
+
+<p><br></p>
+
+<p>In short, <strong>list comprehension</strong> is a way to create a list from existing lists. The idea of list comprehension comes from math world. It&rsquo;s used in order to write sets in simpler and easier way.</p>
+
+<p>For example, <code class="prettyprint">{x | x &gt;0}</code> means the set of all <code class="prettyprint">x</code> that is bigger than than 0. So if <code class="prettyprint">x</code> is the set of -1, 1, and 2, then the notation refers to the set of 1 and 2 but not -1.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">for</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">-1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="no">:when</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">x</span><span class="p">)]</span><span class="w">
+         </span><span class="n">x</span><span class="p">)</span><span class="w">
+</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>This is a list comprehension that means the same thing as <code class="prettyprint">{x | x &gt;0}</code> in math.</p>
+
+<p><code class="prettyprint">:when</code> modifier evaluates the body only for values where the predicate is true.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">for</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="p">]</span><span class="w">
+             </span><span class="no">:let</span><span class="w"> </span><span class="p">[</span><span class="n">y</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="mi">3</span><span class="p">)]</span><span class="w">
+             </span><span class="no">:when</span><span class="w"> </span><span class="p">(</span><span class="nf">even?</span><span class="w"> </span><span class="n">y</span><span class="p">)]</span><span class="w">
+         </span><span class="n">y</span><span class="p">)</span><span class="w">
+</span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">12</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p><code class="prettyprint">let</code> modifier can be used to bind intermediate values.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">for</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="w"> </span><span class="p">(</span><span class="nb">range</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="no">:while</span><span class="w"> </span><span class="p">(</span><span class="nb">not=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="mi">5</span><span class="p">)]</span><span class="w">
+         </span><span class="n">x</span><span class="p">)</span><span class="w">
+</span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p><code class="prettyprint">while</code> modifier stops the evaluation of the body when the predicate is false.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">for</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="w"> </span><span class="p">[</span><span class="ss">'a</span><span class="w"> </span><span class="ss">'b</span><span class="w"> </span><span class="ss">'c</span><span class="p">]</span><span class="w">
+             </span><span class="n">y</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]]</span><span class="w">
+        </span><span class="p">[</span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="p">])</span><span class="w">
+</span><span class="p">([</span><span class="n">a</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">a</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">b</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">b</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">b</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">c</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">c</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">c</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br></p>
+
+<p><code class="prettyprint">for</code> iterates collections in a nested fashion. It&rsquo;s useful to create the combination of all elements in the given collections.</p>
 
 <h1 id="macros">Macros</h1>
 
@@ -1956,7 +2073,8 @@ Now let&rsquo;s start the listener and wait for the time consuming job. After be
 
 <p><br></p>
 
-<p>You can update the value of an atom with <code class="prettyprint">reset!</code>.</p>
+<p>You can set the value of an atom with <code class="prettyprint">reset!</code>. It is used when you are setting the value without regard for the
+current value, normally the first time you create the atom.</p>
 <pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">reset!</span><span class="w"> </span><span class="n">atom-int</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w">
 </span><span class="mi">100</span><span class="w">
 
