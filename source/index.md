@@ -1752,7 +1752,7 @@ nil
 
 If you are looking for how to write for loop in Clojure, I'm sorry, but this is not what you are looking for. Clojure doesn't have for loop because there is no mutable variable that you need inside for loop in Clojure. But more importantly, you can archive the same thing that for loop can archive with more elegant way.
 
-In Clojure, `for` is **list comprehension**. What is list comprehension? Let's look at an example of `for` first.
+In Clojure, `for` is **list comprehension**. What is list comprehension? First of all, let's look at an example.
 
 ```clojure
 user=> (for [x '(1 2 3)]
