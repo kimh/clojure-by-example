@@ -28,7 +28,9 @@ These are very basic questions, but enough to start hacking with the new languag
 
 Recently, I needed to learn this completely new language **Clojure** but couldn't find what I wanted. So, I decided to create one while learning Clojure.
 
-Hopefully, this helps you to start learning and writing Clojure!
+Clojure is a functional programming language and learning functional programming languages is sometimes hard if you've only had experiences with imperative languages. I have paid careful attention to make this page easy to understand for people who don't have experiences with functional programming languages, so please don't hesitate to read this page even if you don't know anything about functional programming.
+
+Hopefully, this page helps you learning functional programming and starting to write Clojure!
 
 # Hello, world!
 
@@ -317,8 +319,8 @@ user=> (defn say-hello
          [name]
          (println (str "Hello, " name)))
 
-user=> (say-hello "kim")
-Hello, kim
+user=> (say-hello "Kim")
+Hello, Kim
 nil
 ```
 
@@ -1033,6 +1035,19 @@ user=> (+ (bigint Long/MAX_VALUE) 10)
 <br>
 
 You can use `bigint` to handle really big numbers.
+
+```clojure
+user> (+ 9223372036854775807 10)
+ArithmeticException integer overflow  clojure.lang.Numbers.throwIntOverflow (Numbers.java:1501)
+
+user> (+ 9223372036854775807N 10N)
+9223372036854775817N
+```
+
+<br>
+<br>
+
+`N` is a literal for bigint.
 
 # Lists
 
@@ -1830,7 +1845,7 @@ nil
 
 ## For
 
-If you are looking for how to write for loop in Clojure, I'm sorry, but this is not what you are looking for. Clojure doesn't have for loop because there is no mutable variable that you need inside for loop in Clojure. But more importantly, you can archive the same thing that for loop can archive with more elegant way.
+If you are looking for how to write a loop in Clojure, I'm sorry, but this is not what you are looking for. Clojure doesn't have an imperative loop because there is no mutable local variable in Clojure. Please see the [loop](#loop) section for more information.
 
 In Clojure, `for` is **list comprehension**. What is list comprehension? First of all, let's look at an example.
 
@@ -1847,7 +1862,7 @@ user=> (for [x '(1 2 3)]
 
 <br>
 
-In short, **list comprehension** is a way to create a list from existing lists. The idea of list comprehension comes from math world. It's used in order to write sets in simpler and easier way.
+In short, **list comprehension** is a way to create a list from existing lists. The idea of list comprehension comes from the world of math. It's used in order to write sets in simpler and easier way.
 
 For example, `{x | x >0}` means the set of all `x` that is bigger than than 0. So if `x` is the set of -1, 1, and 2, then the notation refers to the set of 1 and 2 but not -1.
 
@@ -1900,7 +1915,214 @@ user=> (for [x ['a 'b 'c]
 <br>
 <br>
 
-`for` iterates collections in a nested fashion. It's useful to create the combination of all elements in the given collections.
+`for` iterates collections in a nested fashion. It's useful to create a combination of all elements in given collections.
+
+# Recursion
+
+Function is recursive when the function calls itself inside it's definition. This is the most simple way of doing recursion.
+
+We will start from the example of `fibo-recursive` function that computes Nth Fibonacci number in the Fibonacci sequence because writing function that computes the Fibonacci numbers is a recursive programming version of hello world.
+
+The Fibonacci sequence is consisted of numbers characterized by the fact that every number after the first two is the sum of the two preceding ones. `0 1 1 2 3 5 8 13 ....` are the beginning of the sequence.
+
+```clojure
+user=> (defn fibo-recursive [n]
+         (if (or (= n 0) (= n 1))
+           n
+           (+ (fibo-recursive (- n 1)) (fibo-recursive (- n 2)))))
+
+user=> (fibo-recursive 0)
+0
+
+user=> (fibo-recursive 6)
+8
+```
+
+<br>
+
+As you can see, we are calling `fibo-recursive` function inside the function body of `fibo-recursive` function. Calling the function inside the function body is the most basic way to do recursive programming in Clojure and many other programming languages.
+
+## Recur
+
+The simple recursion, calling itself inside it's definition, is not the only way to make recursive function in Clojure. `recur` is a handy tool to do recursion.
+
+```clojure
+user> (defn fibo-recur [iteration]
+        (let [fibo (fn [one two n]
+          (if (= iteration n)
+            one
+            (recur two (+ one two) (inc n))))]
+          ;; 0N 1N are bigint literals. See Bigint section
+          ;; We need to use bigint to avoid StackOverflow to do the addition of big Fibonacci numbers
+          ;; demonstrated below.
+          (fibo 0N 1N 0)))
+
+#'user/fibo-recur
+
+user> (fibo-recur 6)
+8
+```
+
+<br>
+
+We can write a Fibonacci function by using `recur` as well. `recur` re-binds it's arguments to new values and call the function with the new values.
+
+```clojure
+user> (defn count-down [result n]
+        (if (= n 0)
+          result
+          (recur (conj result n) (dec n))))
+#'user/count-down
+
+user> (count-down [] 5)
+[5 4 3 2 1]
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Here is another example of the use of `recur`. It will keep calling `count-down` function with updated arguments until `n` becomes 0.
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+Why do we have `recur` when you can write a recursive function with the simple recursion like we do in `fibo-recursive`? One of the most important reasons is the performance optimization.
+
+```clojure
+user> (fibo-recursive 100000)
+StackOverflowError   clojure.lang.Numbers.equal (Numbers.java:216)
+```
+
+<br>
+
+You cannot compute large Fibonacci number with `fibo-recursive`. When you try to do that, you will get StackOverflowError.
+
+This is because, with simple recursion, each recursive call creates a stack frame which is a data to store the information of the called function on memory. Doing deep recursion requires large memory for stack frames, but since it cannot, we get StackOverflowError.
+
+Although we don't go deeply into details, one of techniques to avoid this problem is making your function **tail recursive**. A function is tail recursive when the recursion is happening at the end of it's definition. In other words, a tail recursive function must return itself as it's returned value. When you use `recur`, it makes sure you are doing tail recursion.
+
+
+```clojure
+user> (defn fibo-loop-recur [current next iteration]
+        (if (= 0 iteration)
+        current
+        (+ 0
+          (recur next (+ current next) (dec iteration)))))
+CompilerException java.lang.UnsupportedOperationException: Can only recur from tail position, compiling:(*cider-repl localhost*:253:10)
+```
+
+<br>
+
+In fact, you will get an error when you try to call `recur` not at the end of a function.
+
+
+```clojure
+user> (fibo-recur 100000)
+;; takes very long time to compute
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Because `recur` does tail recursion, you don't get StackOverflowError with big Fibonacci number although it takes very long time to compute.
+
+## Loop
+
+Does Clojure have for/while loop? No, Clojure doesn't provide a way to write an imperative loop because there is no mutable local variable in Clojure. However, you can use `loop` to write code that works like an imperative loop.
+
+```clojure
+user> (defn count-up [max]
+        (loop [count 0]
+          (if (= count max)
+            (println "Done!")
+            (do
+              (println (str "Counting " count))
+              (recur (inc count))))))
+
+user> (count-up 5)
+Counting 0
+Counting 1
+Counting 2
+Counting 3
+Counting 4
+Done!
+nil
+```
+
+<br>
+
+Hopefully, this code looks similar to a simple counting loop in non-functional programming languages you've had experienced with before. In this example, `recur` increments `count` at the end of each loop and `loop` uses it in the next loop.
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+`loop` is always used with `recur` and provides a recursion point for `recur`. A **recursion point** is a function entry point that `recur` can go back to do recursion. However, `recur` doesn't necessary need `loop` to do it's job as long as a recursion point is provided.
+
+```clojure
+user> (defn count-up-no-loop [count max]
+  (if (= count max)
+    (println "Done!")
+    (do
+      (println (str "Counting " count))
+      (recur (inc count) max))))
+
+user> (count-up-no-loop 0 5)
+Counting 0
+Counting 1
+Counting 2
+Counting 3
+Counting 4
+Done!
+nil
+```
+
+<br>
+
+You can rewrite `count-up` function without `loop`. In `count-up-no-loop`, the recursion point for `recur` is the function itself. Note that `recur` takes two arguments now. This is because the number of arguments of `recur` must match that of it's recursion point function.
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+One final note: `loop/recur` is merely a friendly way to write recursion code. All imperative loops can be converted to recursions and all recursions can be converted to loops, so Clojure chose recursions. Although you can write code that looks like an imperative loop with `loop/recur`, Clojure is doing recursion under the hood.
 
 # Macros
 
@@ -2834,7 +3056,8 @@ The value of the ref is still 0 at this moment because the update to the ref is 
 
 [CLOJURE for the BRAVE and TRUE](http://www.braveclojure.com/)
 
-[Clojure Cheatsheet](http://clojure.org/cheatsheet)
+[Programming Clojure](https://pragprog.com/titles/shcloj/programming-clojure)
 
+[Clojure Cheatsheet](http://clojure.org/cheatsheet)
 
 And many other great articles and pages made by the Clojure community.
