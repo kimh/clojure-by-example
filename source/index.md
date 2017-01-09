@@ -1715,6 +1715,86 @@ user=> (drop-while neg? [-3 -2 -1 0 1 2 3])
 
 To get the first `n` elements from a sequence as long as the condition is satisfied but stop dropping when the condition is not met, use `drop-while`.
 
+## Concat
+
+```clojure
+user=> (concat '(1 2 3) '(4 5 6))
+(1 2 3 4 5 6)
+```
+
+<br>
+
+To combine sequences, use `concat`.
+
+```clojure
+user=> (concat '(1 2) '(4 5) '(7 8) '(9 10))
+(1 2 4 5 7 8 9 10)
+```
+
+<br>
+<br>
+
+You can also pass more than two sequences to `concat`.
+
+## Cons
+
+```clojure
+user=> (cons 0 '(1 2))
+(0 1 2)
+```
+
+<br>
+
+To insert an element to the head of sequence, use `cons`.
+
+```clojure
+user=> (def old-seq '(1 2))
+#'user/old-seq
+
+user=> (def new-seq (cons 0 old-seq))
+#'user/new-seq
+
+user=> old-seq
+(1 2)
+
+user=> new-seq
+(0 1 2)
+```
+
+<br>
+<br>
+
+Although the term "insert" is used, `cons` doesn't actually insert an element to the existing sequence. Instead, `cons` creates a new sequence that contains the element based on the existing sequence.
+
+## Partition-by
+
+```clojure
+user=> (partition-by #(< 3 %) [1 2 3 4 5 6])
+((1 2 3) (4 5 6))
+```
+
+<br>
+
+To split a collection and group together in a certain way, or in other word partition, "use `partition`. In this example, we partition the vector into two groups: one smaller than or equal 3 and another bigger than 3.
+
+```clojure
+user=> (partition-by #(< 3 %) [1 2 3 4 5 6 1 2 3])
+((1 2 3) (4 5 6) (1 2 3))
+```
+
+<br>
+
+Notice that `(1 2 3)` at the end of the sequence is grouped together as a separate sequence from the first one. `partition-by` doesn't merge values.
+
+## Group-by
+
+```clojure
+user=> (group-by #(< 3 %) [1 2 3 4 5 6 1 2 3])
+{false [1 2 3 1 2 3], true [4 5 6]}
+```
+
+`group-by` splits a collection and does merge them together unlike `partition-by`. `group-by` returns a map where key is the result of the grouping condition.
+
 ## Lazy Sequence
 
 Most of Clojure’s sequences are **lazy**. All familiar functions such as `map` `range` `reduce` etc returns lazy sequences.
