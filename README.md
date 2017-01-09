@@ -25,3 +25,9 @@ bundle exec rake spellcheck
 ```
 
 You can add words to ignore from the checking to `.aspell.en.pws`.
+
+## Todo
+
+* test
+* recursive
+* java interlop
