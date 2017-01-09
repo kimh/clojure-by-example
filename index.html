@@ -1503,6 +1503,72 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <p>To get the first <code class="prettyprint">n</code> elements from a sequence as long as the condition is satisfied but stop dropping when the condition is not met, use <code class="prettyprint">drop-while</code>.</p>
 
+<h2 id="concat">Concat</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">concat</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To combine sequences, use <code class="prettyprint">concat</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">concat</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">4</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">7</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">9</span><span class="w"> </span><span class="mi">10</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>You can also pass more than two sequences to <code class="prettyprint">concat</code>.</p>
+
+<h2 id="cons">Cons</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">cons</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To insert an element to the head of sequence, use <code class="prettyprint">cons</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">old-seq</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/old-seq</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">new-seq</span><span class="w"> </span><span class="p">(</span><span class="nb">cons</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">old-seq</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/new-seq</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="n">old-seq</span><span class="w">
+</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="n">new-seq</span><span class="w">
+</span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>Although the term &ldquo;insert&rdquo; is used, <code class="prettyprint">cons</code> doesn&rsquo;t actually insert an element to the existing sequence. Instead, <code class="prettyprint">cons</code> creates a new sequence that contains the element based on the existing sequence.</p>
+
+<h2 id="partition-by">Partition-by</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">partition-by</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">%</span><span class="p">)</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="p">])</span><span class="w">
+</span><span class="p">((</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="p">))</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To split a collection and group together in a certain way, or in other word partition, &ldquo;use <code class="prettyprint">partition</code>. In this example, we partition the vector into two groups: one smaller than or equal 3 and another bigger than 3.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">partition-by</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">%</span><span class="p">)</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="p">((</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Notice that <code class="prettyprint">(1 2 3)</code> at the end of the sequence is grouped together as a separate sequence from the first one. <code class="prettyprint">partition-by</code> doesn&rsquo;t merge values.</p>
+
+<h2 id="group-by">Group-by</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">group-by</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">%</span><span class="p">)</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="p">{</span><span class="n">false</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="n">,</span><span class="w"> </span><span class="n">true</span><span class="w"> </span><span class="p">[</span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="p">]}</span><span class="w">
+</span></code></pre>
+
+<p><code class="prettyprint">group-by</code> splits a collection and does merge them together unlike <code class="prettyprint">partition-by</code>. <code class="prettyprint">group-by</code> returns a map where key is the result of the grouping condition.</p>
+
 <h2 id="lazy-sequence">Lazy Sequence</h2>
 
 <p>Most of Clojure’s sequences are <strong>lazy</strong>. All familiar functions such as <code class="prettyprint">map</code> <code class="prettyprint">range</code> <code class="prettyprint">reduce</code> etc returns lazy sequences.</p>
@@ -1792,7 +1858,7 @@ Using fully qualified namespace is very important in order to avoid name conflic
 
 <p><br></p>
 
-<p>When you use <code class="prettyprint">delay</code>, the expression is not evaluated immediately, so &ldquo;Adding&rdquo; is not printed.</p>
+<p>When you use <code class="prettyprint">delay</code>, the expression is not evaluated immediately, so &quot;Adding&rdquo; is not printed.</p>
 
 <h2 id="force">Force</h2>
 <pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">later</span><span class="w"> </span><span class="p">(</span><span class="nf">delay</span><span class="w"> </span><span class="p">(</span><span class="nf">do</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">(</span><span class="nb">prn</span><span class="w"> </span><span class="s">"Adding"</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">))))</span><span class="w">
