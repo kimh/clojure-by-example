@@ -1536,7 +1536,7 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <p>If you are looking for how to write for loop in Clojure, I&rsquo;m sorry, but this is not what you are looking for. Clojure doesn&rsquo;t have for loop because there is no mutable variable that you need inside for loop in Clojure. But more importantly, you can archive the same thing that for loop can archive with more elegant way.</p>
 
-<p>In Clojure, <code class="prettyprint">for</code> is <strong>list comprehension</strong>. What is list comprehension? Let&rsquo;s look at an example of <code class="prettyprint">for</code> first.</p>
+<p>In Clojure, <code class="prettyprint">for</code> is <strong>list comprehension</strong>. What is list comprehension? First of all, let&rsquo;s look at an example.</p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">for</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)]</span><span class="w">
          </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">x</span><span class="p">))</span><span class="w">
 </span><span class="p">(</span><span class="nf">11</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="mi">13</span><span class="p">)</span><span class="w">
