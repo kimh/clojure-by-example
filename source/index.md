@@ -1775,7 +1775,7 @@ user=> (partition-by #(< 3 %) [1 2 3 4 5 6])
 
 <br>
 
-To split a collection and group together in a certain way, or in other word partition, "use `partition`. In this example, we partition the vector into two groups: one smaller than or equal 3 and another bigger than 3.
+To split a collection and group together in a certain way, or in other word partition, use `partition`. In this example, we partition the vector into two groups: one smaller than or equal 3 and another bigger than 3.
 
 ```clojure
 user=> (partition-by #(< 3 %) [1 2 3 4 5 6 1 2 3])
