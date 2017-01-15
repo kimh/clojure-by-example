@@ -29,6 +29,6 @@ You can add words to ignore from the checking to `.aspell.en.pws`.
 ## Todo
 
 * test
-* recursive
 * java interlop
+* require/include
 * clean up the confusion in sequence. probably I should use coll where sequence is mentioned because sequence is not data type.

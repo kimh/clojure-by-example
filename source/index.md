@@ -3051,6 +3051,94 @@ We use future to run the whole transaction in the separate thread and wait two s
 
 The value of the ref is still 0 at this moment because the update to the ref is still not committed.
 
+# Java
+
+One of the great traits of Clojure is that you can use Java code from your Clojure code. This trait is called **Java interop**. Although Clojure has very rich standard libraries, sometimes you cannot find libraries that you need to solve your problems. If the library exists in Java, you can borrow it from your Clojure code.
+
+## Instantiation
+
+```
+user> (new java.util.Date)
+#inst "2017-01-15T08:04:14.983-00:00"
+```
+
+<br>
+
+You can create an instance with `new` which takes class name as first argument.
+
+```clojure
+user> (new java.util.Date "2016/2/19")
+#inst "2016-02-18T15:00:00.000-00:00"
+```
+
+<br>
+<br>
+
+The rest of arguments are passed to the constructor function.
+
+```clojure
+user> (java.util.Date.)
+#inst "2017-01-15T08:17:02.580-00:00"
+
+user> (java.util.Date. "2016/2/19")
+#inst "2016-02-18T15:00:00.000-00:00"
+```
+
+<br>
+<br>
+
+There is also `.` notation available. `.` must be placed at the end of class name.
+
+```clojure
+user> (let [current_date (new java.util.Date)]
+        (println current_date))
+#inst "2017-01-15T13:02:29.613-00:00"
+nil
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+You can also bind Java's instance just like Clojure's value.
+
+## Method invocation
+
+Clojure doesn't provide an exponential calculation function in the standard library, so let's borrow `pow` method from `Math` class.
+
+```clojure
+user> (Math/pow 2 3)
+8.0
+```
+
+<br>
+
+You can call Java's method just like Clojure's function. Here is how to call `pow` class method of `Math` class. The class method invocation takes a form of `(Classname/Method)`.
+
+```clojure
+user> (let [current_date (new java.util.Date)]
+        (.toString current_date))
+"Sun Jan 15 21:44:06 JST 2017"
+```
+
+<br>
+
+The instance method invocation takes a form of `(.MethodName Instance Args)`. This example is equivalent to `current_date.toString()` in Java.
+
+```clojure
+user> (let [date1 (new java.util.Date)
+            date2 (new java.util.Date)]
+        (.equals date1 date2))
+true
+```
+
+<br>
+<br>
+
+If you want to call a method that takes arguments, you can pass them after an instance. This example is equivalent to `date1.equals(date2)` in Java.
+
 # Many Thanks
 [Clojure from the ground up](https://aphyr.com/tags/Clojure-from-the-ground-up)
 
