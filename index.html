@@ -58,7 +58,9 @@
 
 <p>Recently, I needed to learn this completely new language <strong>Clojure</strong> but couldn&rsquo;t find what I wanted. So, I decided to create one while learning Clojure.</p>
 
-<p>Hopefully, this helps you to start learning and writing Clojure!</p>
+<p>Clojure is a functional programming language and learning functional programming languages is sometimes hard if you&rsquo;ve only had experiences with imperative languages. I have paid careful attention to make this page easy to understand for people who don&rsquo;t have experiences with functional programming languages, so please don&rsquo;t hesitate to read this page even if you don&rsquo;t know anything about functional programming.</p>
+
+<p>Hopefully, this page helps you learning functional programming and starting to write Clojure!</p>
 
 <h1 id="hello,-world!">Hello, world!</h1>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"Hello, world!"</span><span class="p">)</span><span class="w">
@@ -311,8 +313,8 @@
          </span><span class="p">[</span><span class="nb">name</span><span class="p">]</span><span class="w">
          </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"Hello, "</span><span class="w"> </span><span class="nb">name</span><span class="p">)))</span><span class="w">
 
-</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">say-hello</span><span class="w"> </span><span class="s">"kim"</span><span class="p">)</span><span class="w">
-</span><span class="n">Hello,</span><span class="w"> </span><span class="n">kim</span><span class="w">
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">say-hello</span><span class="w"> </span><span class="s">"Kim"</span><span class="p">)</span><span class="w">
+</span><span class="n">Hello,</span><span class="w"> </span><span class="n">Kim</span><span class="w">
 </span><span class="n">nil</span><span class="w">
 </span></code></pre>
 
@@ -936,6 +938,17 @@ You use <code class="prettyprint">:else</code> keyword for the default case.</p>
 <p><br></p>
 
 <p>You can use <code class="prettyprint">bigint</code> to handle really big numbers.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">9223372036854775807</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w">
+</span><span class="n">ArithmeticException</span><span class="w"> </span><span class="n">integer</span><span class="w"> </span><span class="n">overflow</span><span class="w">  </span><span class="n">clojure.lang.Numbers.throwIntOverflow</span><span class="w"> </span><span class="p">(</span><span class="nf">Numbers.java</span><span class="no">:1501</span><span class="p">)</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">9223372036854775807</span><span class="n">N</span><span class="w"> </span><span class="mi">10</span><span class="n">N</span><span class="p">)</span><span class="w">
+</span><span class="mi">9223372036854775817</span><span class="n">N</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p><code class="prettyprint">N</code> is a literal for bigint.</p>
 
 <h1 id="lists">Lists</h1>
 
@@ -1600,7 +1613,7 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <h2 id="for">For</h2>
 
-<p>If you are looking for how to write for loop in Clojure, I&rsquo;m sorry, but this is not what you are looking for. Clojure doesn&rsquo;t have for loop because there is no mutable variable that you need inside for loop in Clojure. But more importantly, you can archive the same thing that for loop can archive with more elegant way.</p>
+<p>If you are looking for how to write a loop in Clojure, I&rsquo;m sorry, but this is not what you are looking for. Clojure doesn&rsquo;t have an imperative loop because there is no mutable local variable in Clojure. Please see the <a href="#loop">loop</a> section for more information.</p>
 
 <p>In Clojure, <code class="prettyprint">for</code> is <strong>list comprehension</strong>. What is list comprehension? First of all, let&rsquo;s look at an example.</p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">for</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)]</span><span class="w">
@@ -1615,7 +1628,7 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <p><br></p>
 
-<p>In short, <strong>list comprehension</strong> is a way to create a list from existing lists. The idea of list comprehension comes from math world. It&rsquo;s used in order to write sets in simpler and easier way.</p>
+<p>In short, <strong>list comprehension</strong> is a way to create a list from existing lists. The idea of list comprehension comes from the world of math. It&rsquo;s used in order to write sets in simpler and easier way.</p>
 
 <p>For example, <code class="prettyprint">{x | x &gt;0}</code> means the set of all <code class="prettyprint">x</code> that is bigger than than 0. So if <code class="prettyprint">x</code> is the set of -1, 1, and 2, then the notation refers to the set of 1 and 2 but not -1.</p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">for</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">-1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="no">:when</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">x</span><span class="p">)]</span><span class="w">
@@ -1660,7 +1673,195 @@ To get a value from the vector, you need to specify the index of the value.</p>
 <br>
 <br></p>
 
-<p><code class="prettyprint">for</code> iterates collections in a nested fashion. It&rsquo;s useful to create the combination of all elements in the given collections.</p>
+<p><code class="prettyprint">for</code> iterates collections in a nested fashion. It&rsquo;s useful to create a combination of all elements in given collections.</p>
+
+<h1 id="recursion">Recursion</h1>
+
+<p>Function is recursive when the function calls itself inside it&rsquo;s definition. This is the most simple way of doing recursion.</p>
+
+<p>We will start from the example of <code class="prettyprint">fibo-recursive</code> function that computes Nth Fibonacci number in the Fibonacci sequence because writing function that computes the Fibonacci numbers is a recursive programming version of hello world.</p>
+
+<p>The Fibonacci sequence is consisted of numbers characterized by the fact that every number after the first two is the sum of the two preceding ones. <code class="prettyprint">0 1 1 2 3 5 8 13 ....</code> are the beginning of the sequence.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fibo-recursive</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w">
+         </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">or</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">
+           </span><span class="n">n</span><span class="w">
+           </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nf">fibo-recursive</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="p">(</span><span class="nf">fibo-recursive</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">2</span><span class="p">)))))</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">fibo-recursive</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">
+</span><span class="mi">0</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">fibo-recursive</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w">
+</span><span class="mi">8</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>As you can see, we are calling <code class="prettyprint">fibo-recursive</code> function inside the function body of <code class="prettyprint">fibo-recursive</code> function. Calling the function inside the function body is the most basic way to do recursive programming in Clojure and many other programming languages.</p>
+
+<h2 id="recur">Recur</h2>
+
+<p>The simple recursion, calling itself inside it&rsquo;s definition, is not the only way to make recursive function in Clojure. <code class="prettyprint">recur</code> is a handy tool to do recursion.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fibo-recur</span><span class="w"> </span><span class="p">[</span><span class="n">iteration</span><span class="p">]</span><span class="w">
+        </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">fibo</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">one</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">n</span><span class="p">]</span><span class="w">
+          </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="n">iteration</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w">
+            </span><span class="n">one</span><span class="w">
+            </span><span class="p">(</span><span class="nf">recur</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">two</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="n">n</span><span class="p">))))]</span><span class="w">
+          </span><span class="c1">;; 0N 1N are bigint literals. See Bigint section
+</span><span class="w">          </span><span class="c1">;; We need to use bigint to avoid StackOverflow to do the addition of big Fibonacci numbers
+</span><span class="w">          </span><span class="c1">;; demonstrated below.
+</span><span class="w">          </span><span class="p">(</span><span class="nf">fibo</span><span class="w"> </span><span class="mi">0</span><span class="n">N</span><span class="w"> </span><span class="mi">1</span><span class="n">N</span><span class="w"> </span><span class="mi">0</span><span class="p">)))</span><span class="w">
+
+</span><span class="o">#</span><span class="ss">'user/fibo-recur</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">fibo-recur</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w">
+</span><span class="mi">8</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>We can write a Fibonacci function by using <code class="prettyprint">recur</code> as well. <code class="prettyprint">recur</code> re-binds it&rsquo;s arguments to new values and call the function with the new values.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">count-down</span><span class="w"> </span><span class="p">[</span><span class="n">result</span><span class="w"> </span><span class="n">n</span><span class="p">]</span><span class="w">
+        </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">
+          </span><span class="n">result</span><span class="w">
+          </span><span class="p">(</span><span class="nf">recur</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">))))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/count-down</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">count-down</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">
+</span><span class="p">[</span><span class="mi">5</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>Here is another example of the use of <code class="prettyprint">recur</code>. It will keep calling <code class="prettyprint">count-down</code> function with updated arguments until <code class="prettyprint">n</code> becomes 0.</p>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>Why do we have <code class="prettyprint">recur</code> when you can write a recursive function with the simple recursion like we do in <code class="prettyprint">fibo-recursive</code>? One of the most important reasons is the performance optimization.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">fibo-recursive</span><span class="w"> </span><span class="mi">100000</span><span class="p">)</span><span class="w">
+</span><span class="n">StackOverflowError</span><span class="w">   </span><span class="n">clojure.lang.Numbers.equal</span><span class="w"> </span><span class="p">(</span><span class="nf">Numbers.java</span><span class="no">:216</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>You cannot compute large Fibonacci number with <code class="prettyprint">fibo-recursive</code>. When you try to do that, you will get StackOverflowError.</p>
+
+<p>This is because, with simple recursion, each recursive call creates a stack frame which is a data to store the information of the called function on memory. Doing deep recursion requires large memory for stack frames, but since it cannot, we get StackOverflowError.</p>
+
+<p>Although we don&rsquo;t go deeply into details, one of techniques to avoid this problem is making your function <strong>tail recursive</strong>. A function is tail recursive when the recursion is happening at the end of it&rsquo;s definition. In other words, a tail recursive function must return itself as it&rsquo;s returned value. When you use <code class="prettyprint">recur</code>, it makes sure you are doing tail recursion.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fibo-loop-recur</span><span class="w"> </span><span class="p">[</span><span class="n">current</span><span class="w"> </span><span class="nb">next</span><span class="w"> </span><span class="n">iteration</span><span class="p">]</span><span class="w">
+        </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">iteration</span><span class="p">)</span><span class="w">
+        </span><span class="n">current</span><span class="w">
+        </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">0</span><span class="w">
+          </span><span class="p">(</span><span class="nf">recur</span><span class="w"> </span><span class="nb">next</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="nb">next</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">iteration</span><span class="p">)))))</span><span class="w">
+</span><span class="n">CompilerException</span><span class="w"> </span><span class="n">java.lang.UnsupportedOperationException</span><span class="err">:</span><span class="w"> </span><span class="n">Can</span><span class="w"> </span><span class="n">only</span><span class="w"> </span><span class="n">recur</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">tail</span><span class="w"> </span><span class="n">position,</span><span class="w"> </span><span class="n">compiling</span><span class="err">:</span><span class="p">(</span><span class="nf">*cider-repl</span><span class="w"> </span><span class="n">localhost*</span><span class="no">:253:10</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>In fact, you will get an error when you try to call <code class="prettyprint">recur</code> not at the end of a function.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">fibo-recur</span><span class="w"> </span><span class="mi">100000</span><span class="p">)</span><span class="w">
+</span><span class="c1">;; takes very long time to compute
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>Because <code class="prettyprint">recur</code> does tail recursion, you don&rsquo;t get StackOverflowError with big Fibonacci number although it takes very long time to compute.</p>
+
+<h2 id="loop">Loop</h2>
+
+<p>Does Clojure have for/while loop? No, Clojure doesn&rsquo;t provide a way to write an imperative loop because there is no mutable local variable in Clojure. However, you can use <code class="prettyprint">loop</code> to write code that works like an imperative loop.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">count-up</span><span class="w"> </span><span class="p">[</span><span class="nb">max</span><span class="p">]</span><span class="w">
+        </span><span class="p">(</span><span class="nb">loop</span><span class="w"> </span><span class="p">[</span><span class="nb">count</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w">
+          </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="nb">count</span><span class="w"> </span><span class="nb">max</span><span class="p">)</span><span class="w">
+            </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"Done!"</span><span class="p">)</span><span class="w">
+            </span><span class="p">(</span><span class="nf">do</span><span class="w">
+              </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"Counting "</span><span class="w"> </span><span class="nb">count</span><span class="p">))</span><span class="w">
+              </span><span class="p">(</span><span class="nf">recur</span><span class="w"> </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="nb">count</span><span class="p">))))))</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">count-up</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">
+</span><span class="n">Counting</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="n">Counting</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="n">Counting</span><span class="w"> </span><span class="mi">2</span><span class="w">
+</span><span class="n">Counting</span><span class="w"> </span><span class="mi">3</span><span class="w">
+</span><span class="n">Counting</span><span class="w"> </span><span class="mi">4</span><span class="w">
+</span><span class="n">Done!</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Hopefully, this code looks similar to a simple counting loop in non-functional programming languages you&rsquo;ve had experienced with before. In this example, <code class="prettyprint">recur</code> increments <code class="prettyprint">count</code> at the end of each loop and <code class="prettyprint">loop</code> uses it in the next loop.</p>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p><code class="prettyprint">loop</code> is always used with <code class="prettyprint">recur</code> and provides a recursion point for <code class="prettyprint">recur</code>. A <strong>recursion point</strong> is a function entry point that <code class="prettyprint">recur</code> can go back to do recursion. However, <code class="prettyprint">recur</code> doesn&rsquo;t necessary need <code class="prettyprint">loop</code> to do it&rsquo;s job as long as a recursion point is provided.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">count-up-no-loop</span><span class="w"> </span><span class="p">[</span><span class="nb">count</span><span class="w"> </span><span class="nb">max</span><span class="p">]</span><span class="w">
+  </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="nb">count</span><span class="w"> </span><span class="nb">max</span><span class="p">)</span><span class="w">
+    </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"Done!"</span><span class="p">)</span><span class="w">
+    </span><span class="p">(</span><span class="nf">do</span><span class="w">
+      </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="s">"Counting "</span><span class="w"> </span><span class="nb">count</span><span class="p">))</span><span class="w">
+      </span><span class="p">(</span><span class="nf">recur</span><span class="w"> </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="nb">count</span><span class="p">)</span><span class="w"> </span><span class="nb">max</span><span class="p">))))</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">count-up-no-loop</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">
+</span><span class="n">Counting</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="n">Counting</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="n">Counting</span><span class="w"> </span><span class="mi">2</span><span class="w">
+</span><span class="n">Counting</span><span class="w"> </span><span class="mi">3</span><span class="w">
+</span><span class="n">Counting</span><span class="w"> </span><span class="mi">4</span><span class="w">
+</span><span class="n">Done!</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>You can rewrite <code class="prettyprint">count-up</code> function without <code class="prettyprint">loop</code>. In <code class="prettyprint">count-up-no-loop</code>, the recursion point for <code class="prettyprint">recur</code> is the function itself. Note that <code class="prettyprint">recur</code> takes two arguments now. This is because the number of arguments of <code class="prettyprint">recur</code> must match that of it&rsquo;s recursion point function.</p>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>One final note: <code class="prettyprint">loop/recur</code> is merely a friendly way to write recursion code. All imperative loops can be converted to recursions and all recursions can be converted to loops, so Clojure chose recursions. Although you can write code that looks like an imperative loop with <code class="prettyprint">loop/recur</code>, Clojure is doing recursion under the hood.</p>
 
 <h1 id="macros">Macros</h1>
 
@@ -2494,6 +2695,8 @@ current value, normally the first time you create the atom.</p>
 <p><a href="https://aphyr.com/tags/Clojure-from-the-ground-up">Clojure from the ground up</a></p>
 
 <p><a href="http://www.braveclojure.com/">CLOJURE for the BRAVE and TRUE</a></p>
+
+<p><a href="https://pragprog.com/titles/shcloj/programming-clojure">Programming Clojure</a></p>
 
 <p><a href="http://clojure.org/cheatsheet">Clojure Cheatsheet</a></p>
 
