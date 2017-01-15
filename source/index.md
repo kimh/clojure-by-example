@@ -233,7 +233,7 @@ Also notice that the inner `let` does not override the scope of outer `let`.
 <br>
 <br>
 
-The kind of scope is called **lexical scope**. For those whom English is not your first language, lexical means *words in a sentence*. The scope is **lexical** because the compiler relies on the physical location of the symbol (word) in a program (sentence) to resolve them.
+This kind of scope is called **lexical scope**. For those whom English is not your first language, lexical means *words in a sentence*. The scope is **lexical** because the compiler relies on the physical location of the symbol (word) in a program (sentence) to resolve them.
 
 ```clojure
 user> (let [a "a"]
@@ -245,7 +245,7 @@ nil
 
 <br>
 
-The resolution look up bubbles up until it finds the binding. The inner `let` doesn't provide the binding for `a`, so it bubbles up to outer `let`. This happens because the scope of inner let is wrapped by the scope of outer `let`.
+The resolution look up bubbles up until it finds the binding. The inner `let` doesn't provide the binding for `a`, so it bubbles up to the outer `let`. This happens because the scope of inner let is wrapped by the scope of outer `let`.
 
 ```clojure
 user> (let [a "a"]
@@ -264,7 +264,7 @@ Clojure complains with **Unable to resolve symbol** exception when it cannot fin
 <br>
 <br>
 
-You probably find the idea of lexical scope very familiar. This is because most of modern programming languages use lexical scope. There is also something called *dynamic scope* but you probably don't have to know right now.
+You probably find the idea of lexical scope very familiar. This is because most modern programming languages use lexical scope. There is also something called *dynamic scope* but you probably don't have to know that right now.
 
 ## Def
 
@@ -304,7 +304,7 @@ You can also override the one already declared later.
 <br>
 <br>
 
-The rule of thumb in Clojure is avoiding the use of `def` as much as possible. `def` will introduce the state and the abusing of the state will make our code difficult to maintain.
+The rule of thumb in Clojure is avoiding the use of `def` as much as possible. `def` introduces state and abusing state will make our code difficult to maintain.
 
 # Functions
 
@@ -403,8 +403,8 @@ user> (meta #'say-hello)
 
 ## Anonymous Function
 
-Functions are first class object in Clojure. When you say something is *a first class object in programming language X*, it means that you can do the all basic operations with the object
-such as passing to a function, returned from a function, and binding to variable, etc.
+Functions are first class objects in Clojure. When you say something is *a first class object in programming language X*, it means that you can do all the basic operations with the object
+such as passing it to a function, returned from a function, and binding it to a variable, etc.
 
 
 ```clojure
@@ -512,7 +512,7 @@ Then we pass `say-hello` and `say-bye` to `greeting`.
 
 ## Closure
 
-When a function (let's call this *inner* function) is returned from another function (let's call this *outer* function), and the inner function does somethings with the arguments given from outer function, then the inner function is called **closure**.
+When a function (let's call this *inner* function) is returned from another function (let's call this *outer* function), and the inner function does somethings with the arguments given from outer function, then the inner function is called a **closure**.
 
 ```clojure
 user=> (defn inner
@@ -537,7 +537,7 @@ nil
 
 <br>
 
-We define a function called `inner`. `inner` function prints `from-outer` var which is supposed to be given by outer function.
+We define a function called `inner`. `inner` function prints `from-outer` var which is supposed to be given by the outer function.
 
 <br>
 <br>
@@ -547,7 +547,7 @@ We also define two functions, `outer1` and `outer2`. These functions both call `
 <br>
 <br>
 
-As a result, even if `from-outer` var doesn't change, `inner` prints different things.
+As a result, even if the `from-outer` var doesn't change, `inner` prints different things.
 
 
 # Control Flow
@@ -564,7 +564,7 @@ nil
 
 <br>
 
-`if` takes a predicate (`true` or `false`) in the first argument. The second argument will be evaluated if the predicate is evaluated to `true`. The third argument is equivalent to **else** in many programming language which is evaluated when the predicate is evaluated to `false`.
+`if` takes a predicate (`true` or `false`) as the first argument. The second argument will be evaluated if the predicate is evaluated to `true`. The third argument is equivalent to **else** in many programming languages which is evaluated when the predicate evaluates to `false`.
 
 ```clojure
 user=> (if true
@@ -580,7 +580,7 @@ nil
 <br>
 <br>
 
-In Clojure, you can pass only one expression to a branch of `if`. However, you often need to pass more than one expression in real programs. In this case, use `do`.
+In Clojure, you can only pass one expression to a branch of `if`. However, you often need to pass more than one expression in real programs. In this case, use `do`.
 
 ## If-Let
 
@@ -633,7 +633,7 @@ nil
 
 <br>
 
-When you only care about the case when the condition is truthy, you can use `when`. `when` is similar to `if` but no **else** branch and already wrapped by `do`, so you can pass multiple expression.
+When you only care about the case when the condition is truthy, you can use `when`. `when` is similar to `if` but does not contain an **else** branch and is already wrapped by `do`, so you can pass multiple expressions.
 
 ```clojure
 user=> (when false
@@ -663,7 +663,7 @@ nil
 
 <br>
 
-There is also `when-let` which is similar to `if-let` but no **else** branch.
+There is also `when-let` which is similar to `if-let` but does not contain an **else** branch.
 
 ## Case
 
@@ -706,7 +706,7 @@ and evaluates the expression in the matched branch.
 <br>
 <br>
 <br>
-The expression in the last branch will be evaluated if none of other branches are matched.
+The expression in the last branch will be evaluated if none of the conditions are matched.
 
 ## Cond
 
@@ -733,7 +733,7 @@ nil
 
 <br>
 
-When you want to do similar thing to `case` but want to write your own test case rather than `=`, you can use `cond`. You can write different test case in each branch with `cond`.
+When you want to do similar thing to `case` but want to write your own test case rather than `=`, you can use `cond`. You can write a different test case in each branch with `cond`.
 
 <br>
 <br>
@@ -760,7 +760,7 @@ nil
 
 <br>
 
-You can use predicate with `condp` for condition. In this case `contains?` is the predicate.
+You can use a predicate with `condp` for condition. In this case `contains?` is the predicate.
 
 
 <br>
@@ -773,7 +773,7 @@ You can use predicate with `condp` for condition. In this case `contains?` is th
 <br>
 <br>
 
-`(contains? [1 2 3] 5)` will be evaluated falsey, thus default branch will be evaluated.
+`(contains? [1 2 3] 5)` will be evaluated falsey, thus the default branch will be evaluated.
 
 # Boolean
 
@@ -828,7 +828,7 @@ user=> "Hi, there!"
 
 </br>
 
-You can create a string by double-quoting texts.
+You can create a string by double-quoting text.
 
 ## Str
 
@@ -972,7 +972,7 @@ user=> (/ 4 3)
 </br>
 </br>
 
-Interesting thing is that fraction is represented by ratio.
+Interesting thing is that fractions are represented by ratio.
 
 ## Modulo
 
@@ -994,7 +994,7 @@ user=> (max 1 2 3 4 5)
 
 <br>
 
-Get the greatest and smallest number with `max`.
+Get the greatest number with `max`.
 
 ## Min
 
@@ -1032,7 +1032,7 @@ user=> (+ (bigint Long/MAX_VALUE) 10)
 
 <br>
 
-You can use `bigint` to handle really big number.
+You can use `bigint` to handle really big numbers.
 
 # Lists
 
@@ -1047,7 +1047,7 @@ user=> '(1 2 3)
 
 <br>
 
-Lists are simple collection of values. You can create a list by grouping values with parentheses with a single quote `'` at the top.
+A list is a simple collection of values. You can create a list by grouping values with parentheses and a single quote `'` at the beginning.
 
 ```clojure
 user> (1 2 3)
@@ -1068,7 +1068,7 @@ user=> (nth '(1 2 3) 1)
 
 <br>
 
-To get a value from the list, use `nth` with index number. Index starts from 0
+To get a value from the list, use `nth` with it's index number. Index starts from 0
 
 ## Count
 
@@ -1079,7 +1079,7 @@ user=> (count '(1 2 3) )
 
 <br>
 
-To count how many values in the list, use `count`.
+To count how many values are in a list, use `count`.
 
 ## Conj
 
@@ -1094,12 +1094,12 @@ To add a value to the list, use `conj` (conj[oin]). Note that the new value is a
 
 ## Remove element
 
-How to remove a value from a list? You can't really remove a value from list in Clojure. That's not what list is supposed to do.
-If you are writing a program that needs to remove items from collection, you should use other type of collection such as vectors or sets.
+How to remove a value from a list? You can't really remove a value from a list in Clojure. That's not what lists are supposed to do.
+If you are writing a program that needs to remove items from a collection, you should use a different type of data structure such as a vector or set.
 
 # Vectors
 
-You can think of vectors as efficient and useful version of lists. It's more practical data storage of multiple values than lists.
+You can think of vectors as a more efficient and useful version of lists. It's more practical to store multiple values in a vector.
 
 ## Literal
 
@@ -1144,7 +1144,7 @@ user=> (conj [1 2 3] 4)
 
 <br>
 
-To add a value, use `conj` (conj[oin]). Note that the new value is added to the bottom while it is added to the top in lists.
+To add a value, use `conj` (conj[oin]). Note that the new value is added to the end while it is added to the beginning in lists.
 
 ## .indexOf
 
@@ -1170,7 +1170,7 @@ Returns `-1` if the value doesn't exist.
 
 # Sets
 
-Sets are unordered collection of values, meaning that the order of values are not guaranteed.
+Sets are unordered collections of values, meaning that the order of values is not guaranteed.
 
 ## Literal
 
@@ -1181,7 +1181,7 @@ user=> #{1 2 3}
 
 <br>
 
-You can create a set by grouping values with `#{}`. I get the order of 1 -> 3 -> 2 on my computer but you may the get different order since the order is not guaranteed
+You can create a set by grouping values with `#{}`. I get the order of 1 -> 3 -> 2 on my computer but you may get different order since the order is not guaranteed
 
 ## Sort
 
@@ -1213,7 +1213,7 @@ user=> (conj (conj #{1 2 3} 4) 4)
 <br>
 <br>
 
-One important trait of sets is that **it does not contain an element more than once.**
+One important trait of sets is that **they do not contain duplicates of an element.**
 
 ## Disj
 
