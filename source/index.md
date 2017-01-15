@@ -551,6 +551,163 @@ We also define two functions, `outer1` and `outer2`. These functions both call `
 
 As a result, even if the `from-outer` var doesn't change, `inner` prints different things.
 
+# Namespaces
+
+**Namespace** provides a way to organize different Clojure objects into to logical groups. Normally, these logical groups are called **library** and can be used from other namespaces. A namespace is constructed of symbols chained by `.`. `clojure.core`, `clojure-http.client`, `my.app.example`: they are all namespaces.
+
+## create-ns
+
+```clojure
+user> (create-ns 'clojure.by.example)
+nil
+```
+
+<br>
+
+To create a namespace, use `create-ns`. However, it is rare to create a namespace with `create-ns` because there is more handy `ns` macro which will be explained later. You need to place a single quote before a namespace in order to stop resolving the namespace symbol. See [Quotes](#quotes) for more details about quoting.
+
+## In-ns
+
+```clojure
+clojure.by.example> (in-ns 'user)
+#object[clojure.lang.Namespace 0x2522a678 "user"]
+
+user>
+```
+
+<br>
+
+To move to a specific namespace, use `in-ns`.
+
+
+## Require
+
+One of the important roles of namespace is providing a scope for Clojure objects.
+
+```clojure
+clojure.by.example> (defn favorite-language [] "Clojure!!")
+#'clojure.by.example/favorite-language
+
+clojure.by.example> (favorite-language)
+"Clojure!!"
+
+clojure.by.example> (in-ns 'user)
+#object[clojure.lang.Namespace 0x2522a678 "user"]
+
+user> (favorite-language)
+CompilerException java.lang.RuntimeException: Unable to resolve symbol: favorite-language in this context, compiling:(*cider-repl localhost*:501:7)
+```
+
+<br>
+
+Things that you define in a namespace is not visible from other namespaces by default. As you can see in this example, `favorite-language` function is not visible from `user` namespace.
+
+
+```clojure
+user> (require 'clojure.by.example)
+nil
+
+user> (clojure.by.example/favorite-language)
+"Clojure!!"
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+To load other namespaces, use `require`. Once you load `clojure.by.example` namespace, `favorite-language` will be available from `user` namespace.
+
+```clojure
+user> (require '[clojure.by.example :as cbe])
+nil
+
+user> (cbe/favorite-language)
+"Clojure!!"
+```
+
+<br>
+<br>
+<br>
+<br>
+
+Sometimes you want to give a different name to a loaded namespace. In such a case, you can surround the namespace by a vector with `:as` keyword.
+
+```clojure
+user> (require '[clojure.by.example :as cbe]
+               '[clojure.core :as ccc])
+nil
+```
+
+<br>
+<br>
+<br>
+<br>
+
+You can also require multiple namespaces at once.
+
+## Refer
+
+```clojure
+user> (refer 'clojure.by.example)
+nil
+
+user> (favorite-language)
+"Clojure!!"
+```
+
+<br>
+
+You probably don't want to type `clojure.by.example` everytime you want to call `favorite-language` function. You can avoid this if you use `refer`.
+
+## Use
+
+```clojure
+user> (use 'clojure.by.example)
+nil
+
+user> (favorite-language)
+"Clojure!!"
+```
+
+<br>
+
+`require` loads a namespace and `refer` refers the namespace. To do these at once, you can use `use`.
+
+## Import
+
+```clojure
+user> (import java.util.Date)
+java.util.Date
+
+user> (new Date)
+#inst "2017-01-15T14:32:18.537-00:00"
+```
+
+<br>
+
+To import a namespace of Java, you need to use `import`. Please see [Java](#java) section for more information about how to use Java.
+
+## Ns
+
+`ns` macro creates a new namespace and gives you an opportunity to load other namespaces at the creation time.
+
+```clojure
+(ns example.namespace
+  (:require [clojure.java.io])
+  (:use [clojure.data])
+  (:import [java.util List Set]))
+```
+
+<br>
+
+`ns` can take `:require`, `:use`, and `:import` keyword. They work the same way as the corresponding functions explained above except you don't need to quote.
 
 # Control Flow
 
@@ -2211,6 +2368,24 @@ user=> (defmacro unless [test then]
 
 You can see quoting at work in macros. In this `unless` macro, you need to use `'` followed by `if` and `not` because you don't want them to be evaluated inside the macro definition.
 
+```clojure
+user> (require 'clojure.string)
+nil
+```
+
+<br>
+<br>
+<br>
+
+Another common place where quote is used is when loading a namespace.
+
+```clojure
+user> (require clojure.string)
+CompilerException java.lang.ClassNotFoundException: clojure.string, compiling:(*cider-repl localhost*:483:7)
+```
+
+You need to quote `clojure.string` namespace otherwise Clojure tries to resolve the namespace symbol and get error. This is because resolving symbol is the default treatment but `clojure.string` symbol is not bound to a value.
+
 ## Syntax-Quotes
 
 ```clojure
@@ -3087,7 +3262,7 @@ user> (java.util.Date. "2016/2/19")
 <br>
 <br>
 
-There is also `.` notation available. `.` must be placed at the end of class name.
+There is also `.` form available. `.` must be placed at the end of class name.
 
 ```clojure
 user> (let [current_date (new java.util.Date)]
@@ -3128,12 +3303,24 @@ user> (let [current_date (new java.util.Date)]
 The instance method invocation takes a form of `(.MethodName Instance Args)`. This example is equivalent to `current_date.toString()` in Java.
 
 ```clojure
+user> (let [current_date (new java.util.Date)]
+        (. current_date toString))
+"Sun Jan 15 22:30:45 JST 2017"
+```
+
+<br>
+<br>
+
+There is also `.` form available.
+
+```clojure
 user> (let [date1 (new java.util.Date)
             date2 (new java.util.Date)]
         (.equals date1 date2))
 true
 ```
 
+<br>
 <br>
 <br>
 
