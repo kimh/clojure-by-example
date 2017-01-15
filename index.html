@@ -518,6 +518,142 @@ such as passing it to a function, returned from a function, and binding it to a 
 
 <p>As a result, even if the <code class="prettyprint">from-outer</code> var doesn&rsquo;t change, <code class="prettyprint">inner</code> prints different things.</p>
 
+<h1 id="namespaces">Namespaces</h1>
+
+<p><strong>Namespace</strong> provides a way to organize different Clojure objects into to logical groups. Normally, these logical groups are called <strong>library</strong> and can be used from other namespaces. A namespace is constructed of symbols chained by <code class="prettyprint">.</code>. <code class="prettyprint">clojure.core</code>, <code class="prettyprint">clojure-http.client</code>, <code class="prettyprint">my.app.example</code>: they are all namespaces.</p>
+
+<h2 id="create-ns">create-ns</h2>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">create-ns</span><span class="w"> </span><span class="ss">'clojure.by.example</span><span class="p">)</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To create a namespace, use <code class="prettyprint">create-ns</code>. However, it is rare to create a namespace with <code class="prettyprint">create-ns</code> because there is more handy <code class="prettyprint">ns</code> macro which will be explained later. You need to place a single quote before a namespace in order to stop resolving the namespace symbol. See <a href="#quotes">Quotes</a> for more details about quoting.</p>
+
+<h2 id="in-ns">In-ns</h2>
+<pre class="highlight clojure"><code><span class="n">clojure.by.example&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">in-ns</span><span class="w"> </span><span class="ss">'user</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="n">object</span><span class="p">[</span><span class="n">clojure.lang.Namespace</span><span class="w"> </span><span class="mi">0</span><span class="n">x2522a678</span><span class="w"> </span><span class="s">"user"</span><span class="p">]</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To move to a specific namespace, use <code class="prettyprint">in-ns</code>.</p>
+
+<h2 id="require">Require</h2>
+
+<p>One of the important roles of namespace is providing a scope for Clojure objects.</p>
+<pre class="highlight clojure"><code><span class="n">clojure.by.example&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">favorite-language</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="s">"Clojure!!"</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="ss">'clojure.by.example/favorite-language</span><span class="w">
+
+</span><span class="n">clojure.by.example&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">favorite-language</span><span class="p">)</span><span class="w">
+</span><span class="s">"Clojure!!"</span><span class="w">
+
+</span><span class="n">clojure.by.example&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">in-ns</span><span class="w"> </span><span class="ss">'user</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="n">object</span><span class="p">[</span><span class="n">clojure.lang.Namespace</span><span class="w"> </span><span class="mi">0</span><span class="n">x2522a678</span><span class="w"> </span><span class="s">"user"</span><span class="p">]</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">favorite-language</span><span class="p">)</span><span class="w">
+</span><span class="n">CompilerException</span><span class="w"> </span><span class="n">java.lang.RuntimeException</span><span class="err">:</span><span class="w"> </span><span class="n">Unable</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="nb">resolve</span><span class="w"> </span><span class="nb">symbol</span><span class="err">:</span><span class="w"> </span><span class="n">favorite-language</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">context,</span><span class="w"> </span><span class="n">compiling</span><span class="err">:</span><span class="p">(</span><span class="nf">*cider-repl</span><span class="w"> </span><span class="n">localhost*</span><span class="no">:501:7</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Things that you define in a namespace is not visible from other namespaces by default. As you can see in this example, <code class="prettyprint">favorite-language</code> function is not visible from <code class="prettyprint">user</code> namespace.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">require</span><span class="w"> </span><span class="ss">'clojure.by.example</span><span class="p">)</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">clojure.by.example/favorite-language</span><span class="p">)</span><span class="w">
+</span><span class="s">"Clojure!!"</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>To load other namespaces, use <code class="prettyprint">require</code>. Once you load <code class="prettyprint">clojure.by.example</code> namespace, <code class="prettyprint">favorite-language</code> will be available from <code class="prettyprint">user</code> namespace.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">require</span><span class="w"> </span><span class="o">'</span><span class="p">[</span><span class="n">clojure.by.example</span><span class="w"> </span><span class="no">:as</span><span class="w"> </span><span class="n">cbe</span><span class="p">])</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">cbe/favorite-language</span><span class="p">)</span><span class="w">
+</span><span class="s">"Clojure!!"</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p>Sometimes you want to give a different name to a loaded namespace. In such a case, you can surround the namespace by a vector with <code class="prettyprint">:as</code> keyword.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">require</span><span class="w"> </span><span class="o">'</span><span class="p">[</span><span class="n">clojure.by.example</span><span class="w"> </span><span class="no">:as</span><span class="w"> </span><span class="n">cbe</span><span class="p">]</span><span class="w">
+               </span><span class="o">'</span><span class="p">[</span><span class="n">clojure.core</span><span class="w"> </span><span class="no">:as</span><span class="w"> </span><span class="n">ccc</span><span class="p">])</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br></p>
+
+<p>You can also require multiple namespaces at once.</p>
+
+<h2 id="refer">Refer</h2>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">refer</span><span class="w"> </span><span class="ss">'clojure.by.example</span><span class="p">)</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">favorite-language</span><span class="p">)</span><span class="w">
+</span><span class="s">"Clojure!!"</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>You probably don&rsquo;t want to type <code class="prettyprint">clojure.by.example</code> everytime you want to call <code class="prettyprint">favorite-language</code> function. You can avoid this if you use <code class="prettyprint">refer</code>.</p>
+
+<h2 id="use">Use</h2>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">use</span><span class="w"> </span><span class="ss">'clojure.by.example</span><span class="p">)</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">favorite-language</span><span class="p">)</span><span class="w">
+</span><span class="s">"Clojure!!"</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p><code class="prettyprint">require</code> loads a namespace and <code class="prettyprint">refer</code> refers the namespace. To do these at once, you can use <code class="prettyprint">use</code>.</p>
+
+<h2 id="import">Import</h2>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">import</span><span class="w"> </span><span class="n">java.util.Date</span><span class="p">)</span><span class="w">
+</span><span class="n">java.util.Date</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">new</span><span class="w"> </span><span class="n">Date</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="n">inst</span><span class="w"> </span><span class="s">"2017-01-15T14:32:18.537-00:00"</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To import a namespace of Java, you need to use <code class="prettyprint">import</code>. Please see <a href="#java">Java</a> section for more information about how to use Java.</p>
+
+<h2 id="ns">Ns</h2>
+
+<p><code class="prettyprint">ns</code> macro creates a new namespace and gives you an opportunity to load other namespaces at the creation time.</p>
+<pre class="highlight clojure"><code><span class="p">(</span><span class="nf">ns</span><span class="w"> </span><span class="n">example.namespace</span><span class="w">
+  </span><span class="p">(</span><span class="no">:require</span><span class="w"> </span><span class="p">[</span><span class="n">clojure.java.io</span><span class="p">])</span><span class="w">
+  </span><span class="p">(</span><span class="no">:use</span><span class="w"> </span><span class="p">[</span><span class="n">clojure.data</span><span class="p">])</span><span class="w">
+  </span><span class="p">(</span><span class="no">:import</span><span class="w"> </span><span class="p">[</span><span class="n">java.util</span><span class="w"> </span><span class="n">List</span><span class="w"> </span><span class="n">Set</span><span class="p">]))</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p><code class="prettyprint">ns</code> can take <code class="prettyprint">:require</code>, <code class="prettyprint">:use</code>, and <code class="prettyprint">:import</code> keyword. They work the same way as the corresponding functions explained above except you don&rsquo;t need to quote.</p>
+
 <h1 id="control-flow">Control Flow</h1>
 
 <h2 id="if">If</h2>
@@ -1941,6 +2077,20 @@ Note that you have to use <code class="prettyprint">&#39;</code> because you wan
 <p><br></p>
 
 <p>You can see quoting at work in macros. In this <code class="prettyprint">unless</code> macro, you need to use <code class="prettyprint">&#39;</code> followed by <code class="prettyprint">if</code> and <code class="prettyprint">not</code> because you don&rsquo;t want them to be evaluated inside the macro definition.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">require</span><span class="w"> </span><span class="ss">'clojure.string</span><span class="p">)</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br></p>
+
+<p>Another common place where quote is used is when loading a namespace.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">require</span><span class="w"> </span><span class="n">clojure.string</span><span class="p">)</span><span class="w">
+</span><span class="n">CompilerException</span><span class="w"> </span><span class="n">java.lang.ClassNotFoundException</span><span class="err">:</span><span class="w"> </span><span class="n">clojure.string,</span><span class="w"> </span><span class="n">compiling</span><span class="err">:</span><span class="p">(</span><span class="nf">*cider-repl</span><span class="w"> </span><span class="n">localhost*</span><span class="no">:483:7</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p>You need to quote <code class="prettyprint">clojure.string</code> namespace otherwise Clojure tries to resolve the namespace symbol and get error. This is because resolving symbol is the default treatment but <code class="prettyprint">clojure.string</code> symbol is not bound to a value.</p>
 
 <h2 id="syntax-quotes">Syntax-Quotes</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
@@ -2720,7 +2870,7 @@ current value, normally the first time you create the atom.</p>
 <p><br>
 <br></p>
 
-<p>There is also <code class="prettyprint">.</code> notation available. <code class="prettyprint">.</code> must be placed at the end of class name.</p>
+<p>There is also <code class="prettyprint">.</code> form available. <code class="prettyprint">.</code> must be placed at the end of class name.</p>
 <pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">current_date</span><span class="w"> </span><span class="p">(</span><span class="nb">new</span><span class="w"> </span><span class="n">java.util.Date</span><span class="p">)]</span><span class="w">
         </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">current_date</span><span class="p">))</span><span class="w">
 </span><span class="o">#</span><span class="n">inst</span><span class="w"> </span><span class="s">"2017-01-15T13:02:29.613-00:00"</span><span class="w">
@@ -2753,6 +2903,15 @@ current value, normally the first time you create the atom.</p>
 <p><br></p>
 
 <p>The instance method invocation takes a form of <code class="prettyprint">(.MethodName Instance Args)</code>. This example is equivalent to <code class="prettyprint">current_date.toString()</code> in Java.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">current_date</span><span class="w"> </span><span class="p">(</span><span class="nb">new</span><span class="w"> </span><span class="n">java.util.Date</span><span class="p">)]</span><span class="w">
+        </span><span class="p">(</span><span class="nb">.</span><span class="w"> </span><span class="n">current_date</span><span class="w"> </span><span class="n">toString</span><span class="p">))</span><span class="w">
+</span><span class="s">"Sun Jan 15 22:30:45 JST 2017"</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>There is also <code class="prettyprint">.</code> form available.</p>
 <pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">date1</span><span class="w"> </span><span class="p">(</span><span class="nb">new</span><span class="w"> </span><span class="n">java.util.Date</span><span class="p">)</span><span class="w">
             </span><span class="n">date2</span><span class="w"> </span><span class="p">(</span><span class="nb">new</span><span class="w"> </span><span class="n">java.util.Date</span><span class="p">)]</span><span class="w">
         </span><span class="p">(</span><span class="nf">.equals</span><span class="w"> </span><span class="n">date1</span><span class="w"> </span><span class="n">date2</span><span class="p">))</span><span class="w">
@@ -2760,6 +2919,7 @@ current value, normally the first time you create the atom.</p>
 </span></code></pre>
 
 <p><br>
+<br>
 <br></p>
 
 <p>If you want to call a method that takes arguments, you can pass them after an instance. This example is equivalent to <code class="prettyprint">date1.equals(date2)</code> in Java.</p>
