@@ -2690,6 +2690,80 @@ current value, normally the first time you create the atom.</p>
 
 <p>The value of the ref is still 0 at this moment because the update to the ref is still not committed.</p>
 
+<h1 id="java">Java</h1>
+
+<p>One of the great traits of Clojure is that you can use Java code from your Clojure code. This trait is called <strong>Java interop</strong>. Although Clojure has very rich standard libraries, sometimes you cannot find libraries that you need to solve your problems. If the library exists in Java, you can borrow it from your Clojure code.</p>
+
+<h2 id="instantiation">Instantiation</h2>
+<pre class="highlight plaintext"><code>user&gt; (new java.util.Date)
+#inst "2017-01-15T08:04:14.983-00:00"
+</code></pre>
+
+<p><br></p>
+
+<p>You can create an instance with <code class="prettyprint">new</code> which takes class name as first argument.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">new</span><span class="w"> </span><span class="n">java.util.Date</span><span class="w"> </span><span class="s">"2016/2/19"</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="n">inst</span><span class="w"> </span><span class="s">"2016-02-18T15:00:00.000-00:00"</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>The rest of arguments are passed to the constructor function.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">java.util.Date.</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="n">inst</span><span class="w"> </span><span class="s">"2017-01-15T08:17:02.580-00:00"</span><span class="w">
+
+</span><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">java.util.Date.</span><span class="w"> </span><span class="s">"2016/2/19"</span><span class="p">)</span><span class="w">
+</span><span class="o">#</span><span class="n">inst</span><span class="w"> </span><span class="s">"2016-02-18T15:00:00.000-00:00"</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>There is also <code class="prettyprint">.</code> notation available. <code class="prettyprint">.</code> must be placed at the end of class name.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">current_date</span><span class="w"> </span><span class="p">(</span><span class="nb">new</span><span class="w"> </span><span class="n">java.util.Date</span><span class="p">)]</span><span class="w">
+        </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">current_date</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="n">inst</span><span class="w"> </span><span class="s">"2017-01-15T13:02:29.613-00:00"</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br>
+<br>
+<br>
+<br></p>
+
+<p>You can also bind Java&rsquo;s instance just like Clojure&rsquo;s value.</p>
+
+<h2 id="method-invocation">Method invocation</h2>
+
+<p>Clojure doesn&rsquo;t provide an exponential calculation function in the standard library, so let&rsquo;s borrow <code class="prettyprint">pow</code> method from <code class="prettyprint">Math</code> class.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">Math/pow</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
+</span><span class="mf">8.0</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>You can call Java&rsquo;s method just like Clojure&rsquo;s function. Here is how to call <code class="prettyprint">pow</code> class method of <code class="prettyprint">Math</code> class. The class method invocation takes a form of <code class="prettyprint">(Classname/Method)</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">current_date</span><span class="w"> </span><span class="p">(</span><span class="nb">new</span><span class="w"> </span><span class="n">java.util.Date</span><span class="p">)]</span><span class="w">
+        </span><span class="p">(</span><span class="nf">.toString</span><span class="w"> </span><span class="n">current_date</span><span class="p">))</span><span class="w">
+</span><span class="s">"Sun Jan 15 21:44:06 JST 2017"</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>The instance method invocation takes a form of <code class="prettyprint">(.MethodName Instance Args)</code>. This example is equivalent to <code class="prettyprint">current_date.toString()</code> in Java.</p>
+<pre class="highlight clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">date1</span><span class="w"> </span><span class="p">(</span><span class="nb">new</span><span class="w"> </span><span class="n">java.util.Date</span><span class="p">)</span><span class="w">
+            </span><span class="n">date2</span><span class="w"> </span><span class="p">(</span><span class="nb">new</span><span class="w"> </span><span class="n">java.util.Date</span><span class="p">)]</span><span class="w">
+        </span><span class="p">(</span><span class="nf">.equals</span><span class="w"> </span><span class="n">date1</span><span class="w"> </span><span class="n">date2</span><span class="p">))</span><span class="w">
+</span><span class="n">true</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>If you want to call a method that takes arguments, you can pass them after an instance. This example is equivalent to <code class="prettyprint">date1.equals(date2)</code> in Java.</p>
+
 <h1 id="many-thanks">Many Thanks</h1>
 
 <p><a href="https://aphyr.com/tags/Clojure-from-the-ground-up">Clojure from the ground up</a></p>
