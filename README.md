@@ -17,7 +17,7 @@ The command output from middleman tells you the url to access.
 
 ## Test
 
-There are spell checking tests. To run the test, use run the following commands.
+There are spell checking tests.
 
 ```
 cp .aspell.en.pws ~/
@@ -29,6 +29,5 @@ You can add words to ignore from the checking to `.aspell.en.pws`.
 ## Todo
 
 * test
-* java interlop
-* require/include
 * clean up the confusion in sequence. probably I should use coll where sequence is mentioned because sequence is not data type.
+* defrecord
