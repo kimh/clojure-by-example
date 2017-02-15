@@ -31,3 +31,5 @@ You can add words to ignore from the checking to `.aspell.en.pws`.
 * test
 * clean up the confusion in sequence. probably I should use coll where sequence is mentioned because sequence is not data type.
 * defrecord
+* destructuring
+* default value of get
