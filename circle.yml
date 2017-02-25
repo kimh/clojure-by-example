@@ -30,9 +30,9 @@ stages:
 
       - type: shell
         shell: /bin/bash
-        command: bundle install
+        command: bundle install --path vendor/bundle
 
       - type: cache-save
         key: projectname-{{ .Branch }}
         paths:
-          - ~/.bundle/gems
+          - vendor/bundle
