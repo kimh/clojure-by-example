@@ -16,7 +16,7 @@ stages:
       - type: shell
         shell: /bin/bash
         pwd: /
-        command: apt-get -q update; apt-get -y install libgmp3-dev
+        command: apt-get -q update; apt-get -y install libgmp3-dev aspell-en
 
       - type: checkout
 
@@ -36,3 +36,7 @@ stages:
         key: projectname-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
         paths:
           - vendor/bundle
+
+      - type: shell
+        shell: /bin/bash
+        command: bundle exec rake spellcheck
