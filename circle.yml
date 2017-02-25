@@ -26,7 +26,7 @@ stages:
 
       - type: cache-restore
         keys:
-          - projectname-{{ .Branch }}
+          - projectname-{{ .Branch }}-{{ epoch }}
 
       - type: shell
         shell: /bin/bash
