@@ -11,6 +11,7 @@ stages:
     steps:
       - type: shell
         shell: /bin/bash
+        pwd: /
         command: apt-get install git
 
       - type: checkout
