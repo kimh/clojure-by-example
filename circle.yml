@@ -41,7 +41,6 @@ stages:
         shell: /bin/bash
         command: bundle exec rake spellcheck
 
-    steps:
       - type: deploy
         name: "Deploy to staging"
         command: |
