@@ -7,10 +7,10 @@ containerInfo:
 
 stages:
   build:
-    workDir: ~/clojure-by-example
+    workDir: /root/clojure-by-example
 
     environment:
-      - WORK_DIR: ~/clojure-by-example
+      - WORK_DIR: /root/clojure-by-example
 
     steps:
       - type: shell
@@ -22,7 +22,7 @@ stages:
 
       - type: shell
         shell: /bin/bash
-        command: cp .aspell.en.pws ~/
+        command: cp .aspell.en.pws /root/
 
       - type: cache-restore
         keys:
