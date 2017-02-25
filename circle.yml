@@ -24,6 +24,10 @@ stages:
         shell: /bin/bash
         command: cp .aspell.en.pws ~/
 
+      - type: cache-restore
+        keys:
+          - projectname-{{ .Branch }}
+
       - type: shell
         shell: /bin/bash
         command: bundle install
