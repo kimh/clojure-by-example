@@ -40,3 +40,15 @@ stages:
       - type: shell
         shell: /bin/bash
         command: bundle exec rake spellcheck
+
+    steps:
+      - type: deploy
+        name: "Deploy to staging"
+        command: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            git config --global user.email "kimh-machine1@kimh.33mail.com"
+            git config --global user.name "kimh-machine1"
+            git remote remove origin
+            git remote add origin git@github.com:kimh/clojure-by-example.git
+            bundle exec rake publish COMMIT_MESSAGE_SUFFIX="--skip-ci"
+          fi
