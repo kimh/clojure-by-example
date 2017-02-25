@@ -16,7 +16,7 @@ stages:
       - type: shell
         shell: /bin/bash
         pwd: /
-        command: apt-get -q update; apt-get install libgmp3-dev
+        command: apt-get -q update; apt-get -y install libgmp3-dev
 
       - type: checkout
 
