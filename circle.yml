@@ -12,7 +12,7 @@ stages:
       - type: shell
         shell: /bin/bash
         pwd: /
-        command: apt-get install -y git-core
+        command: apt-get update; apt-get install -y git-core
 
       - type: checkout
       # Add an entry to /etc/hosts
