@@ -32,6 +32,6 @@ stages:
         command: bundle install --path vendor/bundle
 
       - type: cache-save
-        key: projectname-{{ .Branch }}-{{ epoch }}
+        key: projectname-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
         paths:
           - vendor/bundle
