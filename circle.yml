@@ -49,5 +49,5 @@ stages:
             git config --global user.name "kimh-machine1"
             git remote remove origin
             git remote add origin git@github.com:kimh/clojure-by-example.git
-            bundle exec rake publish COMMIT_MESSAGE_SUFFIX="--skip-ci"
+            bundle exec rake publish COMMIT_MESSAGE_SUFFIX="[ci skip]"
           fi
