@@ -12,7 +12,7 @@ toc_footers:
 ---
 
 # About
-I don't like reading thick O'Reilly books when I start learning new programming languages. Rather, I like starting by writing small and dirty codes. If you take this approach, having many simple codes examples are extremely helpful because I can find answers to these questions very easily.
+I don't like reading thick O'Reilly books when I start learning new programming languages. Rather, I like starting by writing small and dirty code. If you take this approach, having many simple code examples are extremely helpful because I can find answers to these questions very easily.
 
 *How can I define a function?*
 
