@@ -9,8 +9,13 @@ stages:
   build:
     workDir: ~/my-project
     steps:
+      - type: shell
+        shell: /bin/bash
+        command: apt-get install git
+
       - type: checkout
       # Add an entry to /etc/hosts
+
       - type: shell
         shell: /bin/bash
         command: find ~/my-project
