@@ -33,6 +33,6 @@ stages:
         command: bundle install --path vendor/bundle
 
       - type: cache-save
-        key: projectname-{{ .Branch }}
+        key: projectname-{{ .Branch }}-{{ epoch }}
         paths:
           - vendor/bundle
