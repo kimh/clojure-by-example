@@ -1,0 +1,16 @@
+version: 2
+executorType: docker
+
+containerInfo:
+  - image: ubuntu:14.04
+    cmd: ["/bin/bash"]
+
+stages:
+  build:
+    workDir: ~/my-project
+    steps:
+      - type: checkout
+      # Add an entry to /etc/hosts
+      - type: shell
+        shell: /bin/bash
+        command: find ~/my-project
