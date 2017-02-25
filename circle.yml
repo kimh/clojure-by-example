@@ -13,10 +13,10 @@ stages:
       - WORK_DIR: ~/clojure-by-example
 
     steps:
-      #- type: shell
-      #  shell: /bin/bash
-      #  pwd: /
-      #  command: apt-get -q update; apt-get install -y git-core
+      - type: shell
+        shell: /bin/bash
+        pwd: /
+        command: apt-get -q update; apt-get install libgmp3-dev
 
       - type: checkout
 
