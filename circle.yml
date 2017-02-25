@@ -27,3 +27,8 @@ stages:
       - type: shell
         shell: /bin/bash
         command: bundle install
+
+      - type: cache-save
+        key: projectname-{{ .Branch }}
+        paths:
+          - ~/.bundle/gems
