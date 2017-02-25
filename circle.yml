@@ -7,16 +7,16 @@ containerInfo:
 
 stages:
   build:
-    workDir: ~/my-project
+    workDir: ~/$CIRCLE_PROJECT_REPONAME
+
     steps:
       - type: shell
         shell: /bin/bash
         pwd: /
-        command: apt-get update; apt-get install -y git-core
+        command: apt-get -q update; apt-get install -y git-core
 
       - type: checkout
-      # Add an entry to /etc/hosts
 
       - type: shell
         shell: /bin/bash
-        command: find ~/my-project
+        command: pwd
