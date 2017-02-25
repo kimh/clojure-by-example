@@ -1,6 +1,5 @@
 version: 2
 executorType: docker
-
 containerInfo:
   - image: ruby:2.2.3
     cmd: ["/bin/bash"]
