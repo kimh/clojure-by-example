@@ -26,7 +26,7 @@ stages:
 
       - type: cache-restore
         keys:
-          - projectname-{{ .Branch }}-{{ epoch }}
+          - projectname-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
 
       - type: shell
         shell: /bin/bash
