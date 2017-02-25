@@ -2,7 +2,7 @@ version: 2
 executorType: docker
 
 containerInfo:
-  - image: ubuntu:14.04
+  - image: ruby:2.4
     cmd: ["/bin/bash"]
 
 stages:
@@ -13,13 +13,17 @@ stages:
       - WORK_DIR: ~/clojure-by-example
 
     steps:
-      - type: shell
-        shell: /bin/bash
-        pwd: /
-        command: apt-get -q update; apt-get install -y git-core
+      #- type: shell
+      #  shell: /bin/bash
+      #  pwd: /
+      #  command: apt-get -q update; apt-get install -y git-core
 
       - type: checkout
 
       - type: shell
         shell: /bin/bash
-        command: pwd
+        command: cp .aspell.en.pws ~/
+
+      - type: shell
+        shell: /bin/bash
+        command: bundle install
