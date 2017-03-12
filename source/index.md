@@ -52,7 +52,7 @@ user> true
 true
 ```
 
-> [repl.it](https://repl.it/GRYw/1)
+> [Run at repl.it](https://repl.it/GRYw/1)
 
 <br>
 
