@@ -52,6 +52,8 @@ user> true
 true
 ```
 
+> [repl.it](https://repl.it/GRYw/1)
+
 <br>
 
 Our first Clojure code is, of course, printing "Hello, world!". Here, we invoke the **function** `println` with the **argument** `Hello, world!`. We call the invocation of function ***applying the function to data*** in Clojure or other functional programming language.
