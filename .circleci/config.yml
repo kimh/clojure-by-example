@@ -1,53 +1,38 @@
 version: 2
-executorType: docker
-
-containerInfo:
-  - image: ruby:2.2.3
-    cmd: ["/bin/bash"]
-
-stages:
+jobs:
   build:
-    workDir: /root/clojure-by-example
+    docker:
+      - image: ruby:2.2.3
 
-    environment:
-      - WORK_DIR: /root/clojure-by-example
+    working_directory: /root/clojure-by-example
 
     steps:
-      - type: shell
-        shell: /bin/bash
-        pwd: /
-        command: apt-get -q update; apt-get -y install libgmp3-dev aspell-en
+      - checkout
 
-      - type: checkout
+      - run: apt-get -q update; apt-get -y install libgmp3-dev aspell-en
 
-      - type: shell
-        shell: /bin/bash
-        command: cp .aspell.en.pws /root/
+      - run: cp .aspell.en.pws /root/
 
-      - type: cache-restore
-        keys:
-          - projectname-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+      - restore_cache:
+          keys:
+            - projectname-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
 
-      - type: shell
-        shell: /bin/bash
-        command: bundle install --path vendor/bundle
+      - run: bundle install --path vendor/bundle
 
-      - type: cache-save
-        key: projectname-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-        paths:
+      - save_cache:
+          key: projectname-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
           - vendor/bundle
 
-      - type: shell
-        shell: /bin/bash
-        command: bundle exec rake spellcheck
+      - run: bundle exec rake spellcheck
 
-      - type: deploy
-        name: "Deploy to staging"
-        command: |
-          if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            git config --global user.email "kimh-machine1@kimh.33mail.com"
-            git config --global user.name "kimh-machine1"
-            git remote remove origin
-            git remote add origin git@github.com:kimh/clojure-by-example.git
-            bundle exec rake publish COMMIT_MESSAGE_SUFFIX="[ci skip]"
-          fi
+      - deploy:
+          name: Maybe Deploy to GH page
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              git config --global user.email "kimh-machine1@kimh.33mail.com"
+              git config --global user.name "kimh-machine1"
+              git remote remove origin
+              git remote add origin git@github.com:kimh/clojure-by-example.git
+              bundle exec rake publish COMMIT_MESSAGE_SUFFIX="[ci skip]"
+            fi
