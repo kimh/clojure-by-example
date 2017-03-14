@@ -2,34 +2,32 @@ version: 2
 jobs:
   build:
     docker:
-      image: ruby:2.2.3
+      - image: ruby:2.2.3
 
     working_directory: /root/clojure-by-example
-    environment:
-    - WORK_DIR: /root/clojure-by-example
-    executor: docker
-    steps:
-    - run: apt-get -q update; apt-get -y install libgmp3-dev aspell-en
-    - checkout
-    - run: cp .aspell.en.pws /root/
-    - restore_cache:
-        keys:
-          - projectname-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-    - run: bundle install --path vendor/bundle
 
-    - save_cache:
-        key: projectname-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-        paths:
-        - vendor/bundle
-    - run: bundle exec rake spellcheck
-    - deploy:
-        command: |
-          if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            git config --global user.email "kimh-machine1@kimh.33mail.com"
-            git config --global user.name "kimh-machine1"
-            git remote remove origin
-            git remote add origin git@github.com:kimh/clojure-by-example.git
-            bundle exec rake publish COMMIT_MESSAGE_SUFFIX="[ci skip]"
-          fi
-        name: Deploy to staging
+    steps:
+      - run: apt-get -q update; apt-get -y install libgmp3-dev aspell-en
+      - checkout
+      - run: cp .aspell.en.pws /root/
+      - restore_cache:
+          keys:
+            - projectname-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+      - run: bundle install --path vendor/bundle
+
+      - save_cache:
+          key: projectname-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+          - vendor/bundle
+      - run: bundle exec rake spellcheck
+      - deploy:
+          name: Deploy to staging
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              git config --global user.email "kimh-machine1@kimh.33mail.com"
+              git config --global user.name "kimh-machine1"
+              git remote remove origin
+              git remote add origin git@github.com:kimh/clojure-by-example.git
+              bundle exec rake publish COMMIT_MESSAGE_SUFFIX="[ci skip]"
+            fi
 
