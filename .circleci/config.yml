@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
 
-      - run: apt-get -q update; apt-get -y install libgmp3-dev aspell-en
+      - run: apt-get -q update; apt-get -y install libgmp3-dev aspell-en curl
 
       - run: cp .aspell.en.pws /root/
 
@@ -26,13 +26,28 @@ jobs:
 
       - run: bundle exec rake spellcheck
 
+      #- deploy:
+      #    name: Maybe Deploy to GH page
+      #    command: |
+      #      if [ "${CIRCLE_BRANCH}" == "master" ]; then
+      #        git config --global user.email "kimh-machine1@kimh.33mail.com"
+      #        git config --global user.name "kimh-machine1"
+      #        git remote remove origin
+      #        git remote add origin git@github.com:kimh/clojure-by-example.git
+      #        bundle exec rake publish COMMIT_MESSAGE_SUFFIX="[ci skip]"
+      #      fi
       - deploy:
-          name: Maybe Deploy to GH page
+          name: Maybe Triggering Deploy
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              git config --global user.email "kimh-machine1@kimh.33mail.com"
-              git config --global user.name "kimh-machine1"
-              git remote remove origin
-              git remote add origin git@github.com:kimh/clojure-by-example.git
-              bundle exec rake publish COMMIT_MESSAGE_SUFFIX="[ci skip]"
+                curl -u ${CIRCLE_API_TOKEN}: \
+                     -d build_parameters[CIRCLE_JOB]=deploy \
+                     https://circleci.com/api/v1.1/project/github/kimh/clojure-by-example/tree/${CIRCLE_BRANCH}
             fi
+  deploy:
+    docker:
+      - image: ruby:2.2.3
+
+    working_directory: /root/clojure-by-example
+    steps:
+      - run: echo this is deploy
