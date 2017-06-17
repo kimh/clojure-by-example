@@ -36,22 +36,39 @@ jobs:
       #        git remote add origin git@github.com:kimh/clojure-by-example.git
       #        bundle exec rake publish commit_message_suffix="[ci skip]"
       #      fi
-      - deploy:
-          name: Maybe Triggering Deploy
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-                curl -u ${CIRCLE_API_TOKEN}: \
-                     -d build_parameters[CIRCLE_JOB]=deploy \
-                     https://circleci.com/api/v1.1/project/github/kimh/clojure-by-example/tree/${CIRCLE_BRANCH}
-            else
-                echo not deploying
-            fi
+      #- deploy:
+      #    name: Maybe Triggering Deploy
+      #    command: |
+      #      if [ "${CIRCLE_BRANCH}" == "master" ]; then
+      #          curl -u ${CIRCLE_API_TOKEN}: \
+      #               -d build_parameters[CIRCLE_JOB]=deploy \
+      #               https://circleci.com/api/v1.1/project/github/kimh/clojure-by-example/tree/${CIRCLE_BRANCH}
+      #      else
+      #          echo not deploying
+      #      fi
   deploy:
-    machine:
-      enabled: true
+    docker:
+      - image: ruby:2.2.3
 
     working_directory: /root/clojure-by-example
+
     steps:
+      - checkout
+      - run: |
+          git config --global user.email "kimh-machine1@kimh.33mail.com"
+          git config --global user.name "kimh-machine1"
+          git remote remove origin
+          git remote add origin git@github.com:kimh/clojure-by-example.git
+          bundle exec rake publish commit_message_suffix="[ci skip]"
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
       - deploy:
-          name: maybe deploy to gh page
-          command: echo deploy on machine
+          requires:
+            - build
+          filters:
+            branches:
+              only: workflow
