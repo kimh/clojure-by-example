@@ -1233,6 +1233,25 @@ ClassCastException java.lang.Long cannot be cast to clojure.lang.IFn  user/eval2
 
 We need `'` to prevent the list from being evaluated.
 
+## Conj
+
+```clojure
+user=> (conj '(1 2 3) 4)
+(4 1 2 3)
+```
+
+<br>
+
+To add a value to the list, use `conj` (conj[oin]). Note that the new value is added to the top.
+
+## How can I remove elements?
+
+You may wonder: *How can I remove an element at a specific position from a list? How can I remove all elements that match in a list?*
+
+Unfortunately, there is no built-in function that do these removal operations in lists. You can still use functions from the seq library such as remove, filter, or drop.
+
+If you are not familiar with the seq library, jump to [Sequences](#sequences.) to learn more!
+
 ## Nth
 
 ```clojure
@@ -1255,22 +1274,6 @@ user=> (count '(1 2 3) )
 
 To count how many values are in a list, use `count`.
 
-## Conj
-
-```clojure
-user=> (conj '(1 2 3) 4)
-(4 1 2 3)
-```
-
-<br>
-
-To add a value to the list, use `conj` (conj[oin]). Note that the new value is added to the top.
-
-## Remove element
-
-How to remove a value from a list? You can't really remove a value from a list in Clojure. That's not what lists are supposed to do.
-If you are writing a program that needs to remove items from a collection, you should use a different type of data structure such as a vector or set.
-
 # Vectors
 
 You can think of vectors as a more efficient and useful version of lists. It's more practical to store multiple values in a vector.
@@ -1285,6 +1288,21 @@ user=> [1 2 3]
 <br>
 
 You can create a vector by grouping values with square brackets. Unlike lists, you don't need `'` because vectors will not be evaluated.
+
+## Conj
+
+```clojure
+user=> (conj [1 2 3] 4)
+[1 2 3 4]
+```
+
+<br>
+
+To add a value, use `conj` (conj[oin]). Note that the new value is added to the end while it is added to the beginning in lists.
+
+## How can I remove elements?
+
+The same story as [lists](#how-can-i-remove-elements?).
 
 ## Nth
 
@@ -1308,17 +1326,6 @@ user=> (last [1 2 3])
 <br>
 
 Vectors have convenient functions to access elements. To get the first and second elements, use `first` and `second`.
-
-## Conj
-
-```clojure
-user=> (conj [1 2 3] 4)
-[1 2 3 4]
-```
-
-<br>
-
-To add a value, use `conj` (conj[oin]). Note that the new value is added to the end while it is added to the beginning in lists.
 
 ## .indexOf
 
@@ -1344,7 +1351,9 @@ Returns `-1` if the value doesn't exist.
 
 # Sets
 
-Sets are unordered collections of values, meaning that the order of values is not guaranteed.
+Sets are collections of unique values. In other words, you cannot have duplicated values in a set.
+
+Another important trait of sets is that the order of values is not guaranteed.
 
 ## Literal
 
@@ -1355,18 +1364,17 @@ user=> #{1 2 3}
 
 <br>
 
-You can create a set by grouping values with `#{}`. I get the order of 1 -> 3 -> 2 on my computer but you may get different order since the order is not guaranteed
-
-## Sort
+You can create a set by grouping values with `#{}`. Notice the order of the values is not maintained.
 
 ```clojure
-user=> (sort (conj #{1 2 3} 4))
-(1 2 3 4)
+user=> #{1 2 3 3}
+IllegalArgumentException Duplicate key: 3  clojure.lang.PersistentHashSet.createWithCheck (PersistentHashSet.java:68)
 ```
 
 <br>
+<br>
 
-To get a sorted order, use `sort`.
+You will get an exception when you try to store duplicated value. In this case, `3` is duplicated value.
 
 ## Conj
 
@@ -1387,7 +1395,7 @@ user=> (conj (conj #{1 2 3} 4) 4)
 <br>
 <br>
 
-One important trait of sets is that **they do not contain duplicates of an element.**
+Because sets doesn't allow duplicated values, you will see only one `4` in the final set.
 
 ## Disj
 
@@ -1410,16 +1418,16 @@ user=> (disj #{1 2 3} 4)
 
 If trying to `disj` a value that doesn't exist in the set, it returns the original set.
 
-## Select
+## Sort
 
 ```clojure
-user=> (clojure.set/select odd? #{1 2 3} )
-#{1 3}
+user=> (sort (conj #{1 2 3} 4))
+(1 2 3 4)
 ```
 
 <br>
 
-To select certain values from a set, use `select`. `odd?` returns boolean for each element. This example returns a new set which only contains odd numbers.
+Sets are unordered collections of values, meaning that the order of values is not guaranteed. To get a sorted order, use `sort`.
 
 ## Contains?
 
@@ -1563,10 +1571,15 @@ To get all values from a map, use `vals`.
 
 # Sequences
 
-Sequences are logical lists that are not tied to a particular implementation. What does it mean? It means that you can apply the same functions to any types of collections without worrying about what types of collections that you are dealing with.
+Sequences are data types that store multiple values. You may wonder: *What are differences from lists or vectors? Why Clojure has so many different collection data types?!*
 
-`Sequences` **are the most important data abstraction in Clojure.**
+Yes, you can use lists and vectors to store multiple values. In fact, lists and vectors are sequences, and other collection data types such as maps or sets are also sequences.
 
+Sequences are data types that abstract all more concrete data types with unified functions. These functions are called the **Seq library** in Clojure.
+
+One virtue of the sequence is that you can call the same function to collections without worrying about what types of collections that you are dealing with.
+
+Let's take a look at examples of using `map` to different types of collections.
 
 ```clojure
 user=> (map inc [ 1 2 3 ])
@@ -1580,11 +1593,8 @@ user=> (map inc #{ 1 2 3 })
 
 
 
-user=> (map println {:a 1 :b 2 :c 3} )
-[:c 3]
-[:b 2]
-[:a 1]
-(nil nil nil)
+user=> (map key {:a 1 :b 2 :c 3})
+(:a :b :c)
 ```
 
 <br>
@@ -1601,25 +1611,186 @@ Applying map for the set.
 
 <br>
 
-Applying `map` for the map. We are using `println` for the function that we apply since you cannot `inc` a map, but this doesn't hurt the idea that you can use `map` for any collections.
+Applying `map` for the map. We are using `key` function in this case because `inc` doesn't work with the map.
+
+When you can apply functions of the seq library to a data type, we say the data type is **seqable**. The examples above work because lists, vectors, sets, and maps are all seqable collections.
+
+<br>
+<br>
+
+We will see more functions in the seq library in the following sections to get familiar with sequences.
+
+## Seq
+
+To construct a sequence, use `seq`.
+
+`seq` takes one seqable collection and converts to a sequence.
+
+The collection data types such as lists, vectors, sets, and maps are all seqable, therefore you can pass any of them to `seq`.
 
 ```clojure
-user=> (type (map inc [ 1 2 3 ]))
-clojure.lang.LazySeq
+user=> (seq '(1 2 3))
+(1 2 3)
+```
 
-user=> (type (map inc `( 1 2 3 )))
-clojure.lang.LazySeq
+<br>
 
-user=> (type (map inc #{ 1 2 3 }))
-clojure.lang.LazySeq
+Converting a list to a sequence.
+
+```clojure
+user=> (seq [1 2 3])
+(1 2 3)
 ```
 
 <br>
 <br>
+
+Converting a vector to a sequence.
+
+```clojure
+user=> (seq #{1 2 3})
+(1 3 2)
+```
+
 <br>
 <br>
 
-As you can see, the type of all returned values is `LazySeq`.
+Converting a set to a sequence.
+
+```cloure
+user=> (seq {:a 1 :b 2 :c 3})
+([:a 1] [:b 2] [:c 3])
+```
+
+<br>
+<br>
+
+Converting a map to a sequence.
+
+<br>
+
+**Seqable data types and `seq` are what make sequences elegant in Clojure.** As long as your data types are seqable, `seq` will convert the data to a sequence.
+This is why you can apply the same functions in the seq library to different collection types transparently. These seq library functions internally convert passed collection to a sequence and do the right things for you.
+
+<br>
+
+You may wonder that returned values look like lists in REPL. However, this is just a matter of displaying and they are actually sequences.
+
+```clojure
+user=> (type (seq [1 2 3]))
+clojure.lang.PersistentVector$ChunkedSeq
+```
+
+<br>
+
+It's clear that it's a sequence if you use `type`.
+
+## First
+
+To get the first element from a sequence, use `first`.
+
+You probably have used `first` with different collection data types before without knowing `first` is actually a sequence function.
+
+```clojure
+user=> (first [1 2 3])
+1
+```
+
+<br>
+
+Getting the first element in the vector.
+
+```clojure
+user=> (first "string")
+\s
+```
+
+<br>
+<br>
+
+Getting the first element in the vector.
+
+<br>
+<br>
+
+You can call `first` with any collection data types (string is a collection of characters) and get expected behavior because `first` is a sequence function and all of these data types are seqable.
+
+## Rest
+
+```clojure
+user=> (rest [1 2 3])
+(2 3)
+```
+
+To get all elements except the first one from a sequence, use `rest`.
+
+<br>
+<br>
+
+Here we can see another important trait of sequences: sequence function always returns a sequence no matter of what types of collection it takes.
+
+```clojure
+user=> (type [1 2 3])
+clojure.lang.PersistentVector
+
+user=> (type (rest [1 2 3]))
+clojure.lang.PersistentVector$ChunkedSeq
+```
+
+<br>
+
+`type` tells you the type of data. As you can see, the vector becomes sequence (*CheckedSeq is a type of sequence*) once it goes through `rest` function.
+
+## Cons
+
+```clojure
+user=> (cons 0 '(1 2))
+(0 1 2)
+```
+
+<br>
+
+To add an element to the head of sequence, use `cons`.
+
+```clojure
+user=> (def old-seq '(1 2))
+#'user/old-seq
+
+user=> (def new-seq (cons 0 old-seq))
+#'user/new-seq
+
+user=> old-seq
+(1 2)
+
+user=> new-seq
+(0 1 2)
+```
+
+<br>
+<br>
+
+The operation is equivalent to construct a new sequence by adding an element to the existing sequence, therefore `cons`(cons[truct]).
+
+## Concat
+
+```clojure
+user=> (concat '(1 2 3) '(4 5 6))
+(1 2 3 4 5 6)
+```
+
+<br>
+
+To combine sequences, use `concat`.
+
+```clojure
+user=> (concat '(1 2) '(4 5) '(7 8) '(9 10))
+(1 2 4 5 7 8 9 10)
+```
+
+<br>
+<br>
+
+You can also pass more than two sequences to `concat`.
 
 ## Map
 
@@ -1630,10 +1801,10 @@ user=> (map inc [ 1 2 3 ])
 
 <br>
 
-To apply a function to each element of collection, use `map`.
+To apply a function to each element of a sequence, use `map`.
 
 ```clojure
-user=> (map (fn [x] (+ x 1)) '(1 2 3))
+user=> (map (fn [x] (inc (val x))) {:a 1 :b 2 :c 3})
 (2 3 4)
 ```
 
@@ -1651,7 +1822,33 @@ user=> (reduce + [1 2 3 4])
 
 <br>
 
-`reduce` boils down values in a collection into a single value by applying a function.
+`reduce` boils down elements in a sequence into a single value by applying a function.
+
+<br>
+
+The way `reduce` works is that it first takes out the first two elements from the sequence and apply the function to get a result. Then applying the same function to the result with the third element and keeps doing the same until the end of the sequence. Because of this nature, the function must take two arguments.
+
+```clojure
+user=> (reduce inc [1 2 3 4])
+ArityException Wrong number of args (2) passed to: core/inc  clojure.lang.AFn.throwArity (AFn.java:429)
+```
+
+<br>
+
+Otherwise, you will get an exception (`inc` is an one argument function)
+
+```clojure
+user=> (reduce (fn [res val] (+ res val)) [1 2 3 4])
+10
+```
+
+<br>
+<br>
+
+Of course, you can pass an anonymous function to do more complex stuff. Just don't don't forget that the anonymous function must take two arguments.
+
+<br>
+<br>
 
 ```clojure
 user=> (reduce + -10 [1 2 3 4])
@@ -1659,13 +1856,25 @@ user=> (reduce + -10 [1 2 3 4])
 ```
 
 <br>
-<br>
 
-You can pass a default value in the second argument. When default value is given, `reduce` will use it as a starting point.
+If you don't want to start with the first element of the sequence, you can pass a starting point in the second argument.
 
 ## Into
 
-To convert from one type of collection to another, use `into`.
+To insert all elements of a sequence into another sequence, use `into`.
+
+```clojure
+user=> (into [1 2 3] `(4 5 6))
+[1 2 3 4 5 6]
+```
+
+<br>
+
+Inserting all elements of the list into the vector.
+
+<br>
+
+Because of the nature, `into` is frequently used to convert from one collection type to another.
 
 ```clojure
 
@@ -1728,16 +1937,6 @@ user=> (into [] {:a 1 :b 2 :c 3})
 <br>
 
 Converting a map to a nested vector.
-
-```clojure
-user=> (reduce conj #{} [1 2 3])
-#{1 3 2}
-```
-
-<br>
-<br>
-
-`into` is just a thin wrapper around `reduce`. In fact, you can easily rewrite previous examples with `reduce`.
 
 ## Reverse
 
@@ -1875,7 +2074,7 @@ user=> (drop 5 (range 0 10))
 
 <br>
 
-To remove the first `n` elements from a sequence, use `drop`.
+`drop` is probably the most primitive way to remove elements from a sequence. `drop` will remove the first `n` elements.
 
 ## Drop-While
 
@@ -1889,56 +2088,42 @@ user=> (drop-while neg? [-3 -2 -1 0 1 2 3])
 
 To get the first `n` elements from a sequence as long as the condition is satisfied but stop dropping when the condition is not met, use `drop-while`.
 
-## Concat
+## Filter
+
+You can remove elements that match the rule you specify from a sequence with `filter`.
 
 ```clojure
-user=> (concat '(1 2 3) '(4 5 6))
-(1 2 3 4 5 6)
+user=> (filter pos? [-1 2 3])
+(2 3)
 ```
 
 <br>
 
-To combine sequences, use `concat`.
+Here is an example to remove positive numbers from a sequence. In this case, being a positive number is the rule that you specify.
+
+The rule is called **predicate**. Predicates are functions that return boolean values such as `pos?`.
 
 ```clojure
-user=> (concat '(1 2) '(4 5) '(7 8) '(9 10))
-(1 2 4 5 7 8 9 10)
-```
-
-<br>
-<br>
-
-You can also pass more than two sequences to `concat`.
-
-## Cons
-
-```clojure
-user=> (cons 0 '(1 2))
-(0 1 2)
+user=> (filter (fn [v] (= v 2)) [-1 2 3])
+(2)
 ```
 
 <br>
 
-To insert an element to the head of sequence, use `cons`.
+You can construct your own predicate with [anonymous functions](#anonymous-function). In this example, we are removing elements that are `2`.
+
+## Remove
+
+You can remove elements that matches a predicate with `remove`. The difference from `filter` is that returned value is what's removed.
 
 ```clojure
-user=> (def old-seq '(1 2))
-#'user/old-seq
-
-user=> (def new-seq (cons 0 old-seq))
-#'user/new-seq
-
-user=> old-seq
-(1 2)
-
-user=> new-seq
-(0 1 2)
+user=> (remove pos? [-1 -2 3 4])
+(-1 -2)
 ```
 
 <br>
-<br>
 
-Although the term "insert" is used, `cons` doesn't actually insert an element to the existing sequence. Instead, `cons` creates a new sequence that contains the element based on the existing sequence.
+In this example, we remove positive numbers from a sequence. The returned values are negative numbers.
 
 ## Partition-by
 
