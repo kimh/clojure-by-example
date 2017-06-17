@@ -1233,6 +1233,27 @@ ClassCastException java.lang.Long cannot be cast to clojure.lang.IFn  user/eval2
 
 We need `'` to prevent the list from being evaluated.
 
+## Conj
+
+```clojure
+user=> (conj '(1 2 3) 4)
+(4 1 2 3)
+```
+
+<br>
+
+To add a value to the list, use `conj` (conj[oin]). Note that the new value is added to the top.
+
+## Where is remove?
+
+How to remove a value of a specific position from a list? Unfortunately, there is no function that removes elements from a list.
+
+If you are used to Object Oriented programming languages, removing elements from a collection is a everyday thing. Why can't I do this in Clojure?
+
+List is one of collection data types in Clojure and the lack of the support for removing from list doesn't meant you cannot remove elements from a collection. You can archive the equivalent thing with Clojure's sequences, but it's not just directly with lists.
+
+Jump to [Sequences](#sequences.) to learn more!
+
 ## Nth
 
 ```clojure
@@ -1255,22 +1276,6 @@ user=> (count '(1 2 3) )
 
 To count how many values are in a list, use `count`.
 
-## Conj
-
-```clojure
-user=> (conj '(1 2 3) 4)
-(4 1 2 3)
-```
-
-<br>
-
-To add a value to the list, use `conj` (conj[oin]). Note that the new value is added to the top.
-
-## Remove element
-
-How to remove a value from a list? You can't really remove a value from a list in Clojure. That's not what lists are supposed to do.
-If you are writing a program that needs to remove items from a collection, you should use a different type of data structure such as a vector or set.
-
 # Vectors
 
 You can think of vectors as a more efficient and useful version of lists. It's more practical to store multiple values in a vector.
@@ -1285,6 +1290,21 @@ user=> [1 2 3]
 <br>
 
 You can create a vector by grouping values with square brackets. Unlike lists, you don't need `'` because vectors will not be evaluated.
+
+## Conj
+
+```clojure
+user=> (conj [1 2 3] 4)
+[1 2 3 4]
+```
+
+<br>
+
+To add a value, use `conj` (conj[oin]). Note that the new value is added to the end while it is added to the beginning in lists.
+
+## Where is remove?
+
+There is no function that removes elements from a vector. The same story as [where is remove?](#where-is-remove?) in lists.
 
 ## Nth
 
@@ -1308,17 +1328,6 @@ user=> (last [1 2 3])
 <br>
 
 Vectors have convenient functions to access elements. To get the first and second elements, use `first` and `second`.
-
-## Conj
-
-```clojure
-user=> (conj [1 2 3] 4)
-[1 2 3 4]
-```
-
-<br>
-
-To add a value, use `conj` (conj[oin]). Note that the new value is added to the end while it is added to the beginning in lists.
 
 ## .indexOf
 
@@ -1344,7 +1353,9 @@ Returns `-1` if the value doesn't exist.
 
 # Sets
 
-Sets are unordered collections of values, meaning that the order of values is not guaranteed.
+Sets are collections of unique values. In other words, you cannot have duplicated values in a set.
+
+Another important trait of sets is that the order of values is not guaranteed.
 
 ## Literal
 
@@ -1355,18 +1366,17 @@ user=> #{1 2 3}
 
 <br>
 
-You can create a set by grouping values with `#{}`. I get the order of 1 -> 3 -> 2 on my computer but you may get different order since the order is not guaranteed
-
-## Sort
+You can create a set by grouping values with `#{}`. Notice the order of the values is not maintained.
 
 ```clojure
-user=> (sort (conj #{1 2 3} 4))
-(1 2 3 4)
+user=> #{1 2 3 3}
+IllegalArgumentException Duplicate key: 3  clojure.lang.PersistentHashSet.createWithCheck (PersistentHashSet.java:68)
 ```
 
 <br>
+<br>
 
-To get a sorted order, use `sort`.
+You will get an exception when you try to store duplicated value. In this case, `3` is duplicated value.
 
 ## Conj
 
@@ -1387,7 +1397,7 @@ user=> (conj (conj #{1 2 3} 4) 4)
 <br>
 <br>
 
-One important trait of sets is that **they do not contain duplicates of an element.**
+Because sets doesn't allow duplicated values, you will see only one `4` in the final set.
 
 ## Disj
 
@@ -1410,16 +1420,16 @@ user=> (disj #{1 2 3} 4)
 
 If trying to `disj` a value that doesn't exist in the set, it returns the original set.
 
-## Select
+## Sort
 
 ```clojure
-user=> (clojure.set/select odd? #{1 2 3} )
-#{1 3}
+user=> (sort (conj #{1 2 3} 4))
+(1 2 3 4)
 ```
 
 <br>
 
-To select certain values from a set, use `select`. `odd?` returns boolean for each element. This example returns a new set which only contains odd numbers.
+Sets are unordered collections of values, meaning that the order of values is not guaranteed. To get a sorted order, use `sort`.
 
 ## Contains?
 
