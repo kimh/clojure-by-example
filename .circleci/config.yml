@@ -54,6 +54,18 @@ jobs:
 
     steps:
       - checkout
+
+      - restore_cache:
+          keys:
+            - projectname-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+
+      - run: bundle install --path vendor/bundle
+
+      - save_cache:
+          key: projectname-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+          - vendor/bundle
+
       - run: |
           git config --global user.email "kimh-machine1@kimh.33mail.com"
           git config --global user.name "kimh-machine1"
