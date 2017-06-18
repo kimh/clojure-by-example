@@ -1244,9 +1244,11 @@ user=> (conj '(1 2 3) 4)
 
 To add a value to the list, use `conj` (conj[oin]). Note that the new value is added to the top.
 
-## Where is remove?
+## Where is remove/delete?
 
-How to remove a value of a specific position from a list? Unfortunately, there is no function that removes elements from a list.
+You may wonder: *How can I remove a value at a specific position from a list? How can I remove all elements that match in a list?*
+
+Unfortunately, there is no function that do these in lists.
 
 If you are used to Object Oriented programming languages, removing elements from a collection is a everyday thing. Why can't I do this in Clojure?
 
@@ -1573,10 +1575,15 @@ To get all values from a map, use `vals`.
 
 # Sequences
 
-Sequences are logical lists that are not tied to a particular implementation. What does it mean? It means that you can apply the same functions to any types of collections without worrying about what types of collections that you are dealing with.
+Sequences are data types that store multiple values. You may wonder: *What are differences from lists or vectors? Why Clojure has so many different collection data types?!*
 
-`Sequences` **are the most important data abstraction in Clojure.**
+Yes, you can use lists and vectors to store multiple values. In fact, lists and vectors are sequences, and other collection data types such as maps or sets are also sequences.
 
+Sequences are data types that abstract all more concrete data types with unified functions. These functions are called the **Sequence Library** in Clojure.
+
+One virtue of the sequence is that you can call the same function to collections without worrying about what types of collections that you are dealing with.
+
+Let's take a look at examples of using `map` to different types of collections.
 
 ```clojure
 user=> (map inc [ 1 2 3 ])
@@ -1590,11 +1597,8 @@ user=> (map inc #{ 1 2 3 })
 
 
 
-user=> (map println {:a 1 :b 2 :c 3} )
-[:c 3]
-[:b 2]
-[:a 1]
-(nil nil nil)
+user=> (map key {:a 1 :b 2 :c 3})
+(:a :b :c)
 ```
 
 <br>
@@ -1611,17 +1615,77 @@ Applying map for the set.
 
 <br>
 
-Applying `map` for the map. We are using `println` for the function that we apply since you cannot `inc` a map, but this doesn't hurt the idea that you can use `map` for any collections.
+Applying `map` for the map. We are using `key` function in this case because `inc` doesn't work with the map.
+
+When you can apply functions of the sequence library to a data type, we say the data type is **seqable**. The examples above work because lists, vectors, sets, and maps are all seqable collections.
+
+<br>
+<br>
+
+We will see more functions in the sequence library in the following sections to get familiar with sequences.
+
+## First
+
+To get the first element from a sequence, use `first`.
+
+You probably have used `first` with different collection data types before without knowing `first` is actually a sequence function.
 
 ```clojure
-user=> (type (map inc [ 1 2 3 ]))
-clojure.lang.LazySeq
+user=> (first [1 2 3])
+1
+```
 
-user=> (type (map inc `( 1 2 3 )))
-clojure.lang.LazySeq
+<br>
 
-user=> (type (map inc #{ 1 2 3 }))
-clojure.lang.LazySeq
+Getting the first element in the vector.
+
+```clojure
+user=> (first "string")
+\s
+```
+
+<br>
+<br>
+
+Getting the first element in the vector.
+
+<br>
+<br>
+
+You can call `first` with any collection data types (string is a collection of characters) and get expected behavior because `first` is a sequence function and all of these data types are seqable.
+
+## Rest
+
+```clojure
+user=> (rest [1 2 3])
+(2 3)
+```
+
+To get all elements except the first one from a sequence, use `rest`.
+
+<br>
+<br>
+
+Here we can see another important trait of sequences: sequence function always returns a sequence no matter of what types of collection it takes.
+
+```clojure
+user=> (type [1 2 3])
+clojure.lang.PersistentVector
+
+user=> (type (rest [1 2 3]))
+clojure.lang.PersistentVector$ChunkedSeq
+```
+
+<br>
+
+`type` tells you the type of data. As you can see, the vector becomes sequence (*CheckedSeq is a type of sequence*) once it goes through `rest` function.
+
+```clojure
+user=> '(2 3)
+(2 3)
+
+user=> (rest [1 2 3])
+(2 3)
 ```
 
 <br>
@@ -1629,7 +1693,23 @@ clojure.lang.LazySeq
 <br>
 <br>
 
-As you can see, the type of all returned values is `LazySeq`.
+What's confusing is that sequences and lists look the same when printed out in REPL.
+
+```clojure
+user=> (type '(2 3))
+clojure.lang.PersistentList
+
+user=> (type (rest [1 2 3]))
+clojure.lang.PersistentVector$ChunkedSeq
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+But it's obvious that they are not the same data type if you use `type`.
 
 ## Map
 
@@ -1640,10 +1720,10 @@ user=> (map inc [ 1 2 3 ])
 
 <br>
 
-To apply a function to each element of collection, use `map`.
+To apply a function to each element of a sequence, use `map`.
 
 ```clojure
-user=> (map (fn [x] (+ x 1)) '(1 2 3))
+user=> (map (fn [x] (inc (val x))) {:a 1 :b 2 :c 3})
 (2 3 4)
 ```
 
@@ -1661,7 +1741,33 @@ user=> (reduce + [1 2 3 4])
 
 <br>
 
-`reduce` boils down values in a collection into a single value by applying a function.
+`reduce` boils down elements in a sequence into a single value by applying a function.
+
+<br>
+
+The way `reduce` works is that it first takes out the first two elements from the sequence and apply the function to get a result. Then applying the same function to the result with the third element and keeps doing the same until the end of the sequence. Because of this nature, the function must take two arguments.
+
+```clojure
+user=> (reduce inc [1 2 3 4])
+ArityException Wrong number of args (2) passed to: core/inc  clojure.lang.AFn.throwArity (AFn.java:429)
+```
+
+<br>
+
+Otherwise, you will get an exception.
+
+```clojure
+user=> (reduce (fn [res val] (+ res val)) [1 2 3 4])
+10
+```
+
+<br>
+<br>
+
+Of course, you can pass an anonymous function to do more complex stuff. Just don't don't forget that the anonymous function must take two arguments.
+
+<br>
+<br>
 
 ```clojure
 user=> (reduce + -10 [1 2 3 4])
@@ -1669,13 +1775,25 @@ user=> (reduce + -10 [1 2 3 4])
 ```
 
 <br>
-<br>
 
-You can pass a default value in the second argument. When default value is given, `reduce` will use it as a starting point.
+If you don't want to start with the first element of the sequence, you can pass a starting point in the second argument.
 
 ## Into
 
-To convert from one type of collection to another, use `into`.
+To insert all elements of a sequence into another sequence, use `into`.
+
+```clojure
+user=> (into [1 2 3] `(4 5 6))
+[1 2 3 4 5 6]
+```
+
+<br>
+
+Inserting all elements of the list into the vector.
+
+<br>
+
+Because of the nature, `into` is frequently used to convert from one collection type to another.
 
 ```clojure
 
@@ -1738,16 +1856,6 @@ user=> (into [] {:a 1 :b 2 :c 3})
 <br>
 
 Converting a map to a nested vector.
-
-```clojure
-user=> (reduce conj #{} [1 2 3])
-#{1 3 2}
-```
-
-<br>
-<br>
-
-`into` is just a thin wrapper around `reduce`. In fact, you can easily rewrite previous examples with `reduce`.
 
 ## Reverse
 
