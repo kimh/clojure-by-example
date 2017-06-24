@@ -1111,6 +1111,23 @@ You use <code class="prettyprint">:else</code> keyword for the default case.</p>
 
 <p>We need <code class="prettyprint">&#39;</code> to prevent the list from being evaluated.</p>
 
+<h2 id="conj">Conj</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span><span class="p">(</span><span class="nf">4</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To add a value to the list, use <code class="prettyprint">conj</code> (conj[oin]). Note that the new value is added to the top.</p>
+
+<h2 id="how-can-i-remove-elements?">How can I remove elements?</h2>
+
+<p>You may wonder: <em>How can I remove an element at a specific position from a list? How can I remove all elements that match in a list?</em></p>
+
+<p>Unfortunately, there is no built-in function that do these removal operations in lists. You can still use functions from the seq library such as remove, filter, or drop.</p>
+
+<p>If you are not familiar with the seq library, jump to <a href="#sequences.">Sequences</a> to learn more!</p>
+
 <h2 id="nth">Nth</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">nth</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
 </span><span class="mi">2</span><span class="w">
@@ -1129,20 +1146,6 @@ You use <code class="prettyprint">:else</code> keyword for the default case.</p>
 
 <p>To count how many values are in a list, use <code class="prettyprint">count</code>.</p>
 
-<h2 id="conj">Conj</h2>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
-</span><span class="p">(</span><span class="nf">4</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
-</span></code></pre>
-
-<p><br></p>
-
-<p>To add a value to the list, use <code class="prettyprint">conj</code> (conj[oin]). Note that the new value is added to the top.</p>
-
-<h2 id="remove-element">Remove element</h2>
-
-<p>How to remove a value from a list? You can&rsquo;t really remove a value from a list in Clojure. That&rsquo;s not what lists are supposed to do.
-If you are writing a program that needs to remove items from a collection, you should use a different type of data structure such as a vector or set.</p>
-
 <h1 id="vectors">Vectors</h1>
 
 <p>You can think of vectors as a more efficient and useful version of lists. It&rsquo;s more practical to store multiple values in a vector.</p>
@@ -1155,6 +1158,19 @@ If you are writing a program that needs to remove items from a collection, you s
 <p><br></p>
 
 <p>You can create a vector by grouping values with square brackets. Unlike lists, you don&rsquo;t need <code class="prettyprint">&#39;</code> because vectors will not be evaluated.</p>
+
+<h2 id="conj">Conj</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To add a value, use <code class="prettyprint">conj</code> (conj[oin]). Note that the new value is added to the end while it is added to the beginning in lists.</p>
+
+<h2 id="how-can-i-remove-elements?">How can I remove elements?</h2>
+
+<p>The same story as <a href="#how-can-i-remove-elements?">lists</a>.</p>
 
 <h2 id="nth">Nth</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">nth</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
@@ -1176,15 +1192,6 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <p>Vectors have convenient functions to access elements. To get the first and second elements, use <code class="prettyprint">first</code> and <code class="prettyprint">second</code>.</p>
 
-<h2 id="conj">Conj</h2>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
-</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">]</span><span class="w">
-</span></code></pre>
-
-<p><br></p>
-
-<p>To add a value, use <code class="prettyprint">conj</code> (conj[oin]). Note that the new value is added to the end while it is added to the beginning in lists.</p>
-
 <h2 id=".indexof">.indexOf</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nf">.indexOf</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
 </span><span class="mi">1</span><span class="w">
@@ -1204,7 +1211,9 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <h1 id="sets">Sets</h1>
 
-<p>Sets are unordered collections of values, meaning that the order of values is not guaranteed.</p>
+<p>Sets are collections of unique values. In other words, you cannot have duplicated values in a set.</p>
+
+<p>Another important trait of sets is that the order of values is not guaranteed.</p>
 
 <h2 id="literal">Literal</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w">
@@ -1213,16 +1222,15 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <p><br></p>
 
-<p>You can create a set by grouping values with <code class="prettyprint">#{}</code>. I get the order of 1 -&gt; 3 -&gt; 2 on my computer but you may get different order since the order is not guaranteed</p>
-
-<h2 id="sort">Sort</h2>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">sort</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">4</span><span class="p">))</span><span class="w">
-</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
+<p>You can create a set by grouping values with <code class="prettyprint">#{}</code>. Notice the order of the values is not maintained.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w">
+</span><span class="n">IllegalArgumentException</span><span class="w"> </span><span class="n">Duplicate</span><span class="w"> </span><span class="nb">key</span><span class="err">:</span><span class="w"> </span><span class="mi">3</span><span class="w">  </span><span class="n">clojure.lang.PersistentHashSet.createWithCheck</span><span class="w"> </span><span class="p">(</span><span class="nf">PersistentHashSet.java</span><span class="no">:68</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
-<p><br></p>
+<p><br>
+<br></p>
 
-<p>To get a sorted order, use <code class="prettyprint">sort</code>.</p>
+<p>You will get an exception when you try to store duplicated value. In this case, <code class="prettyprint">3</code> is duplicated value.</p>
 
 <h2 id="conj">Conj</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
@@ -1239,7 +1247,7 @@ To get a value from the vector, you need to specify the index of the value.</p>
 <p><br>
 <br></p>
 
-<p>One important trait of sets is that <strong>they do not contain duplicates of an element.</strong></p>
+<p>Because sets doesn&rsquo;t allow duplicated values, you will see only one <code class="prettyprint">4</code> in the final set.</p>
 
 <h2 id="disj">Disj</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">disj</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
@@ -1258,14 +1266,14 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <p>If trying to <code class="prettyprint">disj</code> a value that doesn&rsquo;t exist in the set, it returns the original set.</p>
 
-<h2 id="select">Select</h2>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">clojure.set/select</span><span class="w"> </span><span class="n">odd?</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w">
+<h2 id="sort">Sort</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">sort</span><span class="w"> </span><span class="p">(</span><span class="nb">conj</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">4</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
 <p><br></p>
 
-<p>To select certain values from a set, use <code class="prettyprint">select</code>. <code class="prettyprint">odd?</code> returns boolean for each element. This example returns a new set which only contains odd numbers.</p>
+<p>Sets are unordered collections of values, meaning that the order of values is not guaranteed. To get a sorted order, use <code class="prettyprint">sort</code>.</p>
 
 <h2 id="contains?">Contains?</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">contains?</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
@@ -1384,9 +1392,15 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <h1 id="sequences">Sequences</h1>
 
-<p>Sequences are logical lists that are not tied to a particular implementation. What does it mean? It means that you can apply the same functions to any types of collections without worrying about what types of collections that you are dealing with.</p>
+<p>Sequences are data types that store multiple values. You may wonder: <em>What are differences from lists or vectors? Why Clojure has so many different collection data types?!</em></p>
 
-<p><code class="prettyprint">Sequences</code> <strong>are the most important data abstraction in Clojure.</strong></p>
+<p>Yes, you can use lists and vectors to store multiple values. In fact, lists and vectors are sequences, and other collection data types such as maps or sets are also sequences.</p>
+
+<p>Sequences are data types that abstract all more concrete data types with unified functions. These functions are called the <strong>Seq library</strong> in Clojure.</p>
+
+<p>One virtue of the sequence is that you can call the same function to collections without worrying about what types of collections that you are dealing with.</p>
+
+<p>Let&rsquo;s take a look at examples of using <code class="prettyprint">map</code> to different types of collections.</p>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">])</span><span class="w">
 </span><span class="p">(</span><span class="nf">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
 
@@ -1398,11 +1412,8 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 
 
-</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">println</span><span class="w"> </span><span class="p">{</span><span class="no">:a</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="no">:b</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="no">:c</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="p">)</span><span class="w">
-</span><span class="p">[</span><span class="no">:c</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w">
-</span><span class="p">[</span><span class="no">:b</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w">
-</span><span class="p">[</span><span class="no">:a</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w">
-</span><span class="p">(</span><span class="nf">nil</span><span class="w"> </span><span class="n">nil</span><span class="w"> </span><span class="n">nil</span><span class="p">)</span><span class="w">
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">key</span><span class="w"> </span><span class="p">{</span><span class="no">:a</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="no">:b</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="no">:c</span><span class="w"> </span><span class="mi">3</span><span class="p">})</span><span class="w">
+</span><span class="p">(</span><span class="no">:a</span><span class="w"> </span><span class="no">:b</span><span class="w"> </span><span class="no">:c</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
 <p><br></p>
@@ -1419,23 +1430,160 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <p><br></p>
 
-<p>Applying <code class="prettyprint">map</code> for the map. We are using <code class="prettyprint">println</code> for the function that we apply since you cannot <code class="prettyprint">inc</code> a map, but this doesn&rsquo;t hurt the idea that you can use <code class="prettyprint">map</code> for any collections.</p>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">type</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">]))</span><span class="w">
-</span><span class="n">clojure.lang.LazySeq</span><span class="w">
+<p>Applying <code class="prettyprint">map</code> for the map. We are using <code class="prettyprint">key</code> function in this case because <code class="prettyprint">inc</code> doesn&rsquo;t work with the map.</p>
 
-</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">type</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="w"> </span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">)))</span><span class="w">
-</span><span class="n">clojure.lang.LazySeq</span><span class="w">
+<p>When you can apply functions of the seq library to a data type, we say the data type is <strong>seqable</strong>. The examples above work because lists, vectors, sets, and maps are all seqable collections.</p>
 
-</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">type</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">}))</span><span class="w">
-</span><span class="n">clojure.lang.LazySeq</span><span class="w">
+<p><br>
+<br></p>
+
+<p>We will see more functions in the seq library in the following sections to get familiar with sequences.</p>
+
+<h2 id="seq">Seq</h2>
+
+<p>To construct a sequence, use <code class="prettyprint">seq</code>.</p>
+
+<p><code class="prettyprint">seq</code> takes one seqable collection and converts to a sequence.</p>
+
+<p>The collection data types such as lists, vectors, sets, and maps are all seqable, therefore you can pass any of them to <code class="prettyprint">seq</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">seq</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Converting a list to a sequence.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">seq</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
 <p><br>
-<br>
-<br>
 <br></p>
 
-<p>As you can see, the type of all returned values is <code class="prettyprint">LazySeq</code>.</p>
+<p>Converting a vector to a sequence.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">seq</span><span class="w"> </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">})</span><span class="w">
+</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>Converting a set to a sequence.</p>
+<pre class="highlight plaintext"><code>user=&gt; (seq {:a 1 :b 2 :c 3})
+([:a 1] [:b 2] [:c 3])
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p>Converting a map to a sequence.</p>
+
+<p><br></p>
+
+<p><strong>Seqable data types and <code class="prettyprint">seq</code> are what make sequences elegant in Clojure.</strong> As long as your data types are seqable, <code class="prettyprint">seq</code> will convert the data to a sequence.
+This is why you can apply the same functions in the seq library to different collection types transparently. These seq library functions internally convert passed collection to a sequence and do the right things for you.</p>
+
+<p><br></p>
+
+<p>You may wonder that returned values look like lists in REPL. However, this is just a matter of displaying and they are actually sequences.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">type</span><span class="w"> </span><span class="p">(</span><span class="nb">seq</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]))</span><span class="w">
+</span><span class="n">clojure.lang.PersistentVector$ChunkedSeq</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>It&rsquo;s clear that it&rsquo;s a sequence if you use <code class="prettyprint">type</code>.</p>
+
+<h2 id="first">First</h2>
+
+<p>To get the first element from a sequence, use <code class="prettyprint">first</code>.</p>
+
+<p>You probably have used <code class="prettyprint">first</code> with different collection data types before without knowing <code class="prettyprint">first</code> is actually a sequence function.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">first</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="mi">1</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Getting the first element in the vector.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">first</span><span class="w"> </span><span class="s">"string"</span><span class="p">)</span><span class="w">
+</span><span class="sc">\s</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>Getting the first element in the vector.</p>
+
+<p><br>
+<br></p>
+
+<p>You can call <code class="prettyprint">first</code> with any collection data types (string is a collection of characters) and get expected behavior because <code class="prettyprint">first</code> is a sequence function and all of these data types are seqable.</p>
+
+<h2 id="rest">Rest</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">rest</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="p">(</span><span class="nf">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p>To get all elements except the first one from a sequence, use <code class="prettyprint">rest</code>.</p>
+
+<p><br>
+<br></p>
+
+<p>Here we can see another important trait of sequences: sequence function always returns a sequence no matter of what types of collection it takes.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">type</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="n">clojure.lang.PersistentVector</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">type</span><span class="w"> </span><span class="p">(</span><span class="nb">rest</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]))</span><span class="w">
+</span><span class="n">clojure.lang.PersistentVector$ChunkedSeq</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p><code class="prettyprint">type</code> tells you the type of data. As you can see, the vector becomes sequence (<em>CheckedSeq is a type of sequence</em>) once it goes through <code class="prettyprint">rest</code> function.</p>
+
+<h2 id="cons">Cons</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">cons</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To add an element to the head of sequence, use <code class="prettyprint">cons</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">old-seq</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/old-seq</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">new-seq</span><span class="w"> </span><span class="p">(</span><span class="nb">cons</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">old-seq</span><span class="p">))</span><span class="w">
+</span><span class="o">#</span><span class="ss">'user/new-seq</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="n">old-seq</span><span class="w">
+</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="n">new-seq</span><span class="w">
+</span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>The operation is equivalent to construct a new sequence by adding an element to the existing sequence, therefore <code class="prettyprint">cons</code>(cons[truct]).</p>
+
+<h2 id="concat">Concat</h2>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">concat</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>To combine sequences, use <code class="prettyprint">concat</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">concat</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">4</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">7</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">9</span><span class="w"> </span><span class="mi">10</span><span class="p">))</span><span class="w">
+</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br>
+<br></p>
+
+<p>You can also pass more than two sequences to <code class="prettyprint">concat</code>.</p>
 
 <h2 id="map">Map</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">])</span><span class="w">
@@ -1444,8 +1592,8 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <p><br></p>
 
-<p>To apply a function to each element of collection, use <code class="prettyprint">map</code>.</p>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w">
+<p>To apply a function to each element of a sequence, use <code class="prettyprint">map</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">inc</span><span class="w"> </span><span class="p">(</span><span class="nb">val</span><span class="w"> </span><span class="n">x</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="no">:a</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="no">:b</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="no">:c</span><span class="w"> </span><span class="mi">3</span><span class="p">})</span><span class="w">
 </span><span class="p">(</span><span class="nf">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
@@ -1461,19 +1609,51 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <p><br></p>
 
-<p><code class="prettyprint">reduce</code> boils down values in a collection into a single value by applying a function.</p>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">reduce</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">-10</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w">
-</span><span class="mi">0</span><span class="w">
+<p><code class="prettyprint">reduce</code> boils down elements in a sequence into a single value by applying a function.</p>
+
+<p><br></p>
+
+<p>The way <code class="prettyprint">reduce</code> works is that it first takes out the first two elements from the sequence and apply the function to get a result. Then applying the same function to the result with the third element and keeps doing the same until the end of the sequence. Because of this nature, the function must take two arguments.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">reduce</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w">
+</span><span class="n">ArityException</span><span class="w"> </span><span class="n">Wrong</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">args</span><span class="w"> </span><span class="p">(</span><span class="nf">2</span><span class="p">)</span><span class="w"> </span><span class="n">passed</span><span class="w"> </span><span class="n">to</span><span class="err">:</span><span class="w"> </span><span class="n">core/inc</span><span class="w">  </span><span class="n">clojure.lang.AFn.throwArity</span><span class="w"> </span><span class="p">(</span><span class="nf">AFn.java</span><span class="no">:429</span><span class="p">)</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Otherwise, you will get an exception (<code class="prettyprint">inc</code> is an one argument function)</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">reduce</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">res</span><span class="w"> </span><span class="nb">val</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="nb">val</span><span class="p">))</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w">
+</span><span class="mi">10</span><span class="w">
 </span></code></pre>
 
 <p><br>
 <br></p>
 
-<p>You can pass a default value in the second argument. When default value is given, <code class="prettyprint">reduce</code> will use it as a starting point.</p>
+<p>Of course, you can pass an anonymous function to do more complex stuff. Just don&rsquo;t don&rsquo;t forget that the anonymous function must take two arguments.</p>
+
+<p><br>
+<br></p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">reduce</span><span class="w"> </span><span class="nb">+</span><span class="w"> </span><span class="mi">-10</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w">
+</span><span class="mi">0</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>If you don&rsquo;t want to start with the first element of the sequence, you can pass a starting point in the second argument.</p>
 
 <h2 id="into">Into</h2>
 
-<p>To convert from one type of collection to another, use <code class="prettyprint">into</code>.</p>
+<p>To insert all elements of a sequence into another sequence, use <code class="prettyprint">into</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">into</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nf">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="p">))</span><span class="w">
+</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="p">]</span><span class="w">
+</span></code></pre>
+
+<p><br></p>
+
+<p>Inserting all elements of the list into the vector.</p>
+
+<p><br></p>
+
+<p>Because of the nature, <code class="prettyprint">into</code> is frequently used to convert from one collection type to another.</p>
 <pre class="highlight clojure"><code><span class="w">
 </span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">into</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="o">`</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w">
 </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w">
@@ -1523,14 +1703,6 @@ To get a value from the vector, you need to specify the index of the value.</p>
 <br></p>
 
 <p>Converting a map to a nested vector.</p>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">reduce</span><span class="w"> </span><span class="nb">conj</span><span class="w"> </span><span class="o">#</span><span class="p">{}</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
-</span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<p><br>
-<br></p>
-
-<p><code class="prettyprint">into</code> is just a thin wrapper around <code class="prettyprint">reduce</code>. In fact, you can easily rewrite previous examples with <code class="prettyprint">reduce</code>.</p>
 
 <h2 id="reverse">Reverse</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">reverse</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
@@ -1645,7 +1817,7 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <p><br></p>
 
-<p>To remove the first <code class="prettyprint">n</code> elements from a sequence, use <code class="prettyprint">drop</code>.</p>
+<p><code class="prettyprint">drop</code> is probably the most primitive way to remove elements from a sequence. <code class="prettyprint">drop</code> will remove the first <code class="prettyprint">n</code> elements.</p>
 
 <h2 id="drop-while">Drop-While</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">drop-while</span><span class="w"> </span><span class="nb">neg?</span><span class="w"> </span><span class="p">[</span><span class="mi">-3</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
@@ -1656,48 +1828,36 @@ To get a value from the vector, you need to specify the index of the value.</p>
 
 <p>To get the first <code class="prettyprint">n</code> elements from a sequence as long as the condition is satisfied but stop dropping when the condition is not met, use <code class="prettyprint">drop-while</code>.</p>
 
-<h2 id="concat">Concat</h2>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">concat</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="p">))</span><span class="w">
-</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w">
+<h2 id="filter">Filter</h2>
+
+<p>You can remove elements that match the rule you specify from a sequence with <code class="prettyprint">filter</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">filter</span><span class="w"> </span><span class="nb">pos?</span><span class="w"> </span><span class="p">[</span><span class="mi">-1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="p">(</span><span class="nf">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
 <p><br></p>
 
-<p>To combine sequences, use <code class="prettyprint">concat</code>.</p>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">concat</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">4</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">7</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">9</span><span class="w"> </span><span class="mi">10</span><span class="p">))</span><span class="w">
-</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w">
-</span></code></pre>
+<p>Here is an example to remove positive numbers from a sequence. In this case, being a positive number is the rule that you specify.</p>
 
-<p><br>
-<br></p>
-
-<p>You can also pass more than two sequences to <code class="prettyprint">concat</code>.</p>
-
-<h2 id="cons">Cons</h2>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">cons</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w">
-</span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+<p>The rule is called <strong>predicate</strong>. Predicates are functions that return boolean values such as <code class="prettyprint">pos?</code>.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">filter</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="p">[</span><span class="mi">-1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">])</span><span class="w">
+</span><span class="p">(</span><span class="nf">2</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
 <p><br></p>
 
-<p>To insert an element to the head of sequence, use <code class="prettyprint">cons</code>.</p>
-<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">old-seq</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w">
-</span><span class="o">#</span><span class="ss">'user/old-seq</span><span class="w">
+<p>You can construct your own predicate with <a href="#anonymous-function">anonymous functions</a>. In this example, we are removing elements that are <code class="prettyprint">2</code>.</p>
 
-</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">new-seq</span><span class="w"> </span><span class="p">(</span><span class="nb">cons</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">old-seq</span><span class="p">))</span><span class="w">
-</span><span class="o">#</span><span class="ss">'user/new-seq</span><span class="w">
+<h2 id="remove">Remove</h2>
 
-</span><span class="n">user=&gt;</span><span class="w"> </span><span class="n">old-seq</span><span class="w">
-</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
-
-</span><span class="n">user=&gt;</span><span class="w"> </span><span class="n">new-seq</span><span class="w">
-</span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+<p>You can remove elements that matches a predicate with <code class="prettyprint">remove</code>. The difference from <code class="prettyprint">filter</code> is that returned value is what&rsquo;s removed.</p>
+<pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">remove</span><span class="w"> </span><span class="nb">pos?</span><span class="w"> </span><span class="p">[</span><span class="mi">-1</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w">
+</span><span class="p">(</span><span class="nf">-1</span><span class="w"> </span><span class="mi">-2</span><span class="p">)</span><span class="w">
 </span></code></pre>
 
-<p><br>
-<br></p>
+<p><br></p>
 
-<p>Although the term &ldquo;insert&rdquo; is used, <code class="prettyprint">cons</code> doesn&rsquo;t actually insert an element to the existing sequence. Instead, <code class="prettyprint">cons</code> creates a new sequence that contains the element based on the existing sequence.</p>
+<p>In this example, we remove positive numbers from a sequence. The returned values are negative numbers.</p>
 
 <h2 id="partition-by">Partition-by</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">partition-by</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">%</span><span class="p">)</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="p">])</span><span class="w">
