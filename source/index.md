@@ -2063,7 +2063,7 @@ user=> (take-while neg? [-3 -2 -1 0 1 2 3])
 
 To get the first `n` elements from a sequence as long as the condition is satisfied but stop taking when the condition is not met, use `take-while`. `neg?` returns true for negative number.
 
-**Note:** Taking elements that only satisfies the condition is not what `take-while` does. That's the job of `select`.
+**Note:** Taking elements that only satisfies the condition is not what `take-while` does. That's the job of `select` for sets, and `filter` for sequences.
 
 ## Drop
 
