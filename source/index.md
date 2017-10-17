@@ -929,7 +929,7 @@ You can use a predicate with `condp` for condition. In this case `contains?` is 
 <br>
 <br>
 
-`(contains? [1 2 3] 2)` will be evaluated in this case.
+`(contains? [1 2 3] 2)` will be evaluated to true in this case.
 
 <br>
 <br>
