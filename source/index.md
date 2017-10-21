@@ -1036,7 +1036,7 @@ user=> (format "My name is %s %s" "Hirokuni" "Kim")
 
 <br>
 
-Like many other languages, Clojure supports string formatting with `format` function. The concat example above can also be archived by using `format` function.
+Like many other languages, Clojure supports string formatting with `format` function. The concat example above can also be achieved by using `format` function.
 
 <br>
 
@@ -3174,7 +3174,7 @@ user> @x
 <br>
 
 
-Now atom comes to rescue. `x` is atom and we use `swap!` to update the value. Unlike vars, atom is thread safe, so `x` will be updated by one thread at one time. Thus, the final value of `x` is guaranteed to be 10. This is archived thanks to the Clojure's use of [compare-and-swap](http://en.wikipedia.org/wiki/Compare-and-swap) in atom.
+Now atom comes to rescue. `x` is atom and we use `swap!` to update the value. Unlike vars, atom is thread safe, so `x` will be updated by one thread at one time. Thus, the final value of `x` is guaranteed to be 10. This is achieved thanks to the Clojure's use of [compare-and-swap](http://en.wikipedia.org/wiki/Compare-and-swap) in atom.
 
 # Refs
 ## Ref
