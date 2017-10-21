@@ -1250,7 +1250,7 @@ You may wonder: *How can I remove an element at a specific position from a list?
 
 Unfortunately, there is no built-in function that do these removal operations in lists. You can still use functions from the seq library such as remove, filter, or drop.
 
-If you are not familiar with the seq library, jump to [Sequences](#sequences.) to learn more!
+If you are not familiar with the seq library, jump to [Sequences](#sequences) to learn more!
 
 ## Nth
 
