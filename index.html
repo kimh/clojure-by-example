@@ -948,7 +948,7 @@ You use <code class="prettyprint">:else</code> keyword for the default case.</p>
 
 <p><br></p>
 
-<p>Like many other languages, Clojure supports string formatting with <code class="prettyprint">format</code> function. The concat example above can also be archived by using <code class="prettyprint">format</code> function.</p>
+<p>Like many other languages, Clojure supports string formatting with <code class="prettyprint">format</code> function. The concat example above can also be achieved by using <code class="prettyprint">format</code> function.</p>
 
 <p><br></p>
 
@@ -1126,7 +1126,7 @@ You use <code class="prettyprint">:else</code> keyword for the default case.</p>
 
 <p>Unfortunately, there is no built-in function that do these removal operations in lists. You can still use functions from the seq library such as remove, filter, or drop.</p>
 
-<p>If you are not familiar with the seq library, jump to <a href="#sequences.">Sequences</a> to learn more!</p>
+<p>If you are not familiar with the seq library, jump to <a href="#sequences">Sequences</a> to learn more!</p>
 
 <h2 id="nth">Nth</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">nth</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
@@ -2788,7 +2788,7 @@ current value, normally the first time you create the atom.</p>
 <br>
 <br></p>
 
-<p>Now atom comes to rescue. <code class="prettyprint">x</code> is atom and we use <code class="prettyprint">swap!</code> to update the value. Unlike vars, atom is thread safe, so <code class="prettyprint">x</code> will be updated by one thread at one time. Thus, the final value of <code class="prettyprint">x</code> is guaranteed to be 10. This is archived thanks to the Clojure&rsquo;s use of <a href="http://en.wikipedia.org/wiki/Compare-and-swap">compare-and-swap</a> in atom.</p>
+<p>Now atom comes to rescue. <code class="prettyprint">x</code> is atom and we use <code class="prettyprint">swap!</code> to update the value. Unlike vars, atom is thread safe, so <code class="prettyprint">x</code> will be updated by one thread at one time. Thus, the final value of <code class="prettyprint">x</code> is guaranteed to be 10. This is achieved thanks to the Clojure&rsquo;s use of <a href="http://en.wikipedia.org/wiki/Compare-and-swap">compare-and-swap</a> in atom.</p>
 
 <h1 id="refs">Refs</h1>
 
