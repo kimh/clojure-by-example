@@ -1220,12 +1220,12 @@ such as passing it to a function, returned from a function, and binding it to a 
 <br></p>
 
 <p>In Clojure, you can only pass one expression to a branch of <code>if</code>. However, you often need to pass more than one expression in real programs. In this case, use <code>do</code>.</p>
-<h2 id='if-let'>If-Let</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">positive-number-seq</span><span class="w"> </span><span class="p">[</span><span class="n">numbers</span><span class="p">]</span><span class="w">
-         </span><span class="p">(</span><span class="nb">if-let</span><span class="w"> </span><span class="p">[</span><span class="n">pos-nums</span><span class="w"> </span><span class="p">(</span><span class="nb">seq</span><span class="w"> </span><span class="p">(</span><span class="nb">filter</span><span class="w"> </span><span class="nb">pos?</span><span class="w"> </span><span class="n">numbers</span><span class="p">))]</span><span class="w">
-          </span><span class="n">pos-nums</span><span class="w">
-          </span><span class="s">"no positive numbers"</span><span class="p">))</span><span class="w">
+<h2 id='if-let'>If-Let</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">positive-number</span><span class="w"> </span><span class="p">[</span><span class="n">numbers</span><span class="p">]</span><span class="w">
+         </span><span class="p">(</span><span class="nb">if-let</span><span class="w"> </span><span class="p">[</span><span class="n">pos-nums</span><span class="w"> </span><span class="p">(</span><span class="nf">not-empty</span><span class="w"> </span><span class="p">(</span><span class="nb">filter</span><span class="w"> </span><span class="nb">pos?</span><span class="w"> </span><span class="n">numbers</span><span class="p">))]</span><span class="w">
+           </span><span class="n">pos-nums</span><span class="w">
+           </span><span class="s">"no positive numbers"</span><span class="p">))</span><span class="w">
 
-</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">positive-number-seq</span><span class="w"> </span><span class="p">[</span><span class="mi">-1</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">])</span><span class="w">
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">positive-number</span><span class="w"> </span><span class="p">[</span><span class="mi">-1</span><span class="w"> </span><span class="mi">-2</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">])</span><span class="w">
 </span><span class="p">(</span><span class="nf">1</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
 
 </span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">positive-number-seq</span><span class="w"> </span><span class="p">[</span><span class="mi">-1</span><span class="w"> </span><span class="mi">-2</span><span class="p">])</span><span class="w">
@@ -1233,23 +1233,25 @@ such as passing it to a function, returned from a function, and binding it to a 
 </span></code></pre>
 <p><br></p>
 
-<p>After testing condition, you often want to reuse it later. <code>if-let</code> binds the evaluated condition to var when it&#39;s truthy. In this example, when <code>positive-number-seq</code> receives a collection which contains positive numbers, the result of <code>(seq (filter pos? numbers)</code> will be bound to <code>pos-nums</code>.</p>
-
-<p><br></p>
+<p>After testing condition, you often want to use the result of the testing later. <code>if-let</code> binds the evaluated condition to var when it&#39;s truthy. In this example, when <code>positive-number</code> receives a collection which contains positive numbers, the result of <code>(not-empty (filter pos? numbers))</code> will be bound to <code>pos-nums</code>.</p>
 
 <p><code>pos-nums</code> is returned since the collection contains positive numbers <code>1 2</code>.
 <br>
 <br>
+<br>
 The second argument is for <strong>else</strong> branch. It will be evaluated when the first argument is evaluated to be false.</p>
-<pre class="highlight plaintext"><code>user=&gt; (seq [1 2])
-(1 2)
+<pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">boolean</span><span class="w"> </span><span class="p">(</span><span class="nb">filter</span><span class="w"> </span><span class="nb">pos?</span><span class="w"> </span><span class="p">[</span><span class="mi">-1</span><span class="p">]))</span><span class="w">
+</span><span class="n">true</span><span class="w">
 
-user=&gt; (seq [])
-nil
-</code></pre>
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">not-empty</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">])</span><span class="w">
+</span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">not-empty</span><span class="w"> </span><span class="p">[])</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
 <p><br></p>
 
-<p>Note that <code>seq</code> will return <code>nil</code> when empty collection is passed.</p>
+<p>Note that <code>filter</code> retruns an empty sequence when no value matches the condition instead of <code>nil</code> and an empty sequence is not falsey in Clojure. But, in order to reach the falesy branch of <code>if-let</code>, <code>pos-nums</code> has to be <code>nil</code>. For this reason, we are using <code>not-empty</code> which properly returns nil if the sequence is empty.</p>
 <h2 id='when'>When</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="n">true</span><span class="w">
          </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"one"</span><span class="p">)</span><span class="w">
          </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"two"</span><span class="p">))</span><span class="w">
