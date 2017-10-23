@@ -1808,7 +1808,7 @@ This is why you can apply the same functions in the seq library to different col
 
 <p>To get the first <code class="prettyprint">n</code> elements from a sequence as long as the condition is satisfied but stop taking when the condition is not met, use <code class="prettyprint">take-while</code>. <code class="prettyprint">neg?</code> returns true for negative number.</p>
 
-<p><strong>Note:</strong> Taking elements that only satisfies the condition is not what <code class="prettyprint">take-while</code> does. That&rsquo;s the job of <code class="prettyprint">select</code>.</p>
+<p><strong>Note:</strong> Taking elements that only satisfies the condition is not what <code class="prettyprint">take-while</code> does. That&rsquo;s the job of <code class="prettyprint">select</code> for sets, and <code class="prettyprint">filter</code> for sequences.</p>
 
 <h2 id="drop">Drop</h2>
 <pre class="highlight clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">drop</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">(</span><span class="nb">range</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">10</span><span class="p">))</span><span class="w">
