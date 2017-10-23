@@ -1,2 +1,2 @@
-//= require_tree ./lib
-//= require_tree ./app
+//= require ./all_nosearch
+//= require ./app/_search

@@ -2,16 +2,14 @@ version: 2
 jobs:
   build:
     docker:
-      - image: ruby:2.2.3
+      - image: ruby:2.3.5
 
     working_directory: /root/clojure-by-example
 
     steps:
       - checkout
 
-      - run: apt-get -q update; apt-get -y install libgmp3-dev aspell-en curl
-
-      - run: cp .aspell.en.pws /root/
+      - run: apt-get -q update; apt-get -y install libgmp3-dev curl
 
       - restore_cache:
           keys:
@@ -23,8 +21,6 @@ jobs:
           key: projectname-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
           - vendor/bundle
-
-      - run: bundle exec rake spellcheck
 
   deploy:
     docker:
