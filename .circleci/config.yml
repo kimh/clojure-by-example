@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: ruby:2.2.3
+      - image: ruby:2.3.5
 
     working_directory: /root/clojure-by-example
 
