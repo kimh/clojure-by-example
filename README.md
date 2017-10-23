@@ -33,3 +33,4 @@ You can add words to ignore from the checking to `.aspell.en.pws`.
 * defrecord
 * destructuring
 * default value of get
+* dissoc in Map
