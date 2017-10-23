@@ -13,3 +13,6 @@ gem 'redcarpet', '~> 3.4.0'
 gem 'nokogiri', '~> 1.6.8'
 gem 'middleman-gh-pages'
 
+gem 'libv8'
+gem 'execjs'
+gem 'therubyracer', :platforms => :ruby
