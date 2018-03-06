@@ -781,7 +781,7 @@ nil
 
 <br>
 
-Note that `filter` retruns an empty sequence when no value matches the condition instead of `nil` and an empty sequence is not falsey in Clojure. But, in order to reach the else branch of `if-let`, `pos-nums` has to be `nil`. For this reason, we are using `not-empty` which properly returns nil if the sequence is empty.
+Note that `filter` returns an empty sequence when no value matches the condition instead of `nil` and an empty sequence is not falsey in Clojure. But, in order to reach the else branch of `if-let`, `pos-nums` has to be `nil`. For this reason, we are using `not-empty` which properly returns nil if the sequence is empty.
 
 ## When
 
