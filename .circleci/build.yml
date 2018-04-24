@@ -1,0 +1,9 @@
+
+version: 2
+
+workflows:
+  version: 2
+  deploy-site:
+    jobs:
+      - middleman/whatever:
+          ruby: "2.3.5"
