@@ -908,7 +908,7 @@ You use `:else` keyword for the default case.
 user=> (defn condp-test-2
          [n]
          (condp contains? n
-           [1 2 3] "n is either 1 or 2 or 3"
+           #{1 2 3} "n is either 1 or 2 or 3"
            "n is not 1 or 2 or 3"))
 #'user/condp-test-2
 
@@ -931,12 +931,12 @@ You can use a predicate with `condp` for condition. In this case `contains?` is 
 <br>
 <br>
 
-`(contains? [1 2 3] 2)` will be evaluated in this case.
+`(contains? #{1 2 3} 2)` will be evaluated in this case.
 
 <br>
 <br>
 
-`(contains? [1 2 3] 5)` will be evaluated falsey, thus the default branch will be evaluated.
+`(contains? #{1 2 3} 5)` will be evaluated falsey, thus the default branch will be evaluated.
 
 # Boolean
 
