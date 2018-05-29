@@ -1251,7 +1251,7 @@ The second argument is for <strong>else</strong> branch. It will be evaluated wh
 </span></code></pre>
 <p><br></p>
 
-<p>Note that <code>filter</code> retruns an empty sequence when no value matches the condition instead of <code>nil</code> and an empty sequence is not falsey in Clojure. But, in order to reach the else branch of <code>if-let</code>, <code>pos-nums</code> has to be <code>nil</code>. For this reason, we are using <code>not-empty</code> which properly returns nil if the sequence is empty.</p>
+<p>Note that <code>filter</code> returns an empty sequence when no value matches the condition instead of <code>nil</code> and an empty sequence is not falsey in Clojure. But, in order to reach the else branch of <code>if-let</code>, <code>pos-nums</code> has to be <code>nil</code>. For this reason, we are using <code>not-empty</code> which properly returns nil if the sequence is empty.</p>
 <h2 id='when'>When</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="n">true</span><span class="w">
          </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"one"</span><span class="p">)</span><span class="w">
          </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="s">"two"</span><span class="p">))</span><span class="w">
