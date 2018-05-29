@@ -1732,13 +1732,20 @@ To get a value from the vector, you need to specify the index of the value.</p>
 <br></p>
 
 <p>You get <code>nil</code> when key doesn&#39;t exist.</p>
+<pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nb">get</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="s">"Linux"</span><span class="w"> </span><span class="s">"Sorry, no Linux"</span><span class="p">)</span><span class="w">
+</span><span class="n">nil</span><span class="w">
+</span></code></pre>
+<p><br>
+<br></p>
+
+<p>You can specify a default value in the third argument which will be returned when the key doesn&#39;t exist in the map.</p>
 <pre class="highlight clojure tab-clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="no">:Apple</span><span class="w"> </span><span class="p">{</span><span class="no">:Apple</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="no">:Microsoft</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">})</span><span class="w">
 </span><span class="s">"Mac"</span><span class="w">
 </span></code></pre>
 <p><br>
 <br></p>
 
-<p>When the key of a map is symbol, you can use the symbol just like a function to get the value.</p>
+<p>When the key of a map is keyword, you can use the keyword just like a function to get the value.</p>
 <h2 id='assoc'>Assoc</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">assoc</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="s">"Commodore"</span><span class="w"> </span><span class="s">"Amiga"</span><span class="p">)</span><span class="w">
 </span><span class="p">{</span><span class="s">"Commodore"</span><span class="w"> </span><span class="s">"Amiga"</span><span class="n">,</span><span class="w"> </span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="n">,</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
 </span></code></pre>
