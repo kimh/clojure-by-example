@@ -1508,6 +1508,16 @@ nil
 You get `nil` when key doesn't exist.
 
 ```clojure
+user=>  (get {"Apple" "Mac" "Microsoft" "Windows"} "Linux" "Sorry, no Linux")
+nil
+```
+
+<br>
+<br>
+
+You can specify a default value in the third argument which will be returned when the key doesn't exist in the map.
+
+```clojure
 user> (:Apple {:Apple "Mac" :Microsoft "Windows"})
 "Mac"
 ```
@@ -1515,7 +1525,7 @@ user> (:Apple {:Apple "Mac" :Microsoft "Windows"})
 <br>
 <br>
 
-When the key of a map is symbol, you can use the symbol just like a function to get the value.
+When the key of a map is keyword, you can use the keyword just like a function to get the value.
 
 ## Assoc
 

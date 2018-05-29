@@ -34,5 +34,4 @@ See [this commit](https://github.com/kimh/clojure-by-example/commit/a2872b5660b8
 * clean up the confusion in sequence. probably I should use coll where sequence is mentioned because sequence is not data type.
 * defrecord
 * destructuring
-* default value of get
 * dissoc in Map
