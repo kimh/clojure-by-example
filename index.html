@@ -1351,7 +1351,7 @@ You use <code>:else</code> keyword for the default case.</p>
 <h2 id='condp'>Condp</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">condp-test-2</span><span class="w">
          </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w">
          </span><span class="p">(</span><span class="nf">condp</span><span class="w"> </span><span class="nb">contains?</span><span class="w"> </span><span class="n">n</span><span class="w">
-           </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="s">"n is either 1 or 2 or 3"</span><span class="w">
+           </span><span class="o">#</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="s">"n is either 1 or 2 or 3"</span><span class="w">
            </span><span class="s">"n is not 1 or 2 or 3"</span><span class="p">))</span><span class="w">
 </span><span class="o">#</span><span class="ss">'user/condp-test-2</span><span class="w">
 
@@ -1372,12 +1372,12 @@ You use <code>:else</code> keyword for the default case.</p>
 <br>
 <br></p>
 
-<p><code>(contains? [1 2 3] 2)</code> will be evaluated in this case.</p>
+<p><code>(contains? #{1 2 3} 2)</code> will be evaluated in this case.</p>
 
 <p><br>
 <br></p>
 
-<p><code>(contains? [1 2 3] 5)</code> will be evaluated falsey, thus the default branch will be evaluated.</p>
+<p><code>(contains? #{1 2 3} 5)</code> will be evaluated falsey, thus the default branch will be evaluated.</p>
 <h1 id='boolean'>Boolean</h1><pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="n">true</span><span class="w">
 </span><span class="n">true</span><span class="w">
 
