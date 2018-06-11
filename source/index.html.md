@@ -1477,19 +1477,22 @@ Maps are key-value data structure to store multiple values.
 ## Literal
 
 ```clojure
+user=> {:Apple "Mac" :Microsoft "Windows"}
+{:Apple "Mac", :Microsoft "Windows"}
+
 user=> {"Apple" "Mac" "Microsoft" "Windows"}
 {"Apple" "Mac" "Microsoft" "Windows"}
 ```
 
 <br>
 
-You can create a map by grouping values with `{}`.
+You can create a map by grouping values with `{}`. Although you can use most of Clojure data type as keys, the two most common type of keys are keyword and string.
 
 
 ## Get
 
 ```clojure
-user=> (get {"Apple" "Mac" "Microsoft" "Windows"} "Apple")
+user=> (get {:Apple "Mac" :Microsoft "Windows"} :Apple)
 "Mac"
 ```
 
@@ -1498,7 +1501,7 @@ user=> (get {"Apple" "Mac" "Microsoft" "Windows"} "Apple")
 To get value from key, use `get`.
 
 ```clojure
-user=>  (get {"Apple" "Mac" "Microsoft" "Windows"} "Linux")
+user=>  (get {:Apple "Mac" :Microsoft "Windows"} :Linux)
 nil
 ```
 
@@ -1508,7 +1511,7 @@ nil
 You get `nil` when key doesn't exist.
 
 ```clojure
-user=>  (get {"Apple" "Mac" "Microsoft" "Windows"} "Linux" "Sorry, no Linux")
+user=>  (get {:Apple "Mac" :Microsoft "Windows"} :Linux "Sorry, no Linux")
 nil
 ```
 
@@ -1530,8 +1533,8 @@ When the key of a map is keyword, you can use the keyword just like a function t
 ## Assoc
 
 ```clojure
-user=> (assoc {"Apple", "Mac" "Microsoft" "Windows"} "Commodore" "Amiga")
-{"Commodore" "Amiga", "Apple" "Mac", "Microsoft" "Windows"}
+user=> (assoc {:Apple "Mac" :Microsoft "Windows"} :Commodore "Amiga")
+{:Commodore "Amiga" :Apple "Mac" :Microsoft "Windows"}
 ```
 
 <br>
@@ -1539,8 +1542,8 @@ user=> (assoc {"Apple", "Mac" "Microsoft" "Windows"} "Commodore" "Amiga")
 To add a key-value pair, use `assoc`.
 
 ```clojure
-user=> (assoc {"Apple", "Mac" "Microsoft" "Windows"} "Apple" "iOS")
-{"Apple" "iOS", "Microsoft" "Windows"}
+user=> (assoc {:Apple "Mac" :Microsoft "Windows"} :Apple "iOS")
+{:Apple "iOS" :Microsoft "Windows"}
 ```
 
 <br>
@@ -1551,8 +1554,8 @@ If the key already exists, it replaces the value.
 ## Merge
 
 ```clojure
-user=> (merge {"Apple", "Mac" "Microsoft" "Windows"} {1 2})
-{1 2, "Apple" "Mac", "Microsoft" "Windows"}
+user=> (merge {:Apple "Mac" :Microsoft "Windows"} {1 2})
+{1 2, :Apple "Mac" :Microsoft "Windows"}
 ```
 
 <br>
@@ -1562,8 +1565,8 @@ To combine two maps, use `merge`.
 ## Keys
 
 ```clojure
-user> (keys {"Apple", "Mac" "Microsoft" "Windows"})
-("Apple" "Microsoft")
+user> (keys {:Apple "Mac" :Microsoft "Windows"})
+(:Apple :Microsoft)
 ```
 
 <br>
@@ -1573,7 +1576,7 @@ To get all keys from a map, use `keys`.
 ## Vals
 
 ```clojure
-user> (vals {"Apple", "Mac" "Microsoft" "Windows"})
+user> (vals {:Apple "Mac" :Microsoft "Windows"})
 ("Mac" "Windows")
 ```
 
