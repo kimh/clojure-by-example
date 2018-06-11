@@ -130,7 +130,6 @@ DEPENDENCIES
   middleman-sprockets (~> 4.1.0)
   middleman-syntax (~> 3.0.0)
   nokogiri (~> 1.6.8)
-  rake
   redcarpet (~> 3.4.0)
   rouge (~> 2.0.5)
   therubyracer

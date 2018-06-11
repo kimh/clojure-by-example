@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  spellcheck:
     docker:
       - image: ruby:2.3.5
 
@@ -9,7 +9,9 @@ jobs:
     steps:
       - checkout
 
-      - run: apt-get -q update; apt-get -y install libgmp3-dev curl
+      - run: apt-get -q update; apt-get -y install libgmp3-dev aspell-en curl
+
+      - run: cp .aspell.en.pws /root/
 
       - restore_cache:
           keys:
@@ -21,6 +23,8 @@ jobs:
           key: projectname-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
           - vendor/bundle
+
+      - run: bundle exec rake spellcheck
 
   deploy:
     docker:
@@ -51,12 +55,12 @@ jobs:
 
 workflows:
   version: 2
-  build_and_test:
+  spellcheck_and_deploy:
     jobs:
-      - build
+      - spellcheck
       - deploy:
           requires:
-            - build
+            - spellcheck
           filters:
             branches:
               only: master
