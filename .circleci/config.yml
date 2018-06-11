@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  spellcheck:
     docker:
       - image: ruby:2.3.5
 
@@ -55,12 +55,12 @@ jobs:
 
 workflows:
   version: 2
-  build_and_test:
+  spellcheck_and_deploy:
     jobs:
-      - build
+      - spellcheck
       - deploy:
           requires:
-            - build
+            - spellcheck
           filters:
             branches:
               only: master
