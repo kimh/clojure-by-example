@@ -2184,7 +2184,7 @@ This is why you can apply the same functions in the seq library to different col
 </span></code></pre>
 <p><code>group-by</code> splits a collection and does merge them together unlike <code>partition-by</code>. <code>group-by</code> returns a map where key is the result of the grouping condition.</p>
 <h2 id='lazy-sequence'>Lazy Sequence</h2>
-<p>Most of Clojure&#39;s sequences are <strong>lazy</strong>. All familiar functions such as <code>map</code> <code>range</code> <code>reduce</code> etc returns lazy sequences.</p>
+<p>Most of sequences are <strong>lazy</strong>. All familiar functions such as <code>map</code> <code>range</code> <code>reduce</code> etc returns lazy sequences.</p>
 <pre class="highlight clojure tab-clojure"><code><span class="c1">;; You need hit Ctrl+c very quickly to stop!!</span><span class="w">
 </span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="p">(</span><span class="nb">iterate</span><span class="w"> </span><span class="nb">inc</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w">
 </span><span class="p">(</span><span class="nf">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">......</span><span class="w">
