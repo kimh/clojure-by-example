@@ -1713,26 +1713,29 @@ To get a value from the vector, you need to specify the index of the value.</p>
 <p>To check if a set includes another set, use <code>superset?</code>.</p>
 <h1 id='maps'>Maps</h1>
 <p>Maps are key-value data structure to store multiple values.</p>
-<h2 id='literal-5'>Literal</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
+<h2 id='literal-5'>Literal</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">{</span><span class="no">:Apple</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="no">:Microsoft</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="no">:Apple</span><span class="w"> </span><span class="s">"Mac"</span><span class="n">,</span><span class="w"> </span><span class="no">:Microsoft</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
+
+</span><span class="n">user=&gt;</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
 </span><span class="p">{</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p><br></p>
 
-<p>You can create a map by grouping values with <code>{}</code>.</p>
-<h2 id='get'>Get</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">get</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="s">"Apple"</span><span class="p">)</span><span class="w">
+<p>You can create a map by grouping values with <code>{}</code>. Although you can use most of Clojure data type as keys, the two most common type of keys are keyword and string.</p>
+<h2 id='get'>Get</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">get</span><span class="w"> </span><span class="p">{</span><span class="no">:Apple</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="no">:Microsoft</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="no">:Apple</span><span class="p">)</span><span class="w">
 </span><span class="s">"Mac"</span><span class="w">
 </span></code></pre>
 <p><br></p>
 
 <p>To get value from key, use <code>get</code>.</p>
-<pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nb">get</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="s">"Linux"</span><span class="p">)</span><span class="w">
+<pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nb">get</span><span class="w"> </span><span class="p">{</span><span class="no">:Apple</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="no">:Microsoft</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="no">:Linux</span><span class="p">)</span><span class="w">
 </span><span class="n">nil</span><span class="w">
 </span></code></pre>
 <p><br>
 <br></p>
 
 <p>You get <code>nil</code> when key doesn&#39;t exist.</p>
-<pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nb">get</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="s">"Linux"</span><span class="w"> </span><span class="s">"Sorry, no Linux"</span><span class="p">)</span><span class="w">
+<pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w">  </span><span class="p">(</span><span class="nb">get</span><span class="w"> </span><span class="p">{</span><span class="no">:Apple</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="no">:Microsoft</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="no">:Linux</span><span class="w"> </span><span class="s">"Sorry, no Linux"</span><span class="p">)</span><span class="w">
 </span><span class="n">nil</span><span class="w">
 </span></code></pre>
 <p><br>
@@ -1746,32 +1749,32 @@ To get a value from the vector, you need to specify the index of the value.</p>
 <br></p>
 
 <p>When the key of a map is keyword, you can use the keyword just like a function to get the value.</p>
-<h2 id='assoc'>Assoc</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">assoc</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="s">"Commodore"</span><span class="w"> </span><span class="s">"Amiga"</span><span class="p">)</span><span class="w">
-</span><span class="p">{</span><span class="s">"Commodore"</span><span class="w"> </span><span class="s">"Amiga"</span><span class="n">,</span><span class="w"> </span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="n">,</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
+<h2 id='assoc'>Assoc</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">assoc</span><span class="w"> </span><span class="p">{</span><span class="no">:Apple</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="no">:Microsoft</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="no">:Commodore</span><span class="w"> </span><span class="s">"Amiga"</span><span class="p">)</span><span class="w">
+</span><span class="p">{</span><span class="no">:Commodore</span><span class="w"> </span><span class="s">"Amiga"</span><span class="w"> </span><span class="no">:Apple</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="no">:Microsoft</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p><br></p>
 
 <p>To add a key-value pair, use <code>assoc</code>.</p>
-<pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">assoc</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"iOS"</span><span class="p">)</span><span class="w">
-</span><span class="p">{</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"iOS"</span><span class="n">,</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
+<pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">assoc</span><span class="w"> </span><span class="p">{</span><span class="no">:Apple</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="no">:Microsoft</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="no">:Apple</span><span class="w"> </span><span class="s">"iOS"</span><span class="p">)</span><span class="w">
+</span><span class="p">{</span><span class="no">:Apple</span><span class="w"> </span><span class="s">"iOS"</span><span class="w"> </span><span class="no">:Microsoft</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p><br>
 <br></p>
 
 <p>If the key already exists, it replaces the value.</p>
-<h2 id='merge'>Merge</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">merge</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">})</span><span class="w">
-</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="n">,</span><span class="w"> </span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Mac"</span><span class="n">,</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
+<h2 id='merge'>Merge</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">merge</span><span class="w"> </span><span class="p">{</span><span class="no">:Apple</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="no">:Microsoft</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="p">})</span><span class="w">
+</span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="n">,</span><span class="w"> </span><span class="no">:Apple</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="no">:Microsoft</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p><br></p>
 
 <p>To combine two maps, use <code>merge</code>.</p>
-<h2 id='keys'>Keys</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">keys</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">})</span><span class="w">
-</span><span class="p">(</span><span class="s">"Apple"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="p">)</span><span class="w">
+<h2 id='keys'>Keys</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">keys</span><span class="w"> </span><span class="p">{</span><span class="no">:Apple</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="no">:Microsoft</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">})</span><span class="w">
+</span><span class="p">(</span><span class="no">:Apple</span><span class="w"> </span><span class="no">:Microsoft</span><span class="p">)</span><span class="w">
 </span></code></pre>
 <p><br></p>
 
 <p>To get all keys from a map, use <code>keys</code>.</p>
-<h2 id='vals'>Vals</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">vals</span><span class="w"> </span><span class="p">{</span><span class="s">"Apple"</span><span class="n">,</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Microsoft"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">})</span><span class="w">
+<h2 id='vals'>Vals</h2><pre class="highlight clojure tab-clojure"><code><span class="n">user&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">vals</span><span class="w"> </span><span class="p">{</span><span class="no">:Apple</span><span class="w"> </span><span class="s">"Mac"</span><span class="w"> </span><span class="no">:Microsoft</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">})</span><span class="w">
 </span><span class="p">(</span><span class="s">"Mac"</span><span class="w"> </span><span class="s">"Windows"</span><span class="p">)</span><span class="w">
 </span></code></pre>
 <p><br></p>
