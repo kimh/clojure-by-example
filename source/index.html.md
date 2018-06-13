@@ -2171,7 +2171,7 @@ user=> (group-by #(< 3 %) [1 2 3 4 5 6 1 2 3])
 
 ## Lazy Sequence
 
-Most of Clojure’s sequences are **lazy**. All familiar functions such as `map` `range` `reduce` etc returns lazy sequences.
+Most of Clojure's sequences are **lazy**. All familiar functions such as `map` `range` `reduce` etc returns lazy sequences.
 
 ```clojure
 ;; You need hit Ctrl+c very quickly to stop!!
