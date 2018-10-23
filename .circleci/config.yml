@@ -46,7 +46,7 @@ jobs:
           paths:
           - vendor/bundle
 
-      - run: |
+      - deploy: |
           git config --global user.email "kimh-machine1@kimh.33mail.com"
           git config --global user.name "kimh-machine1"
           git remote remove origin
