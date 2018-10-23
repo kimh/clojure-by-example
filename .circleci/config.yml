@@ -46,12 +46,13 @@ jobs:
           paths:
           - vendor/bundle
 
-      - deploy: |
-          git config --global user.email "kimh-machine1@kimh.33mail.com"
-          git config --global user.name "kimh-machine1"
-          git remote remove origin
-          git remote add origin git@github.com:kimh/clojure-by-example.git
-          bundle exec rake publish commit_message_suffix="[ci skip]"
+      - deploy: 
+          command: |
+            git config --global user.email "kimh-machine1@kimh.33mail.com"
+            git config --global user.name "kimh-machine1"
+            git remote remove origin
+            git remote add origin git@github.com:kimh/clojure-by-example.git
+            bundle exec rake publish commit_message_suffix="[ci skip]"
 
 workflows:
   version: 2
