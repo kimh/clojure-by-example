@@ -1512,7 +1512,7 @@ You get `nil` when key doesn't exist.
 
 ```clojure
 user=>  (get {:Apple "Mac" :Microsoft "Windows"} :Linux "Sorry, no Linux")
-nil
+"Sorry, no Linux"
 ```
 
 <br>
