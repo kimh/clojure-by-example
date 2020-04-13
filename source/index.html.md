@@ -754,7 +754,7 @@ user=> (defn positive-number [numbers]
 user=> (positive-number [-1 -2 1 2])
 (1 2)
 
-user=> (positive-number-seq [-1 -2])
+user=> (positive-number [-1 -2])
 "no positive numbers"
 ```
 
