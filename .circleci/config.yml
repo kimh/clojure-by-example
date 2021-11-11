@@ -33,6 +33,10 @@ jobs:
     working_directory: /root/clojure-by-example
 
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "70:3d:85:72:12:e2:dc:c0:3f:48:ed:79:50:d2:49:c0"
+
       - checkout
 
       - restore_cache:
