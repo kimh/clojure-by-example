@@ -9,6 +9,7 @@ toc_footers:
  - Powered by <a href='https://github.com/tripit/slate'>Slate</a>
  - Hosted on <a href='https://github.com/kimh/clojure-by-example'>Github</a>
  - Made by <a href='http://kimh.github.io/about/'>Hirokuni Kim</a>
+ - I also sell <a href='https://swallow-scooter.com/products/zero9'>cool scooter!</a>
 ---
 
 # About This Page
