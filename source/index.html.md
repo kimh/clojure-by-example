@@ -11,7 +11,7 @@ toc_footers:
  - Made by <a href='http://kimh.github.io/about/'>Hirokuni Kim</a>
 ---
 
-# About
+# About This Page
 I don't like reading thick O'Reilly books when I start learning new programming languages. Rather, I like starting by writing small and dirty code. If you take this approach, having many simple code examples are extremely helpful because I can find answers to these questions very easily.
 
 *How can I define a function?*
