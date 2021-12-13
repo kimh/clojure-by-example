@@ -748,20 +748,20 @@ In Clojure, you can only pass one expression to a branch of `if`. However, you o
 
 ```clojure
 user=> (defn positive-number [numbers]
-         (if-let [pos-nums (not-empty (filter pos? numbers))]
+         (if-let [pos-nums (seq (filter pos? numbers))]
            pos-nums
            "no positive numbers"))
 
 user=> (positive-number [-1 -2 1 2])
 (1 2)
 
-user=> (positive-number-seq [-1 -2])
+user=> (positive-number [-1 -2])
 "no positive numbers"
 ```
 
 <br>
 
-After testing condition, you often want to use the result of the testing later. `if-let` binds the evaluated condition to var when it's truthy. In this example, when `positive-number` receives a collection which contains positive numbers, the result of `(not-empty (filter pos? numbers))` will be bound to `pos-nums`.
+After testing condition, you often want to use the result of the testing later. `if-let` binds the evaluated condition to var when it's truthy. In this example, when `positive-number` receives a collection which contains positive numbers, the result of `(seq (filter pos? numbers))` will be bound to `pos-nums`.
 
 `pos-nums` is returned since the collection contains positive numbers `1 2`.
 <br>
@@ -773,16 +773,16 @@ The second argument is for **else** branch. It will be evaluated when the first 
 user=> (boolean (filter pos? [-1]))
 true
 
-user=> (not-empty [1 2])
+user=> (seq [1 2])
 [1 2]
 
-user=> (not-empty [])
+user=> (seq [])
 nil
 ```
 
 <br>
 
-Note that `filter` returns an empty sequence when no value matches the condition instead of `nil` and an empty sequence is not falsey in Clojure. But, in order to reach the else branch of `if-let`, `pos-nums` has to be `nil`. For this reason, we are using `not-empty` which properly returns nil if the sequence is empty.
+Note that `filter` returns an empty sequence when no value matches the condition instead of `nil` and an empty sequence is not falsey in Clojure. But, in order to reach the else branch of `if-let`, `pos-nums` has to be `nil`. For this reason, we are using `seq` which properly returns nil if the sequence is empty.
 
 ## When
 
