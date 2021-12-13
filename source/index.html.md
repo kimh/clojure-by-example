@@ -1861,7 +1861,7 @@ user=> (reduce (fn [res val] (+ res val)) [1 2 3 4])
 <br>
 <br>
 
-Of course, you can pass an anonymous function to do more complex stuff. Just don't don't forget that the anonymous function must take two arguments.
+Of course, you can pass an anonymous function to do more complex stuff. Just don't forget that the anonymous function must take two arguments.
 
 <br>
 <br>
