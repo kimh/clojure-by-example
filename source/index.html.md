@@ -2028,11 +2028,11 @@ nil
 Clojure doesn't have `for` or `for-each`. Do something to each element of a sequence, use `doseq`.
 
 ```clojure
-user=> (doseq [n1 [1 2 ]
-               n2 [4 5 ]]
+user=> (doseq [n1 [1 3 ]
+               n2 [3 4 ]]
          (println (+ n1 n2)))
+4
 5
-6
 6
 7
 nil
