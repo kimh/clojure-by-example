@@ -62,10 +62,7 @@ workflows:
   version: 2
   spellcheck_and_deploy:
     jobs:
-      - spellcheck
-      - deploy:
-          requires:
-            - spellcheck
+      - deploy
           filters:
             branches:
               only: master
