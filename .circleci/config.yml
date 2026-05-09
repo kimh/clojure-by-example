@@ -2,7 +2,7 @@ version: 2
 jobs:
   spellcheck:
     docker:
-      - image: ruby:2.3.5
+      - image:cimg/ruby:4.0.3
 
     working_directory: /root/clojure-by-example
 
