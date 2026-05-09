@@ -57,7 +57,6 @@ jobs:
             git remote remove origin
             git remote add origin git@github.com:kimh/clojure-by-example.git
             bundle exec rake publish commit_message_suffix="[ci skip]"
-
 workflows:
   version: 2
   spellcheck_and_deploy:
