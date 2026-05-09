@@ -556,7 +556,7 @@ As a result, even if the `from-outer` var doesn't change, `inner` prints differe
 
 # Namespaces
 
-**Namespace** provides a way to organize different Clojure objects into to logical groups. These logical groups often are called **library** and can be used from other namespaces. A namespace is constructed of symbols chained by `.`. `clojure.core`, `clojure-http.client`, `my.app.example`: they are all namespaces.
+**Namespace** provides a way to organize different Clojure objects into logical groups. These logical groups often are called **library** and can be used from other namespaces. A namespace is constructed of symbols chained by `.`. `clojure.core`, `clojure-http.client`, `my.app.example`: they are all namespaces.
 
 ## Create-ns
 
