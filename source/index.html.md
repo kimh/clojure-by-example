@@ -1724,7 +1724,7 @@ user=> (first "string")
 <br>
 <br>
 
-Getting the first element in the vector.
+Getting the first element in the string.
 
 <br>
 <br>
